@@ -9,7 +9,7 @@ export default class Header extends PureComponent {
       <header className="header">
         <Container>
           <nav className="nav">
-            <a href=""><img className="logo" src="src/static/assets/logo.png"></img></a>
+            <a href=""><img className="logo" src="./src/assets/images/logo.png"></img></a>
             <ul className="nav-menu">
               <li>
                 <a href="">Бронирование</a>
