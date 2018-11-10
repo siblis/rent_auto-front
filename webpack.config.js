@@ -48,9 +48,13 @@ module.exports = {
         })
       },
       {
-        test   : /\.(jpg|png|gif)$/,
-        // include: /images/,
-        loader : 'url'
+        test: /\.(png|jpg|gif|ico|svg)$/,
+        exclude: /node_modules/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          context: ''
+        }
       }
     ]
   },
