@@ -16,7 +16,7 @@ module.exports = {
     alias: {
       actions: path.resolve(__dirname, 'src', 'actions'),
       components: path.resolve(__dirname, 'src', 'components'),
-      data: path.resolve(__dirname, 'src', 'data'),
+      static: path.resolve(__dirname, 'src', 'static'),
       containers: path.resolve(__dirname, 'src', 'containers'),
       reducers: path.resolve(__dirname, 'src', 'reducers')
     }
@@ -46,6 +46,15 @@ module.exports = {
             'stylus-loader',
           ]
         })
+      },
+      {
+        test: /\.(png|jpg|gif|ico|svg)$/,
+        exclude: /node_modules/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          context: ''
+        }
       }
     ]
   },

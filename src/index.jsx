@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'normalize.css/normalize.css';
-import './index.css';
+import './index.styl';
 
 import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';

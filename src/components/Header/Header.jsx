@@ -1,6 +1,6 @@
-import './Header.css';
+import './Header.styl';
 
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import { Container } from 'reactstrap';
 
 export default class Header extends PureComponent {
@@ -8,7 +8,17 @@ export default class Header extends PureComponent {
     return (
       <header className="header">
         <Container>
-          <h3>Hello from Header</h3>
+          <nav className="nav">
+            <a href=""><img className="logo" src={require("../../assets/images/logo.png")}></img></a>
+            <ul className="nav-menu">
+              <li>
+                <a href="">Бронирование</a>
+              </li>
+              <li>
+                <a href="">Контакты</a>
+              </li>
+            </ul>
+          </nav>
         </Container>
       </header>
     );
