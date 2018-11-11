@@ -1,10 +1,20 @@
 import './MainPage.styl';
+import '../../../node_modules/rc-calendar/assets/index.css'
+import '../../../node_modules/rc-time-picker/assets/index.css'
+
 
 import React, { PureComponent } from 'react';
 import { Container, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, 
   Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import propTypes from 'prop-types';
+import Calendar from 'rc-calendar';
+import TimePicker from 'rc-time-picker';
 
 export default class Header extends PureComponent {
+  static propTypes = {
+    carModels: propTypes.array,
+  }
+
   state = {
     carModel: '',
   }
@@ -17,33 +27,31 @@ export default class Header extends PureComponent {
     return (
       <main className="main-page">
         <Container>
-          <Form class="car">
+          <Form className="car">
             <div className="car__info">
               <div className="car__block">
                 <h4>Дата получения</h4>
                 <div className="car__input">
                   <object className="car__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
+                  
                   <UncontrolledDropdown>
                     <DropdownToggle caret>
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem disabled>Disabled for now</DropdownItem>
+                      <Calendar />
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </div>
               </div>
               <div className="car__block">
-                <h4>Время получения</h4>
-                <div className="car__input">
-                  <object className="car__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
-                  <UncontrolledDropdown>
-                    <DropdownToggle caret>
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem disabled>Disabled for now</DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </div>
+                <h4></h4>
+                  <FormGroup>
+                    <Label for="middleName">Время получения</Label>
+                    <div className="car__input">
+                      <object className="car__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
+                      <TimePicker showSecond={false} minuteStep={10}/>
+                    </div>
+                  </FormGroup>
               </div>
               <div className="car__block">
                 <h4>Дата возврата</h4>
@@ -53,7 +61,7 @@ export default class Header extends PureComponent {
                     <DropdownToggle caret>
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem disabled>Disabled for now</DropdownItem>
+                      <Calendar />
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </div>
@@ -62,13 +70,7 @@ export default class Header extends PureComponent {
                 <h4>Время возврата</h4>
                 <div className="car__input">
                   <object className="car__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
-                  <UncontrolledDropdown>
-                    <DropdownToggle caret>
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem disabled>Disabled for now</DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
+                  <TimePicker showSecond={false} minuteStep={10}/>
                 </div>
               </div>
               <div className="car__block">
@@ -80,11 +82,9 @@ export default class Header extends PureComponent {
                       {this.state.carModel}
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem onclick={this.handleCarModel('Renault')}>Renault</DropdownItem>
-                      <DropdownItem onclick={this.handleCarModel('Lada')}>Lada</DropdownItem>
-                      <DropdownItem>Skoda</DropdownItem>
-                      <DropdownItem>BMW</DropdownItem>
-                      <DropdownItem>Toyota</DropdownItem>
+                      {this.props.carModels.map((carModel, index) => 
+                          <DropdownItem key={index}>{carModel.name}</DropdownItem>
+                      )}
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </div>
