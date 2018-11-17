@@ -189,13 +189,7 @@ class MainPageCont extends PureComponent {
     for (let field in application) {
       request += `&${field}=${application[field]}`;
     }
-    console.log(request);
-    console.log('Sending to the server!', application);
-    app.post(request).then(res => {
-      console.log('SERVER RESPONSE: ', res);
-    }).catch(err => {
-      console.log('SERVER ERROR:', err);
-    })
+    app.post(request);
     alert('Ваша заявка принята на рассмотрение! (но это не точно)');
   }
 
