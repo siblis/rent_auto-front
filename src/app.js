@@ -1,6 +1,8 @@
 import axios from 'axios';
 
+import { API_URL } from '../config';
+
 export default axios.create({
-  baseURL: 'http://api.rent-auto.biz.tm/',
+  baseURL: API_URL,
   timeout: 10000,
 });

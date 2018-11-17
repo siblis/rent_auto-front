@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import carModels from './carModels';
+import brands from './brands';
 
 export default combineReducers({
   routing: routerReducer,
-  carModels,
+  brands,
 });

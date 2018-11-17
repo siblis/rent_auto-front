@@ -1,13 +1,13 @@
 import { handleActions } from 'redux-actions';
 
-import { carModelsLoaded } from 'actions/carModels';
+import { brandsLoaded } from 'actions/brands';
 
 const initialState = {
   entities: [],
 };
 
 export default handleActions({
-  [carModelsLoaded]: (state, actions) => {
+  [brandsLoaded]: (state, actions) => {
     return {
       entities: actions.payload,
     }
