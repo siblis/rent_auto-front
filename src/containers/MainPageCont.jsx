@@ -23,11 +23,27 @@ class MainPageCont extends PureComponent {
     endTime: '',
     brand: {},
     price: null,
+    firstName: '',
+    lastName: '',
+    middleName: '',
+    email: '',
+    phoneNumber: '',
+    additional: [],
+    passportGetDate: '',
+    birthdayDate: '',
+    licenseGetDate: '',
+    licenseExpireDate: '',
   }
   
   componentDidMount() {
     const { loadBrands } = this.props;
     loadBrands();
+  }
+
+  handleInput = event => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    })
   }
 
   handleStartDateInput = startDate => {
@@ -87,17 +103,106 @@ class MainPageCont extends PureComponent {
     }
   }
 
-  handleNextButton = () => {
-    // TO DO validate
+  handleToStepTwoButton = () => {
+    if (this.state.startTime === '' || 
+    this.state.endTime === '' ||
+    this.state.startDate === '' ||
+    this.state.endDate === '' ||
+    this.state.brand === {}) {
+      alert('Заполните пожалуйста все поля!');
+      return;
+    }
     this.setState({
       step: 2,
     });
   }
 
+  handleToStepThreeButton = () => {
+    if (this.state.firstName === '' || 
+    this.state.lastName === '' ||
+    this.state.email === '' ||
+    this.state.phoneNumber === '') {
+      alert('Заполните пожалуйста все поля!');
+      return;
+    }
+    this.setState({
+      step: 3,
+    });
+  }
+
+  handlePassportGetDateInput = passportGetDate => {
+    this.setState({
+      passportGetDate,
+    });
+  }
+
+  handleBirthdayDateInput = birthdayDate => {
+    this.setState({
+      birthdayDate,
+    });
+  }
+
+  handleLicenseExpireDateInput = licenseExpireDate => {
+    this.setState({
+      licenseExpireDate,
+    })
+  }
+
+  handleLicenseGetDateInput = licenseGetDate => {
+    this.setState({
+      licenseGetDate,
+    })
+  }
+
+  handleBackButton = () => {
+    this.setState({
+      step: this.state.step - 1,
+    })
+  }
+
+  handleSubmitButton = () => {
+    // TO DO validate
+    const startDate = moment(this.state.startDate).add({
+      hours: this.state.startTime.format('h'),
+      minutes: this.state.startTime.format('m')
+    }).toISOString();
+    const endDate = moment(this.state.endDate).add({
+      hours: this.state.endTime.format('h'),
+      minutes: this.state.endTime.format('m')
+    }).toISOString();
+    const { brand, price, firstName, lastName, middleName, email, phoneNumber, additional, birthdayDate, passportGetDate } = this.state;
+    const application = {
+      begin_time: startDate,
+      end_time: endDate,
+      model_name: brand,
+      price,
+      first_name: firstName,
+      last_name: lastName,
+      middleName,
+      email,
+      phone: phoneNumber,
+      additional,
+      birthdate: birthdayDate,
+      doc_issued_date: passportGetDate,
+    }
+    let request = 'requests?';
+    for (let field in application) {
+      request += `&${field}=${application[field]}`;
+    }
+    console.log(request);
+    console.log('Sending to the server!', application);
+    app.post(request).then(res => {
+      console.log('SERVER RESPONSE: ', res);
+    }).catch(err => {
+      console.log('SERVER ERROR:', err);
+    })
+    alert('Ваша заявка принята на рассмотрение! (но это не точно)');
+  }
+
   render() {
     if (this.state.step === 1) {
       return (
-        <MainPageStepOne 
+        <MainPageStepOne
           startDate={this.state.startDate !== '' ? moment(this.state.startDate).format('DD MM YYYY') : ''}
           endDate={this.state.endDate !== '' ? moment(this.state.endDate).format('DD MM YYYY') : ''}
           startTime={this.state.startTime}
@@ -110,18 +215,33 @@ class MainPageCont extends PureComponent {
           handleStartTimeInput={this.handleStartTimeInput}
           handleEndTimeInput={this.handleEndTimeInput}
           handleBrandInput={this.handleBrandInput}
-          handleNextButton={this.handleNextButton}
+          handleToStepTwoButton={this.handleToStepTwoButton}
         />
       );
     }
     if (this.state.step === 2) {
       return (
-        <MainPageStepTwo />
+        <MainPageStepTwo
+          handleInput={this.handleInput}
+          handleToStepThreeButton={this.handleToStepThreeButton}
+        />
       );
     }
     if (this.state.step === 3) {
       return (
-        <MainPageStepThree />
+        <MainPageStepThree
+          passportGetDate={this.state.passportGetDate !== '' ? moment(this.state.passportGetDate).format('DD MM YYYY') : 'Когда выдан'}
+          birthdayDate={this.state.birthdayDate !== '' ? moment(this.state.birthdayDate).format('DD MM YYYY') : 'Дата рождения'}
+          licenseExpireDate={this.state.licenseExpireDate !== '' ? moment(this.state.licenseExpireDate).format('DD MM YYYY') : 'Срок действия'}
+          licenseGetDate={this.state.licenseGetDate !== '' ? moment(this.state.licenseGetDate).format('DD MM YYYY') : 'Когда выдано'}
+          handleInput={this.handleInput}
+          handlePassportGetDateInput={this.handlePassportGetDateInput}
+          handleBirthdayDateInput={this.handleBirthdayDateInput}
+          handleLicenseGetDateInput={this.handleLicenseGetDateInput}
+          handleLicenseExpireDateInput={this.handleLicenseExpireDateInput}
+          handleBackButton={this.handleBackButton}
+          handleSubmitButton={this.handleSubmitButton}
+        />
       );
     }
   }

@@ -4,21 +4,24 @@ import '../../../node_modules/rc-time-picker/assets/index.css'
 
 
 import React, { PureComponent } from 'react';
-import { Container, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, 
-  Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, Label, UncontrolledDropdown, DropdownToggle, DropdownMenu, 
+  Form, FormGroup, Input, Button } from 'reactstrap';
+import Calendar from 'rc-calendar';
 import propTypes from 'prop-types';
 
 export default class Header extends PureComponent {
   static propTypes = {
-    applicationModels: propTypes.array,
-  }
-
-  state = {
-    applicationModel: '',
-  }
-
-  handleapplicationModel = selectedModel => {
-    this.setState({applicationModel: selectedModel})
+    passportGetDate: propTypes.string,
+    birthdayDate: propTypes.string,
+    licenseGetDate: propTypes.string,
+    licenseExpireDate: propTypes.string,
+    handleBackButton: propTypes.func,
+    handleInput: propTypes.func,
+    handleSubmitButton: propTypes.func,
+    handlePassportGetDateInput: propTypes.func,
+    handleBirthdayDateInput: propTypes.func,
+    handleLicenseExpireDateInput: propTypes.func,
+    handleLicenseGetDateInput: propTypes.func,
   }
 
   render() {
@@ -26,55 +29,74 @@ export default class Header extends PureComponent {
       <main className="main-page">
         <Container>
           <Form className="application">
-            <div className="application__details">
-              <div className="application__personal-data">
-                <FormGroup>
-                  <Label for="lastName">Фамилия</Label>
-                  <Input type="text" name="lastName" id="lastName" />
+            <div className="application__step-three">
+              <h4 className="application__field-name">Паспортные данные</h4>
+              <Input type="text" name="passport-series" id="passport-series" placeholder="Фамилия, имя и отчество" onChange={this.props.handleInput}/>
+              <Input type="text" name="passport-number" id="passport-number" placeholder="Серия и номер" onChange={this.props.handleInput}/>
+              <Input className="application__address-textarea"type="textarea" name="address" id="address" placeholder="Кем выдан" onChange={this.props.handleInput}/>
+              <Input className="application__address-textarea"type="textarea" name="address" id="address" placeholder="Адрес регистрации" onChange={this.props.handleInput}/>
+              <h4 className="application__subttl">Водительское удостоверение</h4>
+              <Input type="text" name="passport-number" id="passport-number" placeholder="Серия и номер" onChange={this.props.handleInput}/>
+              <Input type="text" name="passport-number" id="passport-number" placeholder="Кем выдано" onChange={this.props.handleInput}/>
+              <Input type="text" name="passport-number" id="passport-number" placeholder="Категория ТС" onChange={this.props.handleInput}/>
+              <div className="application__wrapper">
+                <FormGroup className="application__checkbox-group">
+                  <Input type="checkbox" name="policy" id="policy" />
+                  <Label for="policy">Согласие на обработку персональных данных</Label>
                 </FormGroup>
-                <FormGroup>
-                  <Label for="firstName">Имя</Label>
-                  <Input type="text" name="firstName" id="firstName" />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="middleName">Отчество</Label>
-                  <Input type="text" name="middleName" id="middleName" />
-                </FormGroup>
+                <Button className="application__btn-back" color="primary" onClick={this.props.handleBackButton}>Назад</Button>
               </div>
-              <div className="application__additional">
-                <div className="application__block">
-                  <h4>Дополнительные услуги</h4>
-                  <UncontrolledDropdown>
-                    <DropdownToggle applicationet>
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem disabled>Disabled for now</DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </div>
-                <div className="application__block">
-                  <FormGroup>
-                    <Label for="comment">Комментарий к заказу</Label>
-                    <Input className="application__comment-textarea" type="textarea" name="comment" id="comment" />
-                  </FormGroup>
-                </div>
+              <div className="div"></div>
+              <div className="div"></div>
+              <div className="application__input">
+                <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
+                <UncontrolledDropdown>
+                  <DropdownToggle caret>
+                    {this.props.birthdayDate}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <Calendar onChange={this.props.handleBirthdayDateInput}/>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               </div>
+              <div className="application__input">
+                <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
+                <UncontrolledDropdown>
+                  <DropdownToggle caret>
+                    {this.props.passportGetDate}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <Calendar onChange={this.props.handlePassportGetDateInput}/>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </div>
+              <div className="div"></div>
+              <div className="div"></div>
+              <div className="div"></div>
+              <div className="application__input">
+                <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
+                <UncontrolledDropdown>
+                  <DropdownToggle caret>
+                    {this.props.licenseGetDate}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <Calendar onChange={this.props.handleLicenseGetDateInput}/>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </div>
+              <div className="application__input">
+                <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
+                <UncontrolledDropdown>
+                  <DropdownToggle caret>
+                    {this.props.licenseExpireDate}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <Calendar onChange={this.props.handleLicenseExpireDateInput}/>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </div>
+              <Button className="application__btn-submit--step-three" onClick={this.props.handleSubmitButton}>Отправить</Button>
             </div>
-            <div className="application__personal-info">
-              <h4>Паспортные данные</h4>
-              <div className="application__documents">
-                <FormGroup>
-                  <Input type="text" name="passport-series" id="passport-series" placeholder="Серия"/>
-                </FormGroup>
-                <FormGroup>
-                  <Input type="text" name="passport-number" id="passport-number" placeholder="Номер"/>
-                </FormGroup>
-              </div>
-              <FormGroup>
-                <Input className="application__address-textarea"type="textarea" name="address" id="address" placeholder="Адрес регистрации"/>
-              </FormGroup>
-            </div>
-            <Button className="application__submit">Подать заявку</Button>
           </Form>
         </Container>
       </main>
