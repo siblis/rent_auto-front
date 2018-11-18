@@ -1,7 +1,6 @@
-import './MainPage.styl';
-import '../../../node_modules/rc-calendar/assets/index.css'
-import '../../../node_modules/rc-time-picker/assets/index.css'
-
+import '../../../node_modules/rc-calendar/assets/index.css';
+import '../../../node_modules/rc-time-picker/assets/index.css';
+import './MainPageStepThree.styl';
 
 import React, { PureComponent } from 'react';
 import { Container, Label, UncontrolledDropdown, DropdownToggle, DropdownMenu, 

@@ -1,7 +1,6 @@
-import './MainPage.styl';
-import '../../../node_modules/rc-calendar/assets/index.css'
-import '../../../node_modules/rc-time-picker/assets/index.css'
-
+import '../../../node_modules/rc-calendar/assets/index.css';
+import '../../../node_modules/rc-time-picker/assets/index.css';
+import './MainPageStepOne.styl';
 
 import React, { PureComponent } from 'react';
 import { Container, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, 
@@ -18,6 +17,11 @@ export default class Header extends PureComponent {
     brand: propTypes.object,
     price: propTypes.number,
     handleStartDateInput: propTypes.func,
+    validStartDate: propTypes.bool,
+    validEndDate: propTypes.bool,
+    validStartTime: propTypes.bool,
+    validEndTime: propTypes.bool,
+    validBrand: propTypes.bool,
     handleEndDateInput: propTypes.func,
     handleStartTimeInput: propTypes.func,
     handleEndTimeInput: propTypes.func,
@@ -36,13 +40,14 @@ export default class Header extends PureComponent {
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                   <UncontrolledDropdown>
-                    <DropdownToggle caret>
+                    <DropdownToggle caret className={this.props.validStartDate ? '' : 'application__invalid'}>
                       {this.props.startDate}
                     </DropdownToggle>
                     <DropdownMenu>
                       <Calendar onChange={this.props.handleStartDateInput}/>
                     </DropdownMenu>
                   </UncontrolledDropdown>
+                  {this.props.validStartDate || <div className="application__error">!</div>}
                 </div>
               </div>
               <div className="application__block">
@@ -50,13 +55,14 @@ export default class Header extends PureComponent {
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                   <UncontrolledDropdown>
-                    <DropdownToggle caret>
+                    <DropdownToggle caret className={this.props.validEndDate ? '' : 'application__invalid'}>
                       {this.props.endDate}
                     </DropdownToggle>
                     <DropdownMenu>
                       <Calendar onChange={this.props.handleEndDateInput}/>
                     </DropdownMenu>
                   </UncontrolledDropdown>
+                  {this.props.validEndDate || <div className="application__error">!</div>}
                 </div>
               </div>
               <div className="application__block">
@@ -64,8 +70,8 @@ export default class Header extends PureComponent {
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/car.svg')}></object>
                   <UncontrolledDropdown>
-                    <DropdownToggle caret>
-                      {this.props.brand.name}
+                    <DropdownToggle caret className={this.props.validBrand ? '' : 'application__invalid'}>
+                      {this.props.brand ? this.props.brand.name : ''}
                     </DropdownToggle>
                     <DropdownMenu>
                       {this.props.brands.map((brand, index) => 
@@ -73,20 +79,33 @@ export default class Header extends PureComponent {
                       )}
                     </DropdownMenu>
                   </UncontrolledDropdown>
+                  {this.props.validBrand || <div className="application__error">!</div>}
                 </div>
               </div>
               <div className="application__block">
                 <h4 className="application__field-name">Время взятия</h4>
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
-                  <TimePicker className="application__field" onChange={this.props.handleStartTimeInput} showSecond={false} minuteStep={10}/>
+                  <TimePicker 
+                    className={this.props.validStartTime ? 'application__field' : 'application__field application__invalid'}
+                    onChange={this.props.handleStartTimeInput}
+                    showSecond={false}
+                    minuteStep={10}
+                  />
+                  {this.props.validStartTime || <div className="application__error">!</div>}      
                 </div>
               </div>
               <div className="application__block">
                 <h4 className="application__field-name">Время возврата</h4>
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
-                  <TimePicker className="application__field" onChange={this.props.handleEndTimeInput} showSecond={false} minuteStep={10}/>
+                  <TimePicker
+                    className={this.props.validEndTime ? 'application__field' : 'application__field application__invalid'}
+                    onChange={this.props.handleEndTimeInput}
+                    showSecond={false}
+                    minuteStep={10}
+                  />
+                  {this.props.validEndTime || <div className="application__error">!</div>}      
                 </div>
               </div>
               <div className="application__block">

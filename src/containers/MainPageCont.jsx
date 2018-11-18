@@ -17,17 +17,31 @@ class MainPageCont extends PureComponent {
 
   state = {
     step: 1,
+    stepOneLazyValidation: false,
+    stepTwoLazyValidation: false,
+    stepThreeLazyValidation: false,
     startDate: '',
+    validStartDate: true,
     endDate: '',
+    validEndDate: true,
     startTime: '',
+    validStartTime: true,
     endTime: '',
-    brand: {},
+    validEndTime: true,
+    brand: undefined,
+    validBrand: true,
     price: null,
     firstName: '',
+    validFirstName: true,
     lastName: '',
+    validLastName: true,
     middleName: '',
     email: '',
+    validEmail: true,
     phoneNumber: '',
+    validPhoneNumber: true,
+    personalDataCheckbox: false,
+    validPersonalDataCheckbox: true,
     additional: [],
     passportGetDate: '',
     birthdayDate: '',
@@ -43,31 +57,45 @@ class MainPageCont extends PureComponent {
   handleInput = event => {
     this.setState({
       [event.target.name]: event.target.value,
-    })
+    }, () => {
+      this.validateStepTwo();
+    });
   }
 
   handleStartDateInput = startDate => {
     this.setState({
       startDate,
-    }, () => this.calculatePrice());
+    }, () => {
+      this.validateStepOne();
+      this.calculatePrice();
+    });
   }
 
   handleEndDateInput = endDate => {
     this.setState({
       endDate,
-    }, () => this.calculatePrice());
+    }, () => {
+      this.validateStepOne();
+      this.calculatePrice();
+    });
   }
 
   handleStartTimeInput = startTime => {
     this.setState({
       startTime,
-    }, () => this.calculatePrice());
+    }, () => {
+      this.validateStepOne();
+      this.calculatePrice();
+    });
   }
 
   handleEndTimeInput = endTime => {
     this.setState({
       endTime,
-    }, () => this.calculatePrice());
+    }, () => {
+      this.validateStepOne();
+      this.calculatePrice();
+    });
   }
 
   handleBrandInput = e => {
@@ -80,12 +108,58 @@ class MainPageCont extends PureComponent {
     }
     this.setState({
       brand: selectedBrand,
-    }, () => this.calculatePrice());
+    }, () => {
+      this.validateStepOne();
+      this.calculatePrice();
+    });
+  }
+
+  handlePersonalDataCheckbox = () => {
+    this.setState({
+      personalDataCheckbox: !this.state.personalDataCheckbox,
+    }, () => {
+      this.validateStepTwo();
+    });
+  }
+
+  validateStepOne = () => {
+    if (this.state.stepOneLazyValidation) {
+      this.setState({
+        validStartDate: this.state.startDate !== '',
+        validEndDate: this.state.endDate !== '',
+        validStartTime: this.state.startTime !== '',
+        validEndTime: this.state.endTime !== '',
+        validBrand: this.state.brand !== undefined,
+      })
+    }
+    if (this.state.startTime !== '' && this.state.endTime !== '' && this.state.startDate !== '' &&
+    this.state.endDate !== '' && this.state.brand !== undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  validateStepTwo = () => {
+    if (this.state.stepTwoLazyValidation) {
+      this.setState({
+        validFirstName: this.state.firstName !== '',
+        validLastName: this.state.lastName !== '',
+        validEmail: this.state.email !== '',
+        validPhoneNumber: this.state.phoneNumber !== '',
+        validPersonalDataCheckbox: this.state.personalDataCheckbox,
+      })
+    }
+    if (this.state.firstName !== '' && this.state.lastName !== '' &&
+    this.state.email !== '' && this.state.phoneNumber !== '' && this.state.personalDataCheckbox) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   calculatePrice = () => {
-    if (this.state.startTime !== '' && this.state.endTime !== '' && this.state.startDate !== '' &&
-      this.state.endDate !== '' && this.state.brand !== {}) {
+    if (this.validateStepOne()) {
       const startDate = moment(this.state.startDate).add({
         hours: this.state.startTime.format('h'),
         minutes: this.state.startTime.format('m')
@@ -104,29 +178,26 @@ class MainPageCont extends PureComponent {
   }
 
   handleToStepTwoButton = () => {
-    if (this.state.startTime === '' || 
-    this.state.endTime === '' ||
-    this.state.startDate === '' ||
-    this.state.endDate === '' ||
-    this.state.brand === {}) {
-      alert('Заполните пожалуйста все поля!');
-      return;
-    }
     this.setState({
-      step: 2,
+      stepOneLazyValidation: true,
+    }, () => {
+      if (this.validateStepOne()) {
+        this.setState({
+          step: 2,
+        });
+      }
     });
   }
 
   handleToStepThreeButton = () => {
-    if (this.state.firstName === '' || 
-    this.state.lastName === '' ||
-    this.state.email === '' ||
-    this.state.phoneNumber === '') {
-      alert('Заполните пожалуйста все поля!');
-      return;
-    }
     this.setState({
-      step: 3,
+      stepTwoLazyValidation: true,
+    }, () => {
+      if (this.validateStepTwo()) {
+        this.setState({
+          step: 3,
+        });
+      }
     });
   }
 
@@ -170,27 +241,32 @@ class MainPageCont extends PureComponent {
       hours: this.state.endTime.format('h'),
       minutes: this.state.endTime.format('m')
     }).toISOString();
-    const { brand, price, firstName, lastName, middleName, email, phoneNumber, additional, birthdayDate, passportGetDate } = this.state;
+    const { brand, price, firstName, lastName, middleName, email, phoneNumber, 
+      additional, birthdayDate, passportGetDate, licenseGetDate, licenseExpireDate } = this.state;
     const application = {
       begin_time: startDate,
       end_time: endDate,
       model_name: brand,
-      price,
-      first_name: firstName,
       last_name: lastName,
-      middleName,
+      first_name: firstName,
+      patronymic: middleName,
+      birthdate: birthdayDate,
       email,
       phone: phoneNumber,
-      additional,
-      birthdate: birthdayDate,
+      doc_number: null,  // TO DO
+      doc_issued_by: '',  // TO DO
       doc_issued_date: passportGetDate,
+      doc_registration: '',  // TO DO
+      lic_number: null,  // TO DO
+      lic_date: licenseGetDate,
+      lic_issued_by: '',  // TO DO
+      lic_valid_to: licenseExpireDate,
+      note: '',  // TO DO
+      price,
+      additional,
     }
-    let request = 'requests?';
-    for (let field in application) {
-      request += `&${field}=${application[field]}`;
-    }
-    app.post(request);
-    alert('Ваша заявка принята на рассмотрение! (но это не точно)');
+    app.post('requests', application);
+    alert('Ваша заявка принята на рассмотрение!');
   }
 
   render() {
@@ -205,6 +281,11 @@ class MainPageCont extends PureComponent {
           brand={this.state.brand}
           price={this.state.price}
           handleStartDateInput={this.handleStartDateInput}
+          validStartDate={this.state.validStartDate}
+          validEndDate={this.state.validEndDate}
+          validStartTime={this.state.validStartTime}
+          validEndTime={this.state.validEndTime}
+          validBrand={this.state.validBrand}
           handleEndDateInput={this.handleEndDateInput}
           handleStartTimeInput={this.handleStartTimeInput}
           handleEndTimeInput={this.handleEndTimeInput}
@@ -216,7 +297,19 @@ class MainPageCont extends PureComponent {
     if (this.state.step === 2) {
       return (
         <MainPageStepTwo
+          firstName={this.state.firstName}
+          lastName={this.state.lastName}
+          email={this.state.email}
+          phoneNumber={this.state.phoneNumber}
+          middleName={this.state.middleName}
+          personalDataCheckbox={this.state.personalDataCheckbox}
+          validFirstName={this.state.validFirstName}
+          validLastName={this.state.validLastName}
+          validEmail={this.state.validEmail}
+          validPhoneNumber={this.state.validPhoneNumber}
+          validPersonalDataCheckbox={this.state.validPersonalDataCheckbox}
           handleInput={this.handleInput}
+          handlePersonalDataCheckbox={this.handlePersonalDataCheckbox}
           handleToStepThreeButton={this.handleToStepThreeButton}
         />
       );
