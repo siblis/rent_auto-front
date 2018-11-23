@@ -64,7 +64,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new ExtractTextPlugin({
-      filename: 'style.css'
+      filename: 'style.[hash].css'
     }),
     new HtmlPlugin({
       template: path.resolve(__dirname, 'src', 'index.html'),
