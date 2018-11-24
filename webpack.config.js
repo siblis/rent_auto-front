@@ -52,7 +52,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]',
+          name: '[hash].[ext]',
           context: ''
         }
       }

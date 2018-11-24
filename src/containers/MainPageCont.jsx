@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -6,6 +6,7 @@ import moment from 'moment';
 import MainPageStepOne from 'components/MainPageStepOne';
 import MainPageStepTwo from 'components/MainPageStepTwo';
 import MainPageStepThree from 'components/MainPageStepThree';
+import FAQ from 'components/FAQ';
 import { loadBrands } from 'actions/brands';
 import app from '../app';
 
@@ -272,63 +273,72 @@ class MainPageCont extends PureComponent {
   render() {
     if (this.state.step === 1) {
       return (
-        <MainPageStepOne
-          startDate={this.state.startDate !== '' ? moment(this.state.startDate).format('DD MM YYYY') : ''}
-          endDate={this.state.endDate !== '' ? moment(this.state.endDate).format('DD MM YYYY') : ''}
-          startTime={this.state.startTime}
-          endTime={this.state.endTime}
-          brands={this.props.brands}
-          brand={this.state.brand}
-          price={this.state.price}
-          handleStartDateInput={this.handleStartDateInput}
-          validStartDate={this.state.validStartDate}
-          validEndDate={this.state.validEndDate}
-          validStartTime={this.state.validStartTime}
-          validEndTime={this.state.validEndTime}
-          validBrand={this.state.validBrand}
-          handleEndDateInput={this.handleEndDateInput}
-          handleStartTimeInput={this.handleStartTimeInput}
-          handleEndTimeInput={this.handleEndTimeInput}
-          handleBrandInput={this.handleBrandInput}
-          handleToStepTwoButton={this.handleToStepTwoButton}
-        />
+        <Fragment>
+          <MainPageStepOne
+            startDate={this.state.startDate !== '' ? moment(this.state.startDate).format('DD MM YYYY') : ''}
+            endDate={this.state.endDate !== '' ? moment(this.state.endDate).format('DD MM YYYY') : ''}
+            startTime={this.state.startTime}
+            endTime={this.state.endTime}
+            brands={this.props.brands}
+            brand={this.state.brand}
+            price={this.state.price}
+            handleStartDateInput={this.handleStartDateInput}
+            validStartDate={this.state.validStartDate}
+            validEndDate={this.state.validEndDate}
+            validStartTime={this.state.validStartTime}
+            validEndTime={this.state.validEndTime}
+            validBrand={this.state.validBrand}
+            handleEndDateInput={this.handleEndDateInput}
+            handleStartTimeInput={this.handleStartTimeInput}
+            handleEndTimeInput={this.handleEndTimeInput}
+            handleBrandInput={this.handleBrandInput}
+            handleToStepTwoButton={this.handleToStepTwoButton}
+          />
+          <FAQ />
+        </Fragment>
       );
     }
     if (this.state.step === 2) {
       return (
-        <MainPageStepTwo
-          firstName={this.state.firstName}
-          lastName={this.state.lastName}
-          email={this.state.email}
-          phoneNumber={this.state.phoneNumber}
-          middleName={this.state.middleName}
-          personalDataCheckbox={this.state.personalDataCheckbox}
-          validFirstName={this.state.validFirstName}
-          validLastName={this.state.validLastName}
-          validEmail={this.state.validEmail}
-          validPhoneNumber={this.state.validPhoneNumber}
-          validPersonalDataCheckbox={this.state.validPersonalDataCheckbox}
-          handleInput={this.handleInput}
-          handlePersonalDataCheckbox={this.handlePersonalDataCheckbox}
-          handleToStepThreeButton={this.handleToStepThreeButton}
-        />
+        <Fragment>
+          <MainPageStepTwo
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            email={this.state.email}
+            phoneNumber={this.state.phoneNumber}
+            middleName={this.state.middleName}
+            personalDataCheckbox={this.state.personalDataCheckbox}
+            validFirstName={this.state.validFirstName}
+            validLastName={this.state.validLastName}
+            validEmail={this.state.validEmail}
+            validPhoneNumber={this.state.validPhoneNumber}
+            validPersonalDataCheckbox={this.state.validPersonalDataCheckbox}
+            handleInput={this.handleInput}
+            handlePersonalDataCheckbox={this.handlePersonalDataCheckbox}
+            handleToStepThreeButton={this.handleToStepThreeButton}
+          />
+          <FAQ />
+        </Fragment>
       );
     }
     if (this.state.step === 3) {
       return (
-        <MainPageStepThree
-          passportGetDate={this.state.passportGetDate !== '' ? moment(this.state.passportGetDate).format('DD MM YYYY') : 'Когда выдан'}
-          birthdayDate={this.state.birthdayDate !== '' ? moment(this.state.birthdayDate).format('DD MM YYYY') : 'Дата рождения'}
-          licenseExpireDate={this.state.licenseExpireDate !== '' ? moment(this.state.licenseExpireDate).format('DD MM YYYY') : 'Срок действия'}
-          licenseGetDate={this.state.licenseGetDate !== '' ? moment(this.state.licenseGetDate).format('DD MM YYYY') : 'Когда выдано'}
-          handleInput={this.handleInput}
-          handlePassportGetDateInput={this.handlePassportGetDateInput}
-          handleBirthdayDateInput={this.handleBirthdayDateInput}
-          handleLicenseGetDateInput={this.handleLicenseGetDateInput}
-          handleLicenseExpireDateInput={this.handleLicenseExpireDateInput}
-          handleBackButton={this.handleBackButton}
-          handleSubmitButton={this.handleSubmitButton}
-        />
+        <Fragment>
+          <MainPageStepThree
+            passportGetDate={this.state.passportGetDate !== '' ? moment(this.state.passportGetDate).format('DD MM YYYY') : 'Когда выдан'}
+            birthdayDate={this.state.birthdayDate !== '' ? moment(this.state.birthdayDate).format('DD MM YYYY') : 'Дата рождения'}
+            licenseExpireDate={this.state.licenseExpireDate !== '' ? moment(this.state.licenseExpireDate).format('DD MM YYYY') : 'Срок действия'}
+            licenseGetDate={this.state.licenseGetDate !== '' ? moment(this.state.licenseGetDate).format('DD MM YYYY') : 'Когда выдано'}
+            handleInput={this.handleInput}
+            handlePassportGetDateInput={this.handlePassportGetDateInput}
+            handleBirthdayDateInput={this.handleBirthdayDateInput}
+            handleLicenseGetDateInput={this.handleLicenseGetDateInput}
+            handleLicenseExpireDateInput={this.handleLicenseExpireDateInput}
+            handleBackButton={this.handleBackButton}
+            handleSubmitButton={this.handleSubmitButton}
+          />
+          <FAQ />
+        </Fragment>
       );
     }
   }
