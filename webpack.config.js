@@ -2,6 +2,7 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: {
@@ -69,6 +70,13 @@ module.exports = {
     new HtmlPlugin({
       template: path.resolve(__dirname, 'src', 'index.html'),
       filename: 'index.html',
+    }),
+    new Dotenv({
+      path: './.env',
+      safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe) 
     })
-  ]
+  ],
+  node: {
+    fs: "empty"
+  }
 }

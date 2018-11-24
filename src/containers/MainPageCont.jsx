@@ -44,6 +44,7 @@ class MainPageCont extends PureComponent {
     personalDataCheckbox: false,
     validPersonalDataCheckbox: true,
     additional: [],
+    passportSeries: '',
     passportGetDate: '',
     birthdayDate: '',
     licenseGetDate: '',
@@ -55,11 +56,17 @@ class MainPageCont extends PureComponent {
     loadBrands();
   }
 
-  handleInput = event => {
+  handleInputStepTwo = event => {
     this.setState({
       [event.target.name]: event.target.value,
     }, () => {
       this.validateStepTwo();
+    });
+  }
+
+  handleInputStepThree = event => {
+    this.setState({
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -233,7 +240,6 @@ class MainPageCont extends PureComponent {
   }
 
   handleSubmitButton = () => {
-    // TO DO validate
     const startDate = moment(this.state.startDate).add({
       hours: this.state.startTime.format('h'),
       minutes: this.state.startTime.format('m')
@@ -313,7 +319,7 @@ class MainPageCont extends PureComponent {
             validEmail={this.state.validEmail}
             validPhoneNumber={this.state.validPhoneNumber}
             validPersonalDataCheckbox={this.state.validPersonalDataCheckbox}
-            handleInput={this.handleInput}
+            handleInputStepTwo={this.handleInputStepTwo}
             handlePersonalDataCheckbox={this.handlePersonalDataCheckbox}
             handleToStepThreeButton={this.handleToStepThreeButton}
           />
@@ -325,11 +331,15 @@ class MainPageCont extends PureComponent {
       return (
         <Fragment>
           <MainPageStepThree
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            middleName={this.state.middleName}
+            passportSeries={this.state.passportSeries}
             passportGetDate={this.state.passportGetDate !== '' ? moment(this.state.passportGetDate).format('DD MM YYYY') : 'Когда выдан'}
             birthdayDate={this.state.birthdayDate !== '' ? moment(this.state.birthdayDate).format('DD MM YYYY') : 'Дата рождения'}
             licenseExpireDate={this.state.licenseExpireDate !== '' ? moment(this.state.licenseExpireDate).format('DD MM YYYY') : 'Срок действия'}
             licenseGetDate={this.state.licenseGetDate !== '' ? moment(this.state.licenseGetDate).format('DD MM YYYY') : 'Когда выдано'}
-            handleInput={this.handleInput}
+            handleInputStepThree={this.handleInputStepThree}
             handlePassportGetDateInput={this.handlePassportGetDateInput}
             handleBirthdayDateInput={this.handleBirthdayDateInput}
             handleLicenseGetDateInput={this.handleLicenseGetDateInput}

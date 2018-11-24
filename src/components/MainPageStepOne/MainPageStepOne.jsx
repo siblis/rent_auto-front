@@ -71,11 +71,11 @@ export default class Header extends PureComponent {
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/car.svg')}></object>
                   <UncontrolledDropdown>
                     <DropdownToggle caret className={this.props.validBrand ? '' : 'application__invalid'}>
-                      {this.props.brand ? this.props.brand.name : ''}
+                      {this.props.brand ? this.props.brand.full_name : ''}
                     </DropdownToggle>
                     <DropdownMenu>
                       {this.props.brands.map((brand, index) => 
-                        <DropdownItem id={brand.id} onClick={this.props.handleBrandInput} key={index}>{brand.name}</DropdownItem>
+                        <DropdownItem className="application__brand-items"id={brand.id} onClick={this.props.handleBrandInput} key={index}>{brand.full_name}</DropdownItem>
                       )}
                     </DropdownMenu>
                   </UncontrolledDropdown>

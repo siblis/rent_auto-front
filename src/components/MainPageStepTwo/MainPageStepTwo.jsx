@@ -35,7 +35,7 @@ export default class Header extends PureComponent {
     validPersonalDataCheckbox: propTypes.bool,
     handlePersonalDataCheckbox: propTypes.func,
     handleToStepThreeButton: propTypes.func,
-    handleInput: propTypes.func,
+    handleInputStepTwo: propTypes.func,
   }
 
   render() {
@@ -53,7 +53,7 @@ export default class Header extends PureComponent {
                     name="lastName"
                     id="lastName"
                     value={this.props.lastName}
-                    onChange={this.props.handleInput}
+                    onChange={this.props.handleInputStepTwo}
                   />
                   {this.props.validLastName || <div className="application__error">!</div>}
                 </div>
@@ -67,13 +67,13 @@ export default class Header extends PureComponent {
                     name="firstName"
                     id="firstName"
                     value={this.props.firstName}
-                    onChange={this.props.handleInput}/>
+                    onChange={this.props.handleInputStepTwo}/>
                   {this.props.validFirstName || <div className="application__error">!</div>}
                 </div>
               </FormGroup>
               <FormGroup>
                 <Label for="middleName">Отчество</Label>
-                <Input type="text" name="middleName" id="middleName" onChange={this.props.handleInput}/>
+                <Input type="text" name="middleName" id="middleName" onChange={this.props.handleInputStepTwo}/>
               </FormGroup >
               <div className="application__block">
                 <h4 className="application__field-name">Дополнительные услуги</h4>
@@ -93,7 +93,7 @@ export default class Header extends PureComponent {
                     name="email"
                     id="email"
                     value={this.props.email}
-                    onChange={this.props.handleInput}
+                    onChange={this.props.handleInputStepTwo}
                   />
                   {this.props.validEmail || <div className="application__error">!</div>}
                 </div>
@@ -107,7 +107,7 @@ export default class Header extends PureComponent {
                     name="phoneNumber"
                     id="phoneNumber"
                     value={this.props.phoneNumber}
-                    onChange={this.props.handleInput}
+                    onChange={this.props.handleInputStepTwo}
                   />
                   {this.props.validPhoneNumber || <div className="application__error">!</div>}
                 </div>

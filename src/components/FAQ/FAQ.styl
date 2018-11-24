@@ -1,7 +1,45 @@
 .faq
 
   &__wrapper
+    margin 30px 0
+    padding 30px
     background-color white
-    padding 12px 34px
-    margin 26px 0
+
+  &__text
+    display flex
+    flex-direction column
+
+    .btn 
+      background-color transparent
+      color #9A9B9B
+      font-size 1.5rem
+
+      &:hover
+        background-color transparent
+
+      &:active
+        background-color transparent
+        box-shadow none
+
+      &:focus
+        background-color transparent
+        box-shadow none
+
+      &:not(:disabled):not(.disabled):active
+        background-color transparent
+        border none
+        box-shadow none
+
+  &__buttons
+    display flex
+    width 100%
+    justify-content flex-end
+  
+  &__button
+    margin 10px 20px 0 20px
+
+  .card
+    border none
+  
+      
     

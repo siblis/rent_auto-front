@@ -80,7 +80,13 @@
     margin 32px 0 0 0
 
   &__input
-    display flex
+    display flex 
+
+    .dropdown-toggle
+      overflow-x hidden
+
+    .dropdown-menu
+      width 400px
 
   &__icon
     margin-right 10px
@@ -98,3 +104,7 @@
 
   &__invalid
     border 3px solid #F60C0C !important
+
+  &__brand-items
+    white-space nowrap
+    overflow hidden
