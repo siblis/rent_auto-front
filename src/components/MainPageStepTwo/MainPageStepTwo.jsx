@@ -7,19 +7,6 @@ import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Select from 'react-select';
 import propTypes from 'prop-types';
 
-const additionalServices = [
-  { value: 'Мойка кузова и салона', label: 'Мойка кузова и салона' },
-  { value: 'Мойка кузова и ковриков', label: 'Мойка кузова и ковриков' },
-  { value: 'Подача аэропорт день', label: 'Подача/возврат аэропорт день' },
-  { value: 'Подача аэропорт ночь', label: 'Подача/возврат аэропорт ночь' },
-  { value: 'Подача город день', label: 'Подача/возврат город день' },
-  { value: 'Подачат город ночь', label: 'Подача/возврат город ночь' },
-  { value: 'Дополнительный водитель', label: 'Дополнительный водитель' },
-  { value: 'Навигатор', label: 'Навигатор' },
-  { value: 'Детское кресло', label: 'Детское кресло' },
-  { value: 'Переходник для USB', label: 'Переходник для USB' }
-];
-
 export default class Header extends PureComponent {
   static propTypes = {
     lastName: propTypes.string,
@@ -27,6 +14,7 @@ export default class Header extends PureComponent {
     middleName: propTypes.string,
     email: propTypes.string,
     phoneNumber: propTypes.string,
+    additions: propTypes.array,
     personalDataCheckbox: propTypes.bool,
     validFirstName: propTypes.bool,
     validLastName: propTypes.bool,
@@ -34,11 +22,22 @@ export default class Header extends PureComponent {
     validPhoneNumber: propTypes.bool,
     validPersonalDataCheckbox: propTypes.bool,
     handlePersonalDataCheckbox: propTypes.func,
+    handleAdditionsSelect: propTypes.func,
     handleToStepThreeButton: propTypes.func,
     handleInputStepTwo: propTypes.func,
   }
 
   render() {
+    const additionalServices = [];
+    if (this.props.additions.length > 0) {
+      this.props.additions.forEach((item, index) => {
+        additionalServices[index] = {
+          value: item.name,
+          label: item.name,
+        }
+      });
+    }
+    
     return (
       <main className="main-page">
         <Container>
@@ -48,27 +47,27 @@ export default class Header extends PureComponent {
                 <Label for="lastName" >Фамилия</Label>
                 <div className="application__input-group">
                   <Input 
-                    className={this.props.validLastName ? '' : 'application__invalid'}
+                    className={this.props.validLastName ? '' : 'application__invalid animated bounce'}
                     type="text"
                     name="lastName"
                     id="lastName"
                     value={this.props.lastName}
                     onChange={this.props.handleInputStepTwo}
                   />
-                  {this.props.validLastName || <div className="application__error">!</div>}
+                  {this.props.validLastName || <div className="application__error animated bounce">!</div>}
                 </div>
               </FormGroup>
               <FormGroup>
                 <Label for="firstName">Имя</Label>
                 <div className="application__input-group">
                   <Input
-                    className={this.props.validFirstName ? '' : 'application__invalid'}
+                    className={this.props.validFirstName ? '' : 'application__invalid animated bounce'}
                     type="text"
                     name="firstName"
                     id="firstName"
                     value={this.props.firstName}
                     onChange={this.props.handleInputStepTwo}/>
-                  {this.props.validFirstName || <div className="application__error">!</div>}
+                  {this.props.validFirstName || <div className="application__error animated bounce">!</div>}
                 </div>
               </FormGroup>
               <FormGroup>
@@ -82,37 +81,38 @@ export default class Header extends PureComponent {
                   isMulti={true}
                   classNamePrefix="application__multi-select"
                   options={additionalServices}
+                  onChange={this.props.handleAdditionsSelect}
                 />
               </div>
               <FormGroup>
                 <Label for="email">E-mail</Label>
                 <div className="application__input-group">
                   <Input
-                    className={this.props.validEmail ? '' : 'application__invalid'}
+                    className={this.props.validEmail ? '' : 'application__invalid animated bounce'}
                     type="text"
                     name="email"
                     id="email"
                     value={this.props.email}
                     onChange={this.props.handleInputStepTwo}
                   />
-                  {this.props.validEmail || <div className="application__error">!</div>}
+                  {this.props.validEmail || <div className="application__error animated bounce">!</div>}
                 </div>
               </FormGroup>
               <FormGroup>
                 <Label for="phoneNumber">Номер телефона</Label>
                 <div className="application__input-group">
                   <Input
-                    className={this.props.validPhoneNumber ? '' : 'application__invalid'}
+                    className={this.props.validPhoneNumber ? '' : 'application__invalid animated bounce'}
                     type="text"
                     name="phoneNumber"
                     id="phoneNumber"
                     value={this.props.phoneNumber}
                     onChange={this.props.handleInputStepTwo}
                   />
-                  {this.props.validPhoneNumber || <div className="application__error">!</div>}
+                  {this.props.validPhoneNumber || <div className="application__error animated bounce">!</div>}
                 </div>
               </FormGroup>
-              <FormGroup className="application__checkbox-group">
+              <div className="application__checkbox-group">
                 <Input
                   type="checkbox"
                   name="policy"
@@ -120,8 +120,8 @@ export default class Header extends PureComponent {
                   checked={this.props.personalDataCheckbox}
                   onChange={this.props.handlePersonalDataCheckbox}/>
                 <Label for="policy">Согласие на обработку персональных данных</Label>
-                {this.props.validPersonalDataCheckbox || <div className="application__error">!</div>}
-              </FormGroup>
+                {this.props.validPersonalDataCheckbox || <div className="application__error animated bounce">!</div>}
+              </div>
               <div></div>
               <Button className="application__btn-next--step-two" onClick={this.props.handleToStepThreeButton}>Продолжить</Button>
             </div>

@@ -5,9 +5,10 @@ const HtmlPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: {
-    main: path.resolve(__dirname, 'src', 'index.jsx'),
-  },
+  entry: [
+    'babel-polyfill',
+    path.resolve(__dirname, 'src', 'index.jsx')
+  ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js',

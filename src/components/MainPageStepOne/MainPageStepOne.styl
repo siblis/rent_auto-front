@@ -1,3 +1,44 @@
+// Error animation
+@-webkit-keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.animated {
+  -webkit-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
 .main-page
   color #2DA0A6
 
@@ -11,10 +52,8 @@
     height 50px
     background-color #E5E5E5
     border-color transparent
-    padding 0 0 14px 14px
     color #2DA0A6
     position relative
-    padding 0 !important
 
     &:after
       border-top: .8rem solid
@@ -49,15 +88,38 @@
       font-size 1.5rem
       color #9A9B9B
 
-  .rc-time-picker-input
-    border 0
-    background-color #E5E5E5
-    width 200px
-    height 50px
-    font-size 1.5rem
-    text-align right
-    padding-right 1.5rem
-    color #2DA0A6
+.rc-time-picker-input
+  border 0
+  background-color #E5E5E5
+  width 200px
+  height 44px
+  font-size 1.5rem
+  text-align right
+  padding-right 1.5rem
+  color #2DA0A6
+  border none
+  box-sizing border-box
+
+.rc-time-picker-panel-narrow
+  max-width 200px
+  width 200px
+
+.rc-time-picker-panel-select
+  width 50%
+  font-size 1.25em
+  overflow-x hidden
+
+.rc-time-picker-panel-inner
+  width 200px
+
+.rc-time-picker-panel-input-wrap
+  height 50px
+
+.rc-time-picker-panel-input
+  font-size 1.5rem
+  text-align right
+  color #2DA0A6
+  padding-right 15px
   
 .application
 
@@ -71,6 +133,10 @@
     grid-auto-flow column
     align-items center
     font-size 1.5rem
+
+    .dropdown-toggle
+      padding 0 40px 0 0
+      text-align right
 
   &__btn-next
     grid-row-start 3
@@ -88,8 +154,29 @@
     .dropdown-menu
       width 400px
 
+    &--date
+      .dropdown-menu
+        width 100px
+        border none
+
+  &__field
+    height 50px
+    border-radius 5px
+    box-sizing border-box
+    background-color #E5E5E5
+
+    .rc-time-picker-panel-select
+      width 100px !important
+
   &__icon
     margin-right 10px
+
+  &__price
+    font-size 2.25rem
+
+  .bounce
+    animation-name bounce
+    transform-origin center bottom
 
   &__error
     color #F60C0C
@@ -101,9 +188,13 @@
     font-size 1.875rem
     font-weight 700
     margin 0 0 0 20px
+    animation-name: bounce;
+    transform-origin: center bottom;
 
   &__invalid
     border 3px solid #F60C0C !important
+    animation-name: bounce;
+    transform-origin: center bottom;
 
   &__brand-items
     white-space nowrap

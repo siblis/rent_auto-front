@@ -1,9 +1,50 @@
+// Error animation
+@-webkit-keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.animated {
+  -webkit-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
 .application
 
   &__step-two
     display grid
     grid-template-columns 1.6fr 1.6fr 1fr
-    grid-template-rows 1fr 1fr 1fr 1fr
+    grid-template-rows 1fr 1fr 1fr 1.2fr
     grid-auto-flow column
     align-items center
     background-color #fff
@@ -13,7 +54,10 @@
     font-size 1.5rem
 
     .form-group
-      margin-right 0
+      margin 0
+
+      label 
+        margin 0
 
     .dropdown-toggle
       width 300px
@@ -40,11 +84,15 @@
     .dropdown-menu
       width 300px !important
 
+    .application__block
+      margin 0
+
   &__btn-next--step-two
     grid-row-start 4
+    align-self end
 
   &__checkbox-group
-    margin 50px 0 0 0
+    margin 40px 0 0 0
     display flex
 
     input 
@@ -64,12 +112,16 @@
   &__input-group
     display flex
 
+  &__field-name
+    font-size 1.75rem
+
   &__multi-select
     
     &__control
       width 300px
       height 50px
       background-color #E5E5E5 !important
+      border none !important
 
       &:hover 
         border-color #2DA0A6 !important

@@ -8,12 +8,15 @@ import MainPageStepTwo from 'components/MainPageStepTwo';
 import MainPageStepThree from 'components/MainPageStepThree';
 import FAQ from 'components/FAQ';
 import { loadBrands } from 'actions/brands';
+import { loadAdditions } from 'actions/additions';
 import app from '../app';
 
 class MainPageCont extends PureComponent {
   static propTypes = {
     loadBrands: propTypes.func,
+    loadAdditions: propTypes.func,
     brands: propTypes.array,
+    additions: propTypes.array,
   }
 
   state = {
@@ -43,17 +46,24 @@ class MainPageCont extends PureComponent {
     validPhoneNumber: true,
     personalDataCheckbox: false,
     validPersonalDataCheckbox: true,
-    additional: [],
+    selectedAdditions: [],
+    passportOwnerName: '',
     passportSeries: '',
+    passportIssuedBy: '',
+    passportRegAddress: '',
     passportGetDate: '',
     birthdayDate: '',
+    licenseSeries: '',
+    licenseIssuedBy: '',
+    licenseCategory: '',
     licenseGetDate: '',
     licenseExpireDate: '',
   }
   
   componentDidMount() {
-    const { loadBrands } = this.props;
+    const { loadBrands, loadAdditions } = this.props;
     loadBrands();
+    loadAdditions();
   }
 
   handleInputStepTwo = event => {
@@ -133,28 +143,22 @@ class MainPageCont extends PureComponent {
   validateStepOne = () => {
     if (this.state.stepOneLazyValidation) {
       this.setState({
-        validStartDate: this.state.startDate !== '',
-        validEndDate: this.state.endDate !== '',
-        validStartTime: this.state.startTime !== '',
-        validEndTime: this.state.endTime !== '',
+        validStartDate: this.state.startDate !== '' && moment(this.state.startDate).hour(23).minute(59).isAfter(),
+        validEndDate: this.state.endDate !== '' && this.state.startDate !== '' && moment(this.state.startDate).hour(0).minute(0).isBefore(this.state.endDate),
+        validStartTime: this.state.startTime !== '' && this.state.endTime !== '' && moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).isAfter(),
+        validEndTime: this.state.endTime !== '' && this.state.startTime !== '' && moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm')).isAfter(moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm'))),
         validBrand: this.state.brand !== undefined,
       })
-    }
-    if (this.state.startTime !== '' && this.state.endTime !== '' && this.state.startDate !== '' &&
-    this.state.endDate !== '' && this.state.brand !== undefined) {
-      return true;
-    } else {
-      return false;
     }
   }
 
   validateStepTwo = () => {
     if (this.state.stepTwoLazyValidation) {
       this.setState({
-        validFirstName: this.state.firstName !== '',
-        validLastName: this.state.lastName !== '',
-        validEmail: this.state.email !== '',
-        validPhoneNumber: this.state.phoneNumber !== '',
+        validFirstName: this.state.firstName !== '' && /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.firstName),
+        validLastName: this.state.lastName !== '' && /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.lastName),
+        validEmail: this.state.email !== ''  && /^[a-zA-Z]+([_.-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,4})+$/.test(this.state.email),
+        validPhoneNumber: this.state.phoneNumber !== '' && /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im.test(this.state.phoneNumber),
         validPersonalDataCheckbox: this.state.personalDataCheckbox,
       })
     }
@@ -166,21 +170,25 @@ class MainPageCont extends PureComponent {
     }
   }
 
-  calculatePrice = () => {
-    if (this.validateStepOne()) {
-      const startDate = moment(this.state.startDate).add({
-        hours: this.state.startTime.format('h'),
-        minutes: this.state.startTime.format('m')
-      }).toISOString();
-      const endDate = moment(this.state.endDate).add({
-        hours: this.state.endTime.format('h'),
-        minutes: this.state.endTime.format('m')
-      }).toISOString();
+  calculatePrice = async () => {
+    if (this.state.startDate !== '' && this.state.endDate !== '' && this.state.startTime !== '' && this.state.endTime !== '' && this.state.brand !== undefined) {
+      await this.setState({
+        stepOneLazyValidation: true,
+      });
+    }
+    await this.validateStepOne();
+    if (this.state.validStartDate && this.state.validEndDate && this.state.validStartTime && this.state.validEndTime && this.state.brand && this.state.stepOneLazyValidation) {
+      const startDate = moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).toISOString();
+      const endDate = moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm')).toISOString();
       const request = `rent_values?start_time=${startDate}&end_time=${endDate}&model=${this.state.brand.id}`
       app.get(request).then(res => {
         this.setState({
           price: res.data
         })
+      })
+    } else {
+      this.setState({
+        price: null,
       })
     }
   }
@@ -188,13 +196,20 @@ class MainPageCont extends PureComponent {
   handleToStepTwoButton = () => {
     this.setState({
       stepOneLazyValidation: true,
-    }, () => {
-      if (this.validateStepOne()) {
+    }, async () => {
+      await this.validateStepOne();
+      if (this.state.validStartDate && this.state.validEndDate && this.state.validStartTime && this.state.validEndTime && this.state.brand && this.state.stepOneLazyValidation) {
         this.setState({
           step: 2,
         });
       }
     });
+  }
+
+  handleAdditionsSelect = event => {
+    this.setState({
+      selectedAdditions: event,
+    })
   }
 
   handleToStepThreeButton = () => {
@@ -249,7 +264,13 @@ class MainPageCont extends PureComponent {
       minutes: this.state.endTime.format('m')
     }).toISOString();
     const { brand, price, firstName, lastName, middleName, email, phoneNumber, 
-      additional, birthdayDate, passportGetDate, licenseGetDate, licenseExpireDate } = this.state;
+      selectedAdditions, birthdayDate, passportSeries, passportIssuedBy, passportGetDate, 
+      passportRegAddress, licenseSeries, licenseIssuedBy, licenseGetDate, licenseExpireDate, 
+      licenseCategory, personalDataCheckbox } = this.state;
+    const additions = [];
+    selectedAdditions.forEach(item => {
+      additions.push(item.value);
+    })
     const application = {
       begin_time: startDate,
       end_time: endDate,
@@ -257,20 +278,22 @@ class MainPageCont extends PureComponent {
       last_name: lastName,
       first_name: firstName,
       patronymic: middleName,
-      birthdate: birthdayDate,
+      birthdate: birthdayDate !== '' ? birthdayDate.toISOString() : '',
       email,
       phone: phoneNumber,
-      doc_number: null,  // TO DO
-      doc_issued_by: '',  // TO DO
-      doc_issued_date: passportGetDate,
-      doc_registration: '',  // TO DO
-      lic_number: null,  // TO DO
-      lic_date: licenseGetDate,
-      lic_issued_by: '',  // TO DO
-      lic_valid_to: licenseExpireDate,
-      note: '',  // TO DO
+      doc_number: passportSeries,
+      doc_issued_by: passportIssuedBy,
+      doc_issued_date: passportGetDate !== '' ? passportGetDate.toISOString() : '',
+      doc_registration: passportRegAddress,
+      lic_number: licenseSeries,
+      lic_date: licenseGetDate !== '' ? licenseGetDate.toISOString() : '',
+      lic_issued_by: licenseIssuedBy,
+      lic_valid_to: licenseExpireDate !== '' ? licenseExpireDate.toISOString() : '',
+      license_category: licenseCategory,
+      personal_data_agreement: personalDataCheckbox,
+      note: '',  // Threre is no such field in application
       price,
-      additional,
+      additions,
     }
     app.post('requests', application);
     alert('Ваша заявка принята на рассмотрение!');
@@ -313,6 +336,7 @@ class MainPageCont extends PureComponent {
             email={this.state.email}
             phoneNumber={this.state.phoneNumber}
             middleName={this.state.middleName}
+            additions={this.props.additions}
             personalDataCheckbox={this.state.personalDataCheckbox}
             validFirstName={this.state.validFirstName}
             validLastName={this.state.validLastName}
@@ -320,6 +344,7 @@ class MainPageCont extends PureComponent {
             validPhoneNumber={this.state.validPhoneNumber}
             validPersonalDataCheckbox={this.state.validPersonalDataCheckbox}
             handleInputStepTwo={this.handleInputStepTwo}
+            handleAdditionsSelect={this.handleAdditionsSelect}
             handlePersonalDataCheckbox={this.handlePersonalDataCheckbox}
             handleToStepThreeButton={this.handleToStepThreeButton}
           />
@@ -334,7 +359,13 @@ class MainPageCont extends PureComponent {
             firstName={this.state.firstName}
             lastName={this.state.lastName}
             middleName={this.state.middleName}
+            passportOwnerName={this.state.passportOwnerName}
             passportSeries={this.state.passportSeries}
+            passportIssuedBy={this.state.passportIssuedBy}
+            passportRegAddress={this.state.passportRegAddress}
+            licenseSeries={this.state.licenseSeries}
+            licenseIssuedBy={this.state.licenseIssuedBy}
+            licenseCategory={this.state.licenseCategory}
             passportGetDate={this.state.passportGetDate !== '' ? moment(this.state.passportGetDate).format('DD MM YYYY') : 'Когда выдан'}
             birthdayDate={this.state.birthdayDate !== '' ? moment(this.state.birthdayDate).format('DD MM YYYY') : 'Дата рождения'}
             licenseExpireDate={this.state.licenseExpireDate !== '' ? moment(this.state.licenseExpireDate).format('DD MM YYYY') : 'Срок действия'}
@@ -358,6 +389,7 @@ function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
     brands: state.brands.entities,
+    additions: state.additions.entities,
   }
 }
 
@@ -365,6 +397,7 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     ...ownProps,
     loadBrands: () => dispatch(loadBrands()),
+    loadAdditions: () => dispatch(loadAdditions()),
   }
 }
 

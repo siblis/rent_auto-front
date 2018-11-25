@@ -37,41 +37,41 @@ export default class Header extends PureComponent {
             <div className="application__step-one">
               <div className="application__block">
                 <h4 className="application__field-name">Дата взятия</h4>
-                <div className="application__input">
+                <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                   <UncontrolledDropdown>
-                    <DropdownToggle caret className={this.props.validStartDate ? '' : 'application__invalid'}>
+                    <DropdownToggle caret className={this.props.validStartDate ? '' : 'application__invalid animated bounce'}>
                       {this.props.startDate}
                     </DropdownToggle>
                     <DropdownMenu>
                       <Calendar onChange={this.props.handleStartDateInput}/>
                     </DropdownMenu>
                   </UncontrolledDropdown>
-                  {this.props.validStartDate || <div className="application__error">!</div>}
+                  {this.props.validStartDate || <div className="application__error animated bounce">!</div>}
                 </div>
               </div>
               <div className="application__block">
                 <h4 className="application__field-name">Дата возврата</h4>
-                <div className="application__input">
+                <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                   <UncontrolledDropdown>
-                    <DropdownToggle caret className={this.props.validEndDate ? '' : 'application__invalid'}>
+                    <DropdownToggle caret className={this.props.validEndDate ? '' : 'application__invalid animated bounce'}>
                       {this.props.endDate}
                     </DropdownToggle>
                     <DropdownMenu>
                       <Calendar onChange={this.props.handleEndDateInput}/>
                     </DropdownMenu>
                   </UncontrolledDropdown>
-                  {this.props.validEndDate || <div className="application__error">!</div>}
+                  {this.props.validEndDate || <div className="application__error animated bounce">!</div>}
                 </div>
               </div>
               <div className="application__block">
-                <h4 className="application__field-name">Марка автомобиля</h4>
+                <h4 className="application__field-name">Модель автомобиля</h4>
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/car.svg')}></object>
                   <UncontrolledDropdown>
-                    <DropdownToggle caret className={this.props.validBrand ? '' : 'application__invalid'}>
-                      {this.props.brand ? this.props.brand.full_name : ''}
+                    <DropdownToggle caret className={this.props.validBrand ? '' : 'application__invalid animated bounce'}>
+                      {this.props.brand ? `${this.props.brand.brand.name} ${this.props.brand.name}` : ''}
                     </DropdownToggle>
                     <DropdownMenu>
                       {this.props.brands.map((brand, index) => 
@@ -79,20 +79,21 @@ export default class Header extends PureComponent {
                       )}
                     </DropdownMenu>
                   </UncontrolledDropdown>
-                  {this.props.validBrand || <div className="application__error">!</div>}
+                  {this.props.validBrand || <div className="application__error animated bounce">!</div>}
                 </div>
               </div>
               <div className="application__block">
                 <h4 className="application__field-name">Время взятия</h4>
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
-                  <TimePicker 
-                    className={this.props.validStartTime ? 'application__field' : 'application__field application__invalid'}
+                  <TimePicker
+                    className={this.props.validStartTime ? 'application__field' : 'application__field application__invalid animated bounce'}
                     onChange={this.props.handleStartTimeInput}
                     showSecond={false}
                     minuteStep={10}
+                    allowEmpty={false}
                   />
-                  {this.props.validStartTime || <div className="application__error">!</div>}      
+                  {this.props.validStartTime || <div className="application__error animated bounce">!</div>}      
                 </div>
               </div>
               <div className="application__block">
@@ -100,12 +101,13 @@ export default class Header extends PureComponent {
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
                   <TimePicker
-                    className={this.props.validEndTime ? 'application__field' : 'application__field application__invalid'}
+                    className={this.props.validEndTime ? 'application__field' : 'application__field application__invalid animated bounce'}
                     onChange={this.props.handleEndTimeInput}
                     showSecond={false}
                     minuteStep={10}
+                    allowEmpty={false}
                   />
-                  {this.props.validEndTime || <div className="application__error">!</div>}      
+                  {this.props.validEndTime || <div className="application__error animated bounce">!</div>}      
                 </div>
               </div>
               <div className="application__block">
