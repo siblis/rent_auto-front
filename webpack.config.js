@@ -2,11 +2,13 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: {
-    main: path.resolve(__dirname, 'src', 'index.jsx'),
-  },
+  entry: [
+    'babel-polyfill',
+    path.resolve(__dirname, 'src', 'index.jsx')
+  ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js',
@@ -52,7 +54,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]',
+          name: '[hash].[ext]',
           context: ''
         }
       }
@@ -64,11 +66,18 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new ExtractTextPlugin({
-      filename: 'style.css'
+      filename: 'style.[hash].css'
     }),
     new HtmlPlugin({
       template: path.resolve(__dirname, 'src', 'index.html'),
       filename: 'index.html',
+    }),
+    new Dotenv({
+      path: './.env',
+      safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe) 
     })
-  ]
+  ],
+  node: {
+    fs: "empty"
+  }
 }

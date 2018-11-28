@@ -1,0 +1,161 @@
+// Error animation
+@-webkit-keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.animated {
+  -webkit-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.application
+
+  &__step-two
+    display grid
+    grid-template-columns 1.6fr 1.6fr 1fr
+    grid-template-rows 1fr 1fr 1fr 1.2fr
+    grid-auto-flow column
+    align-items center
+    background-color #fff
+    margin 30px 0
+    padding 30px
+    align-items center
+    font-size 1.5rem
+
+    .form-group
+      margin 0
+
+      label 
+        margin 0
+
+    .dropdown-toggle
+      width 300px
+      font-size 1.5rem
+      height 50px
+      background-color #E5E5E5
+      border-color transparent
+      padding 0 0 14px 14px
+      color #2DA0A6
+      position relative
+      padding 0 !important
+
+      &:after
+        border-top: .8rem solid
+        border-right: .8rem solid transparent
+        border-bottom: 0;
+        border-left: .8rem solid transparent
+        position absolute
+        maring 0 !important
+        top 20px
+        right 10px
+        padding 0 !important
+
+    .dropdown-menu
+      width 300px !important
+
+    .application__block
+      margin 0
+
+  &__btn-next--step-two
+    grid-row-start 4
+    align-self end
+
+  &__checkbox-group
+    margin 40px 0 0 0
+    display flex
+
+    input 
+      width 25px
+      height 25px
+      border none
+      outline none
+      background-color #E5E5E5
+      padding 0
+      margin 0 50px 0 0
+
+    label 
+      font-size 1rem
+      padding 0 0 0 50px
+      width 300px
+
+  &__input-group
+    display flex
+
+  &__field-name
+    font-size 1.75rem
+
+  &__multi-select
+    
+    &__control
+      width 300px
+      height 50px
+      background-color #E5E5E5 !important
+      border none !important
+
+      &:hover 
+        border-color #2DA0A6 !important
+        box-shadow 0 0 0 1px #2DA0A6 !important
+      
+      &--is-focused
+        border-color #2DA0A6 !important
+        box-shadow 0 0 0 1px #2DA0A6 !important
+      
+      &:hover
+        border-color #2DA0A6 !important
+        box-shadow 0 0 0 1px #2DA0A6 !important
+
+    &__value-container
+      font-size 1rem
+      left 300px
+      min-width 500px !important
+      flex-direction row
+
+    &__placeholder
+      display none
+
+    &__input
+      display none
+
+    &__indicators
+      background-color #E5E5E5
+      position absolute
+      right 10px
+      top 5px
+
+    &__indicator-separator
+      display none
+
+    &__menu
+      font-size 1rem
+      width 300px !important

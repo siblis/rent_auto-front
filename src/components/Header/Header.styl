@@ -1,5 +1,52 @@
 .header
   background-color #2DA0A6
+
+  &__dropdown
+    width 400px
+    margin -4px 0 0 0
+
+    .btn
+      width 400px
+      text-align right
+    
+    .dropdown-item
+      &:active
+        background-color transparent !important
+        box-shadow none
+
+    .dropdown-toggle
+      background-color transparent !important
+
+      &:focus
+        background-color transparent
+        box-shadow none !important
+
+      &:active
+        background-color transparent
+        box-shadow none
+        border none
+
+      &:hover
+        background-color transparent
+        box-shadow none
+        color white
+
+      &:not(:disabled):not(.disabled).active:focus
+        box-shadow none
+        background-color transparent
+
+      &:not(:disabled):not(.disabled):active
+        background-color transparent
+        box-shadow none
+        border none
+
+    .dropdown-menu
+      margin 20px 0 0 20px
+      background-color #F8F8F8
+    a
+      color #2DA0A6
+      font-size 1.75rem
+
   .container
     display flex
     justify-content space-between
@@ -11,8 +58,7 @@
     justify-content space-between
 
   .nav-menu
-    list-style none
-    display block
+    display flex
     li 
       float left 
       display block
@@ -21,4 +67,7 @@
         color #BEFCFF
         font-weight 700
         font-size 1.75rem
-      
+
+  .dropdown-toggle
+    font-weight 700
+    
