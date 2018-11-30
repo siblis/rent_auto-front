@@ -5,7 +5,8 @@ import Services from 'components/Services';
 import Contacts from 'components/Contacts';
 import About from 'components/About';
 import Description from 'components/Description';
-import Cars from 'components/Cars';
+import CarsCont from 'containers/CarsCont';
+import CarCont from 'containers/CarCont';
 
 export default [
   {
@@ -20,7 +21,12 @@ export default [
   },
   {
     path: '/cars',
-    component: Cars,
+    component: CarsCont,
+    exact: true
+  },
+  {
+    path: '/car/:id',
+    component: CarCont,
     exact: true
   },
   {

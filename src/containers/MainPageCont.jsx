@@ -17,6 +17,7 @@ class MainPageCont extends PureComponent {
     loadAdditions: propTypes.func,
     brands: propTypes.array,
     additions: propTypes.array,
+    location: propTypes.object,
   }
 
   state = {
@@ -64,6 +65,19 @@ class MainPageCont extends PureComponent {
     const { loadBrands, loadAdditions } = this.props;
     loadBrands();
     loadAdditions();
+    this.calculateBrand();
+  }
+
+  calculateBrand = () => {
+    if (this.props.location.carId) {
+      const { carId } = this.props.location;
+      const brand = this.props.brands.filter(brand => brand.id === carId)[0];
+      if (brand) {
+        this.setState({
+          brand,
+        });
+      }
+    }
   }
 
   handleInputStepTwo = event => {
