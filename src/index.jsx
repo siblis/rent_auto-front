@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/bootstrap.min.css';
 import 'normalize.css/normalize.css';
 import './index.styl';
 
