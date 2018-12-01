@@ -4,7 +4,7 @@ import './MainPageStepThree.styl';
 
 import React, { PureComponent } from 'react';
 import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, 
-  Form, FormGroup, Input, Button } from 'reactstrap';
+  Form, FormGroup, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Calendar from 'rc-calendar';
 import propTypes from 'prop-types';
 
@@ -31,6 +31,8 @@ export default class Header extends PureComponent {
     handleBirthdayDateInput: propTypes.func,
     handleLicenseExpireDateInput: propTypes.func,
     handleLicenseGetDateInput: propTypes.func,
+    stepThreeModal: propTypes.bool,
+    stepThreeModalToggle: propTypes.func,
   }
 
   render() {
@@ -151,6 +153,15 @@ export default class Header extends PureComponent {
                 </UncontrolledDropdown>
               </div>
               <Button className="application__btn-submit--step-three" onClick={this.props.handleSubmitButton}>Отправить</Button>
+              <Modal isOpen={this.props.stepThreeModal} toggle={this.props.stepThreeModalToggle} >
+                <ModalHeader toggle={this.props.stepThreeModalToggle}>Заявка принята</ModalHeader>
+                <ModalBody>
+                  Ваша заявка принята! Скоро с Вами свяжется наш специалист
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="secondary" onClick={this.props.stepThreeModalToggle}>Закрыть</Button>
+                </ModalFooter>
+              </Modal>
             </div>
           </Form>
         </Container>

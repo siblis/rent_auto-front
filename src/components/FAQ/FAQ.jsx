@@ -50,10 +50,12 @@ export default class About extends PureComponent {
                 </Fragment>
               ))}
             </div>
+            {/*
             <div className="faq__buttons">
               <Button className="faq__button" color="primary">Задать вопрос</Button>
               <Button className="faq__button">Заказать звонок</Button>
             </div>
+            */}
           </div>
         </Container>
       </section>

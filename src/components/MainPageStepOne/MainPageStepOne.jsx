@@ -44,7 +44,10 @@ export default class Header extends PureComponent {
                       {this.props.startDate}
                     </DropdownToggle>
                     <DropdownMenu>
-                      <Calendar onChange={this.props.handleStartDateInput}/>
+                      <Calendar
+                        onChange={this.props.handleStartDateInput}
+                        animation="slide-up"
+                      />
                     </DropdownMenu>
                   </UncontrolledDropdown>
                   {this.props.validStartDate || <div className="application__error animated bounce">!</div>}
@@ -59,7 +62,10 @@ export default class Header extends PureComponent {
                       {this.props.endDate}
                     </DropdownToggle>
                     <DropdownMenu>
-                      <Calendar onChange={this.props.handleEndDateInput}/>
+                      <Calendar
+                        onChange={this.props.handleEndDateInput}
+                        animation="slide-up"
+                      />
                     </DropdownMenu>
                   </UncontrolledDropdown>
                   {this.props.validEndDate || <div className="application__error animated bounce">!</div>}
@@ -70,7 +76,7 @@ export default class Header extends PureComponent {
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/car.svg')}></object>
                   <UncontrolledDropdown>
-                    <DropdownToggle caret className={this.props.validBrand ? '' : 'application__invalid animated bounce'}>
+                    <DropdownToggle caret className={this.props.validBrand ? 'application__brand-name' : 'application__brand-name application__invalid animated bounce'}>
                       {this.props.brand ? `${this.props.brand.brand.name} ${this.props.brand.name}` : ''}
                     </DropdownToggle>
                     <DropdownMenu>

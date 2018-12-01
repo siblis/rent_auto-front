@@ -44,7 +44,7 @@ export default class Header extends PureComponent {
           <Form className="application">
             <div className="application__step-two">
               <FormGroup>
-                <Label for="lastName" >Фамилия</Label>
+                <Label for="lastName">Фамилия</Label>
                 <div className="application__input-group">
                   <Input 
                     className={this.props.validLastName ? '' : 'application__invalid animated bounce'}

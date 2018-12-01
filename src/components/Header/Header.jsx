@@ -36,7 +36,7 @@ export default class Header extends PureComponent {
       <header className="header">
         <Container>
           <nav className="nav">
-            <Link to={`/`}><img className="logo" src={require("../../assets/images/logo.png")}></img></Link>
+            <Link to={{pathname: '/', step: 1}}><img className="logo" src={require("../../assets/images/logo.png")}></img></Link>
             <ul className="nav-menu">
               <UncontrolledDropdown className="header__dropdown">
                 <DropdownToggle caret >

@@ -1,7 +1,7 @@
 import './Contacts.styl';
 
 import React, { PureComponent } from 'react';
-import { Container, Input, Button } from 'reactstrap';
+import { Container } from 'reactstrap';
 import propTypes from 'prop-types';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
@@ -47,10 +47,12 @@ export default class Contacts extends PureComponent {
               <p>Сотовый: 89002012652</p>
               <p>Почта: info@tachka96.ru</p>
             </address>
+            {/*
             <div className="contacts__order-call">
               <Input className="contacts__phone-input" type="phone" placeholder='Номер телефона'></Input>
               <Button className="contacts__order-btn">Заказать звонок</Button>
             </div>
+            */}
           </div>
         </Container>
       </section>

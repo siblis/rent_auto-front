@@ -59,6 +59,7 @@ class MainPageCont extends PureComponent {
     licenseCategory: '',
     licenseGetDate: '',
     licenseExpireDate: '',
+    stepThreeModal: false,
   }
   
   componentDidMount() {
@@ -66,6 +67,7 @@ class MainPageCont extends PureComponent {
     loadBrands();
     loadAdditions();
     this.calculateBrand();
+    this.setStep();
   }
 
   calculateBrand = () => {
@@ -77,6 +79,14 @@ class MainPageCont extends PureComponent {
           brand,
         });
       }
+    }
+  }
+
+  setStep = () => {
+    if (this.props.location.step) {
+      this.setState({
+        step: +this.props.location.step,
+      });
     }
   }
 
@@ -268,6 +278,12 @@ class MainPageCont extends PureComponent {
     })
   }
 
+  stepThreeModalToggle = () => {
+    this.setState({
+      stepThreeModal: !this.state.stepThreeModal
+    });
+  }
+
   handleSubmitButton = () => {
     const startDate = moment(this.state.startDate).add({
       hours: this.state.startTime.format('h'),
@@ -310,7 +326,7 @@ class MainPageCont extends PureComponent {
       additions,
     }
     app.post('requests', application);
-    alert('Ваша заявка принята на рассмотрение!');
+    this.stepThreeModalToggle();
   }
 
   render() {
@@ -391,6 +407,8 @@ class MainPageCont extends PureComponent {
             handleLicenseExpireDateInput={this.handleLicenseExpireDateInput}
             handleBackButton={this.handleBackButton}
             handleSubmitButton={this.handleSubmitButton}
+            stepThreeModal={this.state.stepThreeModal}
+            stepThreeModalToggle={this.stepThreeModalToggle}
           />
           <FAQ />
         </Fragment>
