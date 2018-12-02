@@ -1,8 +1,10 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const OptimizeCssnanoPlugin = require('@intervolga/optimize-cssnano-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 
 module.exports = {
   entry: [
@@ -11,7 +13,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[contenthash].js',
+    filename: '[contenthash:8].js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -34,27 +36,25 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader']
-        })
+        use: [
+            ExtractCssChunks.loader,
+            'css-loader',
+          ]
       },
       {
         test: /\.styl$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
+        use: [
+            ExtractCssChunks.loader,
             'css-loader',
             'stylus-loader',
           ]
-        })
       },
       {
         test: /\.(png|jpg|gif|ico|svg)$/,
         exclude: /node_modules/,
         loader: 'file-loader',
         options: {
-          name: '[hash].[ext]',
+          name: '[hash:8].[ext]',
           context: ''
         }
       }
@@ -65,12 +65,38 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new ExtractTextPlugin({
-      filename: 'style.[hash].css'
+    new OptimizeCssnanoPlugin({
+      cssnanoOptions: {
+        preset: ['default', {
+          discardComments: {
+            removeAll: true,
+          },
+        }],
+      },
     }),
+    new ExtractCssChunks(
+      {
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: "[hash:8].css",
+        chunkFilename: "[id].[hash:8].css",
+        hot: true, // if you want HMR - we try to automatically inject hot reloading but if it's not working, add it to the config
+        orderWarning: true, // Disable to remove warnings about conflicting order between imports
+        reloadAll: true, // when desperation kicks in - this is a brute force HMR flag
+        cssModules: true // if you use cssModules, this can help.
+      }
+    ),
     new HtmlPlugin({
       template: path.resolve(__dirname, 'src', 'index.html'),
       filename: 'index.html',
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true
+      },
     }),
     new Dotenv({
       path: './.env',
@@ -79,5 +105,40 @@ module.exports = {
   ],
   node: {
     fs: "empty"
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+        uglifyOptions: {
+          output: {
+            comments: false
+          }
+        }
+      })
+    ],
+    splitChunks: {
+      chunks: 'async',
+      minSize: 100000,
+      maxSize: 500000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
   }
 }
