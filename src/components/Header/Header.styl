@@ -4,10 +4,22 @@
   &__dropdown
     width 400px
     margin -4px 0 0 0
+    
+    @media (max-width: 1000px)
+      width 200px
+
+    @media (max-width: 600px)
+      width 120px
 
     .btn
       width 400px
       text-align right
+      
+      @media (max-width: 1000px)
+        width 200px
+      
+      @media (max-width: 600px)
+        width 100px
     
     .dropdown-item
       &:active
@@ -43,6 +55,9 @@
     .dropdown-menu
       margin 20px 0 0 20px
       background-color #F8F8F8
+      @media (max-width: 800px)
+        right 10px
+        left auto !important
     a
       color #2DA0A6
       font-size 1.75rem
@@ -55,11 +70,16 @@
     @media (min-width: 1200px)
       max-width 1400px
 
-  .nav
+  &__nav
     width 100%
     display flex
     justify-content space-between
     margin 0 200px 0 0
+    @media (max-width: 1200px)
+      margin 0
+    
+  &__logo
+    width 150px
 
   .nav-menu
     display flex
@@ -75,3 +95,6 @@
   .dropdown-toggle
     font-weight 700
     
+  &__contacts
+    @media (max-width: 800px)
+      display none !important

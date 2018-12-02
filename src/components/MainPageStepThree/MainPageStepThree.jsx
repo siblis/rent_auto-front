@@ -7,7 +7,7 @@ import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu,
   Form, FormGroup, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Calendar from 'rc-calendar';
 import propTypes from 'prop-types';
-import Recaptcha from 'react-recaptcha';
+// import Recaptcha from 'react-recaptcha';
 
 export default class Header extends PureComponent {
   static propTypes = {
@@ -102,9 +102,11 @@ export default class Header extends PureComponent {
                   <Label for="policy">Согласие на обработку персональных данных</Label>
                 */}
                 </FormGroup>
+                {/*
                 <Recaptcha
                   sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY}
                 />
+                */}
                 <Button className="application__btn-back" color="primary" onClick={this.props.handleBackButton}>Назад</Button>
               </div>
               <div className="div"></div>

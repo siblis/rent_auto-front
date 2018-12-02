@@ -37,10 +37,10 @@ export default class About extends PureComponent {
             <div className="faq__text">
               {faq.map((item, index) => (
                 <Fragment key={index}>
-                  <Button id={`question-${index}`}>
+                  <Button className="faq__question" id={`question-${index}`}>
                     {item.question}
                   </Button>
-                  <UncontrolledCollapse toggler={`#question-${index}`}>
+                  <UncontrolledCollapse className="faq__answer" toggler={`#question-${index}`}>
                     <Card>
                       <CardBody>
                         {item.answer}

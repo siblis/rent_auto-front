@@ -35,8 +35,8 @@ export default class Header extends PureComponent {
     return (
       <header className="header">
         <Container>
-          <nav className="nav">
-            <Link to={{pathname: '/', step: 1}}><img className="logo" src={require("../../assets/images/logo.png")}></img></Link>
+          <nav className="header__nav">
+            <Link to={{pathname: '/', step: 1}}><img className="header__logo" src={require("../../assets/images/logo.png")}></img></Link>
             <ul className="nav-menu">
               <UncontrolledDropdown className="header__dropdown">
                 <DropdownToggle caret >
@@ -57,7 +57,7 @@ export default class Header extends PureComponent {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <li>
+              <li className="header__contacts">
                 <Link to={`/contacts`}>Контакты</Link>
               </li>
             </ul>
