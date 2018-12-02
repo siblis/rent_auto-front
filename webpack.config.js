@@ -5,6 +5,7 @@ const Dotenv = require('dotenv-webpack');
 const OptimizeCssnanoPlugin = require('@intervolga/optimize-cssnano-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: [
@@ -57,7 +58,7 @@ module.exports = {
           name: '[hash:8].[ext]',
           context: ''
         }
-      }
+      },
     ]
   },
   devServer: {
@@ -87,7 +88,7 @@ module.exports = {
       }
     ),
     new HtmlPlugin({
-      template: path.resolve(__dirname, 'src', 'index.html'),
+      template: path.resolve(__dirname, 'src', 'static', 'index.html'),
       filename: 'index.html',
       minify: {
         collapseWhitespace: true,
@@ -98,6 +99,14 @@ module.exports = {
         useShortDoctype: true
       },
     }),
+    new CopyWebpackPlugin([
+      {
+        from: 'src/static/*',
+        to: '',
+        toType: 'dir',
+        flatten: true
+      }
+    ]),
     new Dotenv({
       path: './.env',
       safe: false, // load .env.example (defaults to "false" which does not use dotenv-safe) 
