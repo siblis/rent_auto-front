@@ -21,7 +21,7 @@ class MainPageCont extends PureComponent {
   }
 
   state = {
-    step: 3,
+    step: 1,
     stepOneLazyValidation: false,
     stepTwoLazyValidation: false,
     stepThreeLazyValidation: false,
