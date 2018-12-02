@@ -284,6 +284,58 @@ class MainPageCont extends PureComponent {
     });
   }
 
+  handleModalCloseButton = () => {
+    this.setState({
+      step: 1,
+      stepOneLazyValidation: false,
+      stepTwoLazyValidation: false,
+      stepThreeLazyValidation: false,
+      startDate: '',
+      validStartDate: true,
+      endDate: '',
+      validEndDate: true,
+      startTime: '',
+      validStartTime: true,
+      endTime: '',
+      validEndTime: true,
+      brand: undefined,
+      validBrand: true,
+      price: null,
+      firstName: '',
+      validFirstName: true,
+      lastName: '',
+      validLastName: true,
+      middleName: '',
+      email: '',
+      validEmail: true,
+      phoneNumber: '',
+      validPhoneNumber: true,
+      personalDataCheckbox: false,
+      validPersonalDataCheckbox: true,
+      selectedAdditions: [],
+      passportOwnerName: '',
+      passportSeries: '',
+      passportIssuedBy: '',
+      passportRegAddress: '',
+      passportGetDate: '',
+      birthdayDate: '',
+      licenseSeries: '',
+      licenseIssuedBy: '',
+      licenseCategory: '',
+      licenseGetDate: '',
+      licenseExpireDate: '',
+      stepThreeModal: false,
+    });
+  }
+
+  getAdditionsArray = () => {
+    const additionsArray = [];
+    this.state.selectedAdditions.forEach(addition => {
+      additionsArray.push({id: addition.id, name: addition.value});
+    });
+    return additionsArray;
+  }
+
   handleSubmitButton = () => {
     const startDate = moment(this.state.startDate).add({
       hours: this.state.startTime.format('h'),
@@ -293,18 +345,22 @@ class MainPageCont extends PureComponent {
       hours: this.state.endTime.format('h'),
       minutes: this.state.endTime.format('m')
     }).toISOString();
-    const { brand, price, firstName, lastName, middleName, email, phoneNumber, 
-      selectedAdditions, birthdayDate, passportSeries, passportIssuedBy, passportGetDate, 
+    const { brand, price, firstName, lastName, middleName, email, phoneNumber,
+      birthdayDate, passportSeries, passportIssuedBy, passportGetDate, 
       passportRegAddress, licenseSeries, licenseIssuedBy, licenseGetDate, licenseExpireDate, 
       licenseCategory, personalDataCheckbox } = this.state;
     const additions = [];
-    selectedAdditions.forEach(item => {
+    this.state.selectedAdditions.forEach(item => {
       additions.push(item.value);
-    })
+    });
+    const serversideAdditions = this.getAdditionsArray();
     const application = {
       begin_time: startDate,
       end_time: endDate,
-      model_name: brand,
+      model: {
+        id: brand.id,
+        full_name: `${brand.brand.name} ${brand.name}`,
+      },
       last_name: lastName,
       first_name: firstName,
       patronymic: middleName,
@@ -323,7 +379,7 @@ class MainPageCont extends PureComponent {
       personal_data_agreement: personalDataCheckbox,
       note: '',  // Threre is no such field in application
       price,
-      additions,
+      additions: serversideAdditions,
     }
     app.post('requests', application);
     this.stepThreeModalToggle();
@@ -409,6 +465,7 @@ class MainPageCont extends PureComponent {
             handleSubmitButton={this.handleSubmitButton}
             stepThreeModal={this.state.stepThreeModal}
             stepThreeModalToggle={this.stepThreeModalToggle}
+            handleModalCloseButton={this.handleModalCloseButton}
           />
           <FAQ />
         </Fragment>

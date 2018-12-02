@@ -34,6 +34,7 @@ export default class Header extends PureComponent {
         additionalServices[index] = {
           value: item.name,
           label: item.name,
+          id: item.id,
         }
       });
     }

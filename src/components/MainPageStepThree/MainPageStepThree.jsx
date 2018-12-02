@@ -34,6 +34,7 @@ export default class Header extends PureComponent {
     handleLicenseGetDateInput: propTypes.func,
     stepThreeModal: propTypes.bool,
     stepThreeModalToggle: propTypes.func,
+    handleModalCloseButton: propTypes.func,
   }
 
   render() {
@@ -165,7 +166,7 @@ export default class Header extends PureComponent {
                   Ваша заявка принята! Скоро с Вами свяжется наш специалист
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="secondary" onClick={this.props.stepThreeModalToggle}>Закрыть</Button>
+                  <Button color="secondary" onClick={this.props.handleModalCloseButton}>Закрыть</Button>
                 </ModalFooter>
               </Modal>
             </div>
