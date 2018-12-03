@@ -24,11 +24,12 @@ export default class Cars extends PureComponent {
             Стоимость аренды:
           </div>
           <div className="car-card__table">
-            {this.props.car.range_rates.map((rate, index) => 
+            {this.props.car.range_rates.map((rate, index) =>
+              index < 5 ?
               <div className="car-card__row" key={index}>
                 <div>{rate.name}</div>
                 <div>{this.props.car.rental.day_cost * rate.rate}</div>
-              </div>
+              </div> : ''
             )}
           </div>
           <div className="car-card__buttons">

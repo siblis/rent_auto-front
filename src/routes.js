@@ -1,4 +1,4 @@
-import MainPage from 'containers/MainPageCont';
+import AppCont from 'containers/AppCont';
 import Rules from 'components/Rules';
 import Policy from 'components/Policy';
 import Services from 'components/Services';
@@ -11,12 +11,12 @@ import CarCont from 'containers/CarCont';
 export default [
   {
     path: '/',
-    component: MainPage,
+    component: AppCont,
     exact: true
   },
   {
     path: '/app',
-    component: MainPage,
+    component: AppCont,
     exact: true
   },
   {

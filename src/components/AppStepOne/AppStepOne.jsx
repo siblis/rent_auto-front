@@ -1,6 +1,6 @@
 import '../../../node_modules/rc-calendar/assets/index.css';
 import '../../../node_modules/rc-time-picker/assets/index.css';
-import './MainPageStepOne.styl';
+import './AppStepOne.styl';
 
 import React, { PureComponent } from 'react';
 import { Container, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, 
@@ -9,7 +9,7 @@ import propTypes from 'prop-types';
 import Calendar from 'rc-calendar';
 import TimePicker from 'rc-time-picker';
 
-export default class Header extends PureComponent {
+export default class AppStepOne extends PureComponent {
   static propTypes = {
     brands: propTypes.array,
     startDate: propTypes.string,

@@ -3,15 +3,15 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import MainPageStepOne from 'components/MainPageStepOne';
-import MainPageStepTwo from 'components/MainPageStepTwo';
-import MainPageStepThree from 'components/MainPageStepThree';
+import AppStepOne from 'components/AppStepOne';
+import AppStepTwo from 'components/AppStepTwo';
+import AppStepThree from 'components/AppStepThree';
 import FAQ from 'components/FAQ';
 import { loadBrands } from 'actions/brands';
 import { loadAdditions } from 'actions/additions';
 import app from '../app';
 
-class MainPageCont extends PureComponent {
+class AppCont extends PureComponent {
   static propTypes = {
     loadBrands: propTypes.func,
     loadAdditions: propTypes.func,
@@ -64,10 +64,11 @@ class MainPageCont extends PureComponent {
   
   componentDidMount() {
     const { loadBrands, loadAdditions } = this.props;
+    const { calculateBrand, setStep } = this;
     loadBrands();
     loadAdditions();
-    this.calculateBrand();
-    this.setStep();
+    calculateBrand();
+    setStep();
   }
 
   calculateBrand = () => {
@@ -84,8 +85,9 @@ class MainPageCont extends PureComponent {
 
   setStep = () => {
     if (this.props.location.step) {
+      const { step } = this.props.location;
       this.setState({
-        step: +this.props.location.step,
+        step,
       });
     }
   }
@@ -148,6 +150,7 @@ class MainPageCont extends PureComponent {
         break;
       }
     }
+
     this.setState({
       brand: selectedBrand,
     }, () => {
@@ -170,7 +173,9 @@ class MainPageCont extends PureComponent {
         validStartDate: this.state.startDate !== '' && moment(this.state.startDate).hour(23).minute(59).isAfter(),
         validEndDate: this.state.endDate !== '' && this.state.startDate !== '' && moment(this.state.startDate).hour(0).minute(0).isBefore(this.state.endDate),
         validStartTime: this.state.startTime !== '' && this.state.endTime !== '' && moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).isAfter(),
-        validEndTime: this.state.endTime !== '' && this.state.startTime !== '' && moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm')).isAfter(moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm'))),
+        validEndTime: this.state.endTime !== '' && this.state.startTime !== '' && 
+          moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm'))
+            .isAfter(moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm'))),
         validBrand: this.state.brand !== undefined,
       })
     }
@@ -325,6 +330,7 @@ class MainPageCont extends PureComponent {
       licenseGetDate: '',
       licenseExpireDate: '',
       stepThreeModal: false,
+      loading: true,
     });
   }
 
@@ -348,9 +354,9 @@ class MainPageCont extends PureComponent {
     const { brand, price, firstName, lastName, middleName, email, phoneNumber,
       birthdayDate, passportSeries, passportIssuedBy, passportGetDate, 
       passportRegAddress, licenseSeries, licenseIssuedBy, licenseGetDate, licenseExpireDate, 
-      licenseCategory, personalDataCheckbox } = this.state;
+      licenseCategory, personalDataCheckbox, selectedAdditions } = this.state;
     const additions = [];
-    this.state.selectedAdditions.forEach(item => {
+    selectedAdditions.forEach(item => {
       additions.push(item.value);
     });
     const serversideAdditions = this.getAdditionsArray();
@@ -377,7 +383,7 @@ class MainPageCont extends PureComponent {
       lic_valid_to: licenseExpireDate !== '' ? licenseExpireDate.toISOString() : '',
       license_category: licenseCategory,
       personal_data_agreement: personalDataCheckbox,
-      note: '',  // Threre is no such field in application
+      note: '',  // Threre is no such field in the application
       price,
       additions: serversideAdditions,
     }
@@ -389,7 +395,7 @@ class MainPageCont extends PureComponent {
     if (this.state.step === 1) {
       return (
         <Fragment>
-          <MainPageStepOne
+          <AppStepOne
             startDate={this.state.startDate !== '' ? moment(this.state.startDate).format('DD MM YYYY') : ''}
             endDate={this.state.endDate !== '' ? moment(this.state.endDate).format('DD MM YYYY') : ''}
             startTime={this.state.startTime}
@@ -416,7 +422,7 @@ class MainPageCont extends PureComponent {
     if (this.state.step === 2) {
       return (
         <Fragment>
-          <MainPageStepTwo
+          <AppStepTwo
             firstName={this.state.firstName}
             lastName={this.state.lastName}
             email={this.state.email}
@@ -441,7 +447,7 @@ class MainPageCont extends PureComponent {
     if (this.state.step === 3) {
       return (
         <Fragment>
-          <MainPageStepThree
+          <AppStepThree
             firstName={this.state.firstName}
             lastName={this.state.lastName}
             middleName={this.state.middleName}
@@ -490,4 +496,4 @@ function mapDispatchToProps(dispatch, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPageCont);
+export default connect(mapStateToProps, mapDispatchToProps)(AppCont);

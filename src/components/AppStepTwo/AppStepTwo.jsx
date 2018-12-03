@@ -1,13 +1,13 @@
 import '../../../node_modules/rc-calendar/assets/index.css';
 import '../../../node_modules/rc-time-picker/assets/index.css';
-import './MainPageStepTwo.styl';
+import './AppStepTwo.styl';
 
 import React, { PureComponent } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Select from 'react-select';
 import propTypes from 'prop-types';
 
-export default class Header extends PureComponent {
+export default class AppStepTwo extends PureComponent {
   static propTypes = {
     lastName: propTypes.string,
     firstName: propTypes.string,

@@ -1,6 +1,6 @@
 import '../../../node_modules/rc-calendar/assets/index.css';
 import '../../../node_modules/rc-time-picker/assets/index.css';
-import './MainPageStepThree.styl';
+import './AppStepThree.styl';
 
 import React, { PureComponent } from 'react';
 import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, 
@@ -9,7 +9,7 @@ import Calendar from 'rc-calendar';
 import propTypes from 'prop-types';
 // import Recaptcha from 'react-recaptcha';
 
-export default class Header extends PureComponent {
+export default class AppStepTwo extends PureComponent {
   static propTypes = {
     firstName: propTypes.string,
     lastName: propTypes.string,

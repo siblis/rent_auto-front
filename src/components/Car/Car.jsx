@@ -28,7 +28,7 @@ export default class Car extends PureComponent {
             </div>
             <div className="car__info">
               <div className="car__description">
-                <div className="car__text">
+                <div className="car__subtitle">
                   Стоимость аренды:
                 </div>
                 <div className="car__table">
