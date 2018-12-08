@@ -6,7 +6,7 @@ import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, Dropdown
   Form, FormGroup, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Calendar from 'react-infinite-calendar';
 import propTypes from 'prop-types';
-// import Recaptcha from 'react-recaptcha';
+import Recaptcha from 'react-recaptcha';
 
 import calendarLocale from '../../utils/calendarLocale';
 import calendarTheme from '../../utils/calendarTheme';
@@ -39,6 +39,7 @@ export default class AppStepTwo extends PureComponent {
     stepThreeModal: propTypes.bool,
     stepThreeModalToggle: propTypes.func,
     handleModalCloseButton: propTypes.func,
+    recaptchaVerifyCallback: propTypes.func,
   }
 
   render() {
@@ -107,11 +108,11 @@ export default class AppStepTwo extends PureComponent {
                   <Label for="policy">Согласие на обработку персональных данных</Label>
                 */}
                 </FormGroup>
-                {/*
+                {
                 <Recaptcha
                   sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY}
-                />
-                */}
+                  verifyCallback={this.props.recaptchaVerifyCallback}
+                />}
                 <Button className="application__btn-back" color="primary" onClick={this.props.handleBackButton}>Назад</Button>
               </div>
               <div className="div"></div>

@@ -305,6 +305,10 @@ class AppCont extends PureComponent {
     });
   }
 
+  recaptchaVerifyCallback = (response) => {
+    console.log(response);
+  }
+
   handleModalCloseButton = () => {
     this.setState({
       step: 1,
@@ -499,6 +503,7 @@ class AppCont extends PureComponent {
             stepThreeModal={this.state.stepThreeModal}
             stepThreeModalToggle={this.stepThreeModalToggle}
             handleModalCloseButton={this.handleModalCloseButton}
+            recaptchaVerifyCallback={this.recaptchaVerifyCallback}
             isLoading={this.state.isLoading}
           />
           <FAQ />
