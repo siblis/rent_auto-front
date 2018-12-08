@@ -3,7 +3,7 @@ import './AppStepThree.styl';
 
 import React, { PureComponent } from 'react';
 import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
-  Form, FormGroup, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+  Form, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Calendar from 'react-infinite-calendar';
 import propTypes from 'prop-types';
 import Recaptcha from 'react-recaptcha';

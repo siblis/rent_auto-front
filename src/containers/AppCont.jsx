@@ -305,8 +305,8 @@ class AppCont extends PureComponent {
     });
   }
 
-  recaptchaVerifyCallback = (response) => {
-    console.log(response);
+  recaptchaVerifyCallback = () => {
+    // console.log(response);
   }
 
   handleModalCloseButton = () => {

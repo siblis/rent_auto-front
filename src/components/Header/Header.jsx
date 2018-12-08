@@ -2,12 +2,13 @@ import './Header.styl';
 
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
+import { Container, Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 export default class Header extends PureComponent {
   state = {
     dropdownMenuTitle: 'Парк авто',
-    dropdownClassName: 'header__dropdown'
+    dropdownClassName: 'header__dropdown',
+    dropdownOpen: false,
   }
 
   componentDidMount = () => {
@@ -34,6 +35,12 @@ export default class Header extends PureComponent {
         dropdownMenuTitle: 'Главная',
       });
     }
+  }
+  
+  dropdownToggle = () => {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
   }
 
   setDropdownMenuTitle = (event) => {
@@ -62,13 +69,9 @@ export default class Header extends PureComponent {
     }
   }
 
-  handleMenuClick = (event) => {
-    event.currentTarget.className = "dropdown-menu";
-    event.currentTarget.parentElement.className = "header__dropdown dropdown";
-  }
-
-  dropdownClassName = () => {
-
+  handleLinkClick = () => {
+    this.setDropdownMenuTitle();
+    this.dropdownToggle();
   }
 
   render() {
@@ -78,18 +81,18 @@ export default class Header extends PureComponent {
           <nav className="header__nav">
             <Link to={{pathname: '/', step: 1}} onClick={this.setDropdownMenuTitle}><img className="header__logo" src={require("../../assets/images/logo.png")}></img></Link>
             <ul className="nav-menu">
-              <UncontrolledDropdown className="header__dropdown">
+              <Dropdown className="header__dropdown" isOpen={this.state.dropdownOpen} toggle={this.dropdownToggle}>
                 <DropdownToggle caret >
                   {this.state.dropdownMenuTitle}
                 </DropdownToggle>
-                <DropdownMenu className="header__dropdown-menu" onClick={this.handleMenuClick}>
-                  <Link to={`/app`} id='app' onClick={this.setDropdownMenuTitle}>Главная</Link>
-                  <Link to={`/cars`} id='cars' onClick={this.setDropdownMenuTitle}>Список авто</Link>
-                  <Link to={`/rules`} id='rules' onClick={this.setDropdownMenuTitle}>Условия проката</Link>
-                  <Link to={`/services`} id='services' onClick={this.setDropdownMenuTitle}>Дополнительные услуги</Link>
-                  <Link to={`/contacts`} id='contacts' onClick={this.setDropdownMenuTitle}>Контакты</Link>
+                <DropdownMenu className="header__dropdown-menu">
+                  <Link to={`/app`} id='app' onClick={this.handleLinkClick}>Главная</Link>
+                  <Link to={`/cars`} id='cars' onClick={this.handleLinkClick}>Список авто</Link>
+                  <Link to={`/rules`} id='rules' onClick={this.handleLinkClick}>Условия проката</Link>
+                  <Link to={`/services`} id='services' onClick={this.handleLinkClick}>Дополнительные услуги</Link>
+                  <Link to={`/contacts`} id='contacts' onClick={this.handleLinkClick}>Контакты</Link>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </Dropdown>
               <li className="header__contacts">
                 <Link to={`/contacts`}>Контакты</Link>
               </li>
