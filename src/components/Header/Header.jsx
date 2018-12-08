@@ -31,7 +31,7 @@ export default class Header extends PureComponent {
       });
     } else {
       this.setState({
-        dropdownMenuTitle: 'Парк авто',
+        dropdownMenuTitle: 'Главная',
       });
     }
   }
@@ -57,7 +57,7 @@ export default class Header extends PureComponent {
       });
     } else {
       this.setState({
-        dropdownMenuTitle: 'Парк авто',
+        dropdownMenuTitle: 'Главная',
       });
     }
   }
@@ -83,7 +83,7 @@ export default class Header extends PureComponent {
                   {this.state.dropdownMenuTitle}
                 </DropdownToggle>
                 <DropdownMenu className="header__dropdown-menu" onClick={this.handleMenuClick}>
-                  <Link to={`/app`} id='app' onClick={this.setDropdownMenuTitle}>Парк авто</Link>
+                  <Link to={`/app`} id='app' onClick={this.setDropdownMenuTitle}>Главная</Link>
                   <Link to={`/cars`} id='cars' onClick={this.setDropdownMenuTitle}>Список авто</Link>
                   <Link to={`/rules`} id='rules' onClick={this.setDropdownMenuTitle}>Условия проката</Link>
                   <Link to={`/services`} id='services' onClick={this.setDropdownMenuTitle}>Дополнительные услуги</Link>

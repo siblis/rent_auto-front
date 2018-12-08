@@ -1,13 +1,15 @@
-import '../../../node_modules/rc-calendar/assets/index.css';
 import '../../../node_modules/rc-time-picker/assets/index.css';
 import './AppStepThree.styl';
 
 import React, { PureComponent } from 'react';
-import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, 
+import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
   Form, FormGroup, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Calendar from 'rc-calendar';
+import Calendar from 'react-infinite-calendar';
 import propTypes from 'prop-types';
 // import Recaptcha from 'react-recaptcha';
+
+import calendarLocale from '../../utils/calendarLocale';
+import calendarTheme from '../../utils/calendarTheme';
 
 export default class AppStepTwo extends PureComponent {
   static propTypes = {
@@ -25,6 +27,8 @@ export default class AppStepTwo extends PureComponent {
     licenseCategory: propTypes.string,
     licenseGetDate: propTypes.string,
     licenseExpireDate: propTypes.string,
+    isLoading: propTypes.bool,
+    requestSuccess: propTypes.bool,
     handleBackButton: propTypes.func,
     handleInputStepThree: propTypes.func,
     handleSubmitButton: propTypes.func,
@@ -112,58 +116,94 @@ export default class AppStepTwo extends PureComponent {
               </div>
               <div className="div"></div>
               <div className="div"></div>
-              <div className="application__input">
+              <div className="application__input application__input--date">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 <UncontrolledDropdown>
                   <DropdownToggle caret>
                     {this.props.birthdayDate}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <Calendar onChange={this.props.handleBirthdayDateInput}/>
+                    <DropdownItem>
+                      <Calendar
+                        onSelect={this.props.handleBirthdayDateInput}
+                        locale={calendarLocale}
+                        theme={calendarTheme}
+                        height={350}
+                      />
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
-              <div className="application__input">
+              <div className="application__input application__input--date">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 <UncontrolledDropdown>
                   <DropdownToggle caret>
                     {this.props.passportGetDate}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <Calendar onChange={this.props.handlePassportGetDateInput}/>
+                    <DropdownItem>
+                      <Calendar
+                        onSelect={this.props.handlePassportGetDateInput}
+                        locale={calendarLocale}
+                        theme={calendarTheme}
+                        height={350}
+                      />
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
               <div className="div"></div>
               <div className="div"></div>
               <div className="div"></div>
-              <div className="application__input">
+              <div className="application__input application__input--date">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 <UncontrolledDropdown>
                   <DropdownToggle caret>
                     {this.props.licenseGetDate}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <Calendar onChange={this.props.handleLicenseGetDateInput}/>
+                    <DropdownItem>
+                      <Calendar
+                        onSelect={this.props.handleLicenseGetDateInput}
+                        locale={calendarLocale}
+                        theme={calendarTheme}
+                        height={350}
+                      />
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
-              <div className="application__input">
+              <div className="application__input application__input--date">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 <UncontrolledDropdown>
                   <DropdownToggle caret>
                     {this.props.licenseExpireDate}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <Calendar onChange={this.props.handleLicenseExpireDateInput}/>
+                    <DropdownItem>
+                      <Calendar
+                        onSelect={this.props.handleLicenseExpireDateInput}
+                        locale={calendarLocale}
+                        theme={calendarTheme}
+                        height={350}
+                      />
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
-              <Button className="application__btn-submit--step-three" onClick={this.props.handleSubmitButton}>Отправить</Button>
+              <Button
+                className={this.props.isLoading ? 'application__btn-submit--step-three ld ld-ext-right running' : 'application__btn-submit--step-three'}
+                onClick={this.props.handleSubmitButton}
+              >{this.props.isLoading ? '' : 'Отправить'}
+              <i className={this.props.isLoading ? 'ld ld-ring ld-spin' : ''}></i>
+
+              </Button>
               <Modal isOpen={this.props.stepThreeModal} toggle={this.props.stepThreeModalToggle} >
-                <ModalHeader toggle={this.props.stepThreeModalToggle}>Заявка принята</ModalHeader>
+                <ModalHeader toggle={this.props.stepThreeModalToggle}>
+                {this.props.requestSuccess ? 'Заявка принята' : 'Упс...'}
+                </ModalHeader>
                 <ModalBody>
-                  Ваша заявка принята! Скоро с Вами свяжется наш специалист
+                  {this.props.requestSuccess ? 'Заявка отправлена на рассмотрение. Информация о заявке отправлена на указанную почту' : 'Что-то пошло не так. Не удалось отправить вашу заявку на сервер.'}
                 </ModalBody>
                 <ModalFooter>
                   <Button color="secondary" onClick={this.props.handleModalCloseButton}>Закрыть</Button>

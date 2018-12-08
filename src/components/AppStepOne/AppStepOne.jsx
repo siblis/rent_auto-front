@@ -1,4 +1,3 @@
-import '../../../node_modules/rc-calendar/assets/index.css';
 import '../../../node_modules/rc-time-picker/assets/index.css';
 import './AppStepOne.styl';
 
@@ -6,8 +5,11 @@ import React, { PureComponent } from 'react';
 import { Container, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, 
   Form, Button } from 'reactstrap';
 import propTypes from 'prop-types';
-import Calendar from 'rc-calendar';
+import Calendar from 'react-infinite-calendar';
 import TimePicker from 'rc-time-picker';
+
+import calendarLocale from '../../utils/calendarLocale';
+import calendarTheme from '../../utils/calendarTheme';
 
 export default class AppStepOne extends PureComponent {
   static propTypes = {
@@ -44,10 +46,15 @@ export default class AppStepOne extends PureComponent {
                       {this.props.startDate}
                     </DropdownToggle>
                     <DropdownMenu>
-                      <Calendar
-                        onChange={this.props.handleStartDateInput}
-                        animation="slide-up"
-                      />
+                      <DropdownItem>
+                        <Calendar
+                          onSelect={this.props.handleStartDateInput}
+                          locale={calendarLocale}
+                          minDate={new Date()}
+                          height={350}
+                          theme={calendarTheme}
+                        />
+                      </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
                   {this.props.validStartDate || <div className="application__error animated bounce">!</div>}
@@ -62,10 +69,15 @@ export default class AppStepOne extends PureComponent {
                       {this.props.endDate}
                     </DropdownToggle>
                     <DropdownMenu>
-                      <Calendar
-                        onChange={this.props.handleEndDateInput}
-                        animation="slide-up"
-                      />
+                      <DropdownItem>
+                        <Calendar
+                          onSelect={this.props.handleEndDateInput}
+                          locale={calendarLocale}
+                          minDate={new Date()}
+                          height={350}
+                          theme={calendarTheme}
+                        />
+                      </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
                   {this.props.validEndDate || <div className="application__error animated bounce">!</div>}

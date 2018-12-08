@@ -5,24 +5,44 @@ import { Container, Button, UncontrolledCollapse, Card, CardBody } from 'reactst
 
 const faq = [
   {
-    question: 'Сколько лет мне должно быть, чтобы получить автомобиль в аренду?',
-    answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste seddignissimos esse fuga! Minus, alias.',
+    question: 'Есть ли ограничения по количеству дней, на которые я могу арендовать автомобиль? Ограничения по суточному пробегу?',
+    answer: 'Мы предоставляем автомобили в аренду на любое время (от 24 часов до 1 года). Суточный пробег автомобиля по Екатеринбургу не ограничивается.',
   },
   {
-    question: 'Могу ли я арендовать автомобиль для кого-то еще?',
-    answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste seddignissimos esse fuga! Minus, alias.',
+    question: 'Требуется ли внесение залога за автомобиль, как это часто требуется в других компаниях?',
+    answer: 'Нет, компания Тачка 96 выделяется среди других тем, что не требует внесения залога.',
   },
   {
-    question: 'Как найти самое бюджетное предложение на аренду автомобиля?',
-    answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste seddignissimos esse fuga! Minus, alias.',
+    question: 'Как быть, если я на арендованном автомобиле попаду в ДТП?',
+    answer: 'Вы можете не волноваться о том, что вдруг попадёте в небольшую аварию, поскольку в стоимость аренды каждого автомобиля включена страховка по КАСКО (с ограниченной материальной ответственностью водителя) и ОСАГО, поэтому страховики полностью покроют все затраты на ремонт и восстановление авто.',
   },
   {
-    question: 'На что я должен обратить внимание при выборе автомобиля?',
-    answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste seddignissimos esse fuga! Minus, alias.',
+    question: 'Если я планирую дальнюю поездку с ребенком, могу ли дополнительно у вас арендовать кресло? Навигатор?',
+    answer: 'Да, наша компания предоставляет дополнительное оборудование (детские кресла и удерживающие сиденья, багажники, крепления, навигационное оборудование, аксессуары для кемпинга и т.д.) при условии наличия такого оборудования и по тарифам, указанным в договоре.',
   },
   {
-    question: 'Все ли сборы включены в стоимость аренды?',
-    answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste seddignissimos esse fuga! Minus, alias.',
+    question: 'Предоставляете ли Вы автомобили с водителем?',
+    answer: 'Обычно мы предоставляем автомобили в аренду без водителя, но при необходимости оказываем услугу транспортного аутсорсинга (присылаем автомобиль с водителем). Услуги водителя оплачиваются отдельно.',
+  },
+  {
+    question: 'Можно ли взять автомобиль для подработки в такси?',
+    answer: 'Вы можете использовать аренду для любых целей.',
+  },
+  {
+    question: 'Я хочу взять автомобиль в пятницу в 20.00 – это тариф рабочего дня?',
+    answer: 'Тариф "выходного дня" - с 17-00 пятницы по 10-00 понедельника. Тариф "рабочая неделя" - с 10-00 понедельника по 17-00 пятницы.',
+  },
+  {
+    question: 'Автомобиль нужен срочно, возможно ли оперативно его заказать?',
+    answer: 'Основной нашей задачей является максимально быстрая подача автомобиля в аренду. Если вам необходим срочный прокат в  Екатеринбурге, свяжитесь с нами по  телефону +7 (343) 201-2-401',
+  },
+  {
+    question: 'Существует ли у вас скидочная или бонусная система при регулярном заказе?',
+    answer: 'При первом же заказе мы начисляем Вам бонусы на следующий заказ.',
+  },
+  {
+    question: 'Берете ли Вы дополнительные деньги за бронирование?',
+    answer: 'Услуга бронирования автомобиля предоставляется бесплатно.',
   },
 ]
 

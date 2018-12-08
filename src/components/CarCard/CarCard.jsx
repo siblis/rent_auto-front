@@ -13,12 +13,16 @@ export default class Cars extends PureComponent {
   render() {
     return (
       <div className="car-card">
-        <img 
-          src={this.props.car.link || require('../../assets/images/no-image.png')}
-          className="car-card__image" 
-          alt=""
-        />
-        <h3 className="car-card__title">{this.props.car.brand.name} {this.props.car.name}</h3>
+        <Link to={`/car/${this.props.car.id}`}>
+          <img 
+            src={this.props.car.link || require('../../assets/images/no-image.png')}
+            className="car-card__image" 
+            alt=""
+          />
+        </Link>
+        <Link to={`/car/${this.props.car.id}`}>
+          <h3 className="car-card__title">{this.props.car.brand.name} {this.props.car.name} {this.props.car.model_class.name} {this.props.car.style}</h3>
+        </Link>
         <div className="car-card__description">
           <div className="car-card__text">
             Стоимость аренды:

@@ -7,6 +7,7 @@ import About from 'components/About';
 import Description from 'components/Description';
 import CarsCont from 'containers/CarsCont';
 import CarCont from 'containers/CarCont';
+import NotFound from 'components/NotFound';
 
 export default [
   {
@@ -59,4 +60,7 @@ export default [
     component: Description,
     exact: true
   },
+  {
+    component: NotFound,
+  }
 ]

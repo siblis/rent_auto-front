@@ -25,6 +25,7 @@ export default class AppStepTwo extends PureComponent {
     handleAdditionsSelect: propTypes.func,
     handleToStepThreeButton: propTypes.func,
     handleInputStepTwo: propTypes.func,
+    handleNameInput: propTypes.func,
   }
 
   render() {
@@ -53,7 +54,7 @@ export default class AppStepTwo extends PureComponent {
                     name="lastName"
                     id="lastName"
                     value={this.props.lastName}
-                    onChange={this.props.handleInputStepTwo}
+                    onChange={this.props.handleNameInput}
                   />
                   {this.props.validLastName || <div className="application__error animated bounce">!</div>}
                 </div>
@@ -67,13 +68,19 @@ export default class AppStepTwo extends PureComponent {
                     name="firstName"
                     id="firstName"
                     value={this.props.firstName}
-                    onChange={this.props.handleInputStepTwo}/>
+                    onChange={this.props.handleNameInput}/>
                   {this.props.validFirstName || <div className="application__error animated bounce">!</div>}
                 </div>
               </FormGroup>
               <FormGroup>
                 <Label for="middleName">Отчество</Label>
-                <Input type="text" name="middleName" id="middleName" onChange={this.props.handleInputStepTwo}/>
+                <Input
+                  type="text"
+                  name="middleName"
+                  id="middleName"
+                  value={this.props.middleName}
+                  onChange={this.props.handleNameInput}
+                />
               </FormGroup >
               <div className="application__block">
                 <h4 className="application__field-name">Дополнительные услуги</h4>

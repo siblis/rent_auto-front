@@ -60,6 +60,8 @@ class AppCont extends PureComponent {
     licenseGetDate: '',
     licenseExpireDate: '',
     stepThreeModal: false,
+    isLoading: false,
+    requestSuccess: false,
   }
   
   componentDidMount() {
@@ -125,6 +127,9 @@ class AppCont extends PureComponent {
   }
 
   handleStartTimeInput = startTime => {
+    if (startTime.minute() % 10 !== 0) {
+      startTime.minute('00');
+    }
     this.setState({
       startTime,
     }, () => {
@@ -134,6 +139,9 @@ class AppCont extends PureComponent {
   }
 
   handleEndTimeInput = endTime => {
+    if (endTime.minute() % 10 !== 0) {
+      endTime.minute('00');
+    }
     this.setState({
       endTime,
     }, () => {
@@ -162,6 +170,14 @@ class AppCont extends PureComponent {
   handlePersonalDataCheckbox = () => {
     this.setState({
       personalDataCheckbox: !this.state.personalDataCheckbox,
+    }, () => {
+      this.validateStepTwo();
+    });
+  }
+
+  handleNameInput = event => {
+    this.setState({
+      [event.target.name]: event.target.value.replace(/^[а-яёa-z]/g, l => l.toUpperCase()),
     }, () => {
       this.validateStepTwo();
     });
@@ -330,7 +346,8 @@ class AppCont extends PureComponent {
       licenseGetDate: '',
       licenseExpireDate: '',
       stepThreeModal: false,
-      loading: true,
+      isLoading: false,
+      requestSuccess: false,
     });
   }
 
@@ -343,6 +360,9 @@ class AppCont extends PureComponent {
   }
 
   handleSubmitButton = () => {
+    this.setState({
+      isLoading: true,
+    });
     const startDate = moment(this.state.startDate).add({
       hours: this.state.startTime.format('h'),
       minutes: this.state.startTime.format('m')
@@ -384,8 +404,17 @@ class AppCont extends PureComponent {
       price,
       additions: serversideAdditions,
     }
-    app.post('requests', application);
-    this.stepThreeModalToggle();
+    app.post('requests', application).then(async (res) => {
+      if (res.status === 200) {
+        await this.setState({
+          requestSuccess: true,
+        });
+      }
+      await this.setState({
+        isLoading: false,
+      });
+      this.stepThreeModalToggle();
+    });
   }
 
   render() {
@@ -433,6 +462,7 @@ class AppCont extends PureComponent {
             validPhoneNumber={this.state.validPhoneNumber}
             validPersonalDataCheckbox={this.state.validPersonalDataCheckbox}
             handleInputStepTwo={this.handleInputStepTwo}
+            handleNameInput={this.handleNameInput}
             handleAdditionsSelect={this.handleAdditionsSelect}
             handlePersonalDataCheckbox={this.handlePersonalDataCheckbox}
             handleToStepThreeButton={this.handleToStepThreeButton}
@@ -469,6 +499,7 @@ class AppCont extends PureComponent {
             stepThreeModal={this.state.stepThreeModal}
             stepThreeModalToggle={this.stepThreeModalToggle}
             handleModalCloseButton={this.handleModalCloseButton}
+            isLoading={this.state.isLoading}
           />
           <FAQ />
         </Fragment>
