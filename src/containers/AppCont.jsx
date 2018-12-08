@@ -337,7 +337,7 @@ class AppCont extends PureComponent {
   getAdditionsArray = () => {
     const additionsArray = [];
     this.state.selectedAdditions.forEach(addition => {
-      additionsArray.push({id: addition.id, name: addition.value});
+      additionsArray.push(addition.id);
     });
     return additionsArray;
   }
@@ -363,10 +363,7 @@ class AppCont extends PureComponent {
     const application = {
       begin_time: startDate,
       end_time: endDate,
-      model: {
-        id: brand.id,
-        full_name: `${brand.brand.name} ${brand.name}`,
-      },
+      model: brand.id,
       last_name: lastName,
       first_name: firstName,
       patronymic: middleName,

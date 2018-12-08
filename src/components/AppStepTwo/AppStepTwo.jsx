@@ -40,7 +40,7 @@ export default class AppStepTwo extends PureComponent {
     }
     
     return (
-      <main className="main-page">
+      <main className="app">
         <Container>
           <Form className="application">
             <div className="application__step-two">

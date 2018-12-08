@@ -14,7 +14,7 @@ export default class Cars extends PureComponent {
     return (
       <div className="car-card">
         <img 
-          src={require('../../assets/images/' + this.props.car.image_uri)}
+          src={this.props.car.link || require('../../assets/images/no-image.png')}
           className="car-card__image" 
           alt=""
         />

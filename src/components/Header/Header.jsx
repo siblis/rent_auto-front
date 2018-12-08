@@ -2,11 +2,38 @@ import './Header.styl';
 
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 export default class Header extends PureComponent {
   state = {
     dropdownMenuTitle: 'Парк авто',
+    dropdownClassName: 'header__dropdown'
+  }
+
+  componentDidMount = () => {
+    const path = window.location.pathname;
+
+    if (path === '/cars') {
+      this.setState({
+        dropdownMenuTitle: 'Список авто',
+      });
+    } else if (path === '/rules') {
+      this.setState({
+        dropdownMenuTitle: 'Условия проката',
+      });
+    } else if (path === '/services') {
+      this.setState({
+        dropdownMenuTitle: 'Дополнительные услуги',
+      });
+    } else if (path === '/contacts') {
+      this.setState({
+        dropdownMenuTitle: 'Контакты',
+      });
+    } else {
+      this.setState({
+        dropdownMenuTitle: 'Парк авто',
+      });
+    }
   }
 
   setDropdownMenuTitle = (event) => {
@@ -24,6 +51,10 @@ export default class Header extends PureComponent {
       this.setState({
         dropdownMenuTitle: 'Дополнительные услуги',
       });
+    } else if (targetId === 'contacts') {
+      this.setState({
+        dropdownMenuTitle: 'Контакты',
+      });
     } else {
       this.setState({
         dropdownMenuTitle: 'Парк авто',
@@ -31,30 +62,32 @@ export default class Header extends PureComponent {
     }
   }
 
+  handleMenuClick = (event) => {
+    event.currentTarget.className = "dropdown-menu";
+    event.currentTarget.parentElement.className = "header__dropdown dropdown";
+  }
+
+  dropdownClassName = () => {
+
+  }
+
   render() {
     return (
       <header className="header">
         <Container>
           <nav className="header__nav">
-            <Link to={{pathname: '/', step: 1}}><img className="header__logo" src={require("../../assets/images/logo.png")}></img></Link>
+            <Link to={{pathname: '/', step: 1}} onClick={this.setDropdownMenuTitle}><img className="header__logo" src={require("../../assets/images/logo.png")}></img></Link>
             <ul className="nav-menu">
               <UncontrolledDropdown className="header__dropdown">
                 <DropdownToggle caret >
                   {this.state.dropdownMenuTitle}
                 </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={this.setDropdownMenuTitle}>
-                    <Link to={`/app`} id='app'>Парк авто</Link>
-                  </DropdownItem>
-                  <DropdownItem onClick={this.setDropdownMenuTitle}>
-                    <Link to={`/cars`} id='cars'>Список авто</Link>
-                  </DropdownItem>
-                  <DropdownItem onClick={this.setDropdownMenuTitle}>
-                    <Link to={`/rules`} id='rules'>Условия проката</Link>
-                  </DropdownItem>
-                  <DropdownItem onClick={this.setDropdownMenuTitle}>
-                    <Link to={`/services`} id='services'>Дополнительные услуги</Link>
-                  </DropdownItem>
+                <DropdownMenu className="header__dropdown-menu" onClick={this.handleMenuClick}>
+                  <Link to={`/app`} id='app' onClick={this.setDropdownMenuTitle}>Парк авто</Link>
+                  <Link to={`/cars`} id='cars' onClick={this.setDropdownMenuTitle}>Список авто</Link>
+                  <Link to={`/rules`} id='rules' onClick={this.setDropdownMenuTitle}>Условия проката</Link>
+                  <Link to={`/services`} id='services' onClick={this.setDropdownMenuTitle}>Дополнительные услуги</Link>
+                  <Link to={`/contacts`} id='contacts' onClick={this.setDropdownMenuTitle}>Контакты</Link>
                 </DropdownMenu>
               </UncontrolledDropdown>
               <li className="header__contacts">

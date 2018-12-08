@@ -5,6 +5,8 @@ import { Container } from 'reactstrap';
 import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import textParser from '../../utils/textParser';
+
 export default class Car extends PureComponent {
   static propTypes = {
     car: propTypes.object,
@@ -16,14 +18,18 @@ export default class Car extends PureComponent {
         <Container>
           <div className="car__wrapper">
             <div className="car__block">
-              <img 
-                src={require('../../assets/images/' + this.props.car.image_uri)}
-                className="car__image" 
-                alt=""
-              />
+              <div className="car__img-wrapper">
+                <img 
+                  src={this.props.car.link || require('../../assets/images/no-image.png')}
+                  className="car__image"
+                  alt=""
+                />
+              </div>
               <div className="car__full-desc">
                 <h3 className="car__title">{this.props.car.full_name}</h3>
-                <div className="car__text">{this.props.car.note}</div>
+                <div className="car__text">{textParser(this.props.car.note).map((paragraph, index) => 
+                  <p key={index}>{paragraph}</p>
+                )}</div>
               </div>
             </div>
             <div className="car__info">
