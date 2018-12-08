@@ -6,7 +6,6 @@ import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, Dropdown
   Form, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Calendar from 'react-infinite-calendar';
 import propTypes from 'prop-types';
-import Recaptcha from 'react-recaptcha';
 
 import calendarLocale from '../../utils/calendarLocale';
 import calendarTheme from '../../utils/calendarTheme';
@@ -109,11 +108,6 @@ export default class AppStepTwo extends PureComponent {
                 
                 </FormGroup>
                 */}
-                {
-                <Recaptcha
-                  sitekey={'6Ldgl38UAAAAAFmE1RGswgY-0kzoV4TKNpfCYsmD'}
-                  verifyCallback={this.props.recaptchaVerifyCallback}
-                />}
                 <Button className="application__btn-back" color="primary" onClick={this.props.handleBackButton}>Назад</Button>
               </div>
               <div className="div"></div>

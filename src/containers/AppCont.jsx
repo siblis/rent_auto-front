@@ -10,6 +10,7 @@ import FAQ from 'components/FAQ';
 import { loadBrands } from 'actions/brands';
 import { loadAdditions } from 'actions/additions';
 import app from '../app';
+import { GOOGLE_RECAPTCHA_SITE_KEY } from '../../config';
 
 class AppCont extends PureComponent {
   static propTypes = {
@@ -21,7 +22,7 @@ class AppCont extends PureComponent {
   }
 
   state = {
-    step: 3,
+    step: 1,
     stepOneLazyValidation: false,
     stepTwoLazyValidation: false,
     stepThreeLazyValidation: false,
@@ -352,6 +353,7 @@ class AppCont extends PureComponent {
       stepThreeModal: false,
       isLoading: false,
       requestSuccess: false,
+      recaptchaToken: '',
     });
   }
 
@@ -363,9 +365,14 @@ class AppCont extends PureComponent {
     return additionsArray;
   }
 
-  handleSubmitButton = () => {
+  handleSubmitButton = async () => {
     this.setState({
       isLoading: true,
+    });
+    await window.grecaptcha.execute(GOOGLE_RECAPTCHA_SITE_KEY, {action: 'formSending'}).then(async token => {
+      await this.setState({
+        recaptchaToken: token,
+      });
     });
     const startDate = moment(this.state.startDate).add({
       hours: this.state.startTime.format('h'),
@@ -375,10 +382,28 @@ class AppCont extends PureComponent {
       hours: this.state.endTime.format('h'),
       minutes: this.state.endTime.format('m')
     }).toISOString();
-    const { brand, price, firstName, lastName, middleName, email, phoneNumber,
-      birthdayDate, passportSeries, passportIssuedBy, passportGetDate, 
-      passportRegAddress, licenseSeries, licenseIssuedBy, licenseGetDate, licenseExpireDate, 
-      licenseCategory, personalDataCheckbox, selectedAdditions } = this.state;
+    const {
+      brand,
+      price,
+      firstName,
+      lastName,
+      middleName,
+      email,
+      phoneNumber,
+      birthdayDate,
+      passportSeries,
+      passportIssuedBy,
+      passportGetDate, 
+      passportRegAddress,
+      licenseSeries,
+      licenseIssuedBy,
+      licenseGetDate,
+      licenseExpireDate, 
+      licenseCategory,
+      personalDataCheckbox,
+      selectedAdditions,
+      recaptchaToken
+    } = this.state;
     const additions = [];
     selectedAdditions.forEach(item => {
       additions.push(item.value);
@@ -407,6 +432,7 @@ class AppCont extends PureComponent {
       note: '',  // Threre is no such field in the application
       price,
       additions: serversideAdditions,
+      recaptcha_token: recaptchaToken,
     }
     app.post('requests', application).then(async (res) => {
       if (res.status === 200) {
@@ -418,7 +444,12 @@ class AppCont extends PureComponent {
         isLoading: false,
       });
       this.stepThreeModalToggle();
-    });
+    }).catch(() => {
+      this.stepThreeModalToggle();
+      this.setState({
+        isLoading: false,
+      });
+    })
   }
 
   render() {
