@@ -111,7 +111,7 @@ export default class AppStepTwo extends PureComponent {
                 */}
                 {
                 <Recaptcha
-                  sitekey={'6LcOPX4UAAAAAMKNr7yUMt2I8vX6YY9FGggIhwHD'}
+                  sitekey={'6Ldgl38UAAAAAFmE1RGswgY-0kzoV4TKNpfCYsmD'}
                   verifyCallback={this.props.recaptchaVerifyCallback}
                 />}
                 <Button className="application__btn-back" color="primary" onClick={this.props.handleBackButton}>Назад</Button>

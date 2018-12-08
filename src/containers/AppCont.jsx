@@ -202,7 +202,7 @@ class AppCont extends PureComponent {
       this.setState({
         validFirstName: this.state.firstName !== '' && /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.firstName),
         validLastName: this.state.lastName !== '' && /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.lastName),
-        validEmail: this.state.email !== ''  && /^[a-zA-Z]+([_.-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,4})+$/.test(this.state.email),
+        validEmail: this.state.email !== ''  && /^[a-zA-Z]+([_.-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})+$/.test(this.state.email),
         validPhoneNumber: this.state.phoneNumber !== '' && /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im.test(this.state.phoneNumber),
         validPersonalDataCheckbox: this.state.personalDataCheckbox,
       })
