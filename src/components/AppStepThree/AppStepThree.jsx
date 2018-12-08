@@ -102,15 +102,16 @@ export default class AppStepTwo extends PureComponent {
                 value={this.props.licenseCategory}
               />
               <div className="application__wrapper">
-                <FormGroup className="application__checkbox-group">
                 {/*
+                <FormGroup className="application__checkbox-group">
                   <Input type="checkbox" name="policy" id="policy" />
                   <Label for="policy">Согласие на обработку персональных данных</Label>
-                */}
+                
                 </FormGroup>
+                */}
                 {
                 <Recaptcha
-                  sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY}
+                  sitekey={'6LcOPX4UAAAAAMKNr7yUMt2I8vX6YY9FGggIhwHD'}
                   verifyCallback={this.props.recaptchaVerifyCallback}
                 />}
                 <Button className="application__btn-back" color="primary" onClick={this.props.handleBackButton}>Назад</Button>

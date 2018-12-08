@@ -21,7 +21,7 @@ class AppCont extends PureComponent {
   }
 
   state = {
-    step: 1,
+    step: 3,
     stepOneLazyValidation: false,
     stepTwoLazyValidation: false,
     stepThreeLazyValidation: false,
