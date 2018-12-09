@@ -91,7 +91,7 @@
 
 .rc-time-picker-input
   border 0
-  background-color #E5E5E5
+  background-color transparent
   width 200px
   height 44px
   font-size 1.5rem
@@ -100,6 +100,9 @@
   color #2DA0A6
   border none
   box-sizing border-box
+
+  @media (max-width 990px)
+    width 100%
 
 .rc-time-picker-panel-narrow
   max-width 200px
@@ -146,9 +149,35 @@
       padding 0 40px 0 0
       text-align right
 
+    .application__block--start-date
+      @media (max-width 990px)
+        order -5
+
+    .application__block--start-time
+      @media (max-width 990px)
+        order -4
+
+    .application__block--end-date
+      @media (max-width 990px)
+        order -3
+
+    .application__block--model
+      @media (max-width 990px)
+        order 1
+    
+    .application__block--price
+      @media (max-width 990px)
+        order 2
+
   &__btn-next
     grid-row-start 3
     margin 70px 0 0 -60px
+
+    @media (max-width 990px)
+      order 3
+
+    @media (max-width 990px)
+      margin 30px 0 0 0
 
   &__block
     margin 32px 0 0 0
@@ -157,6 +186,10 @@
 
   &__input
     display flex
+
+    .application__icon--clock
+      margin-right 15px
+
     @media (max-width: 990px)
       width 100%
 
@@ -178,16 +211,27 @@
   .dropdown
     @media (max-width: 990px)
       width 70%
-    @media (max-width: 490px)
+
+    @media (max-width 460px)
       width 60%
-    @media (max-width: 390px)
-      width 50%
+    
+    @media (max-width 370px)
+      width 55%
 
   &__field
     height 50px
     border-radius 5px
     box-sizing border-box
     background-color #E5E5E5
+
+    @media (max-width 990px)
+      width 70%
+    
+    @media (max-width 460px)
+      width 60%
+    
+    @media (max-width 370px)
+      width 55%
 
     .rc-time-picker-panel-select
       width 100px !important

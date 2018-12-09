@@ -14,7 +14,9 @@
     width 100% !important
     white-space inherit
     text-align left
-    margin 10px 0
+    margin 0
+    padding 0 12px
+    height 70px !important
     @media (max-width: 990px)
       margin-bottom 0
       height 80px !important
@@ -36,6 +38,8 @@
       &:active
         background-color transparent
         box-shadow none
+        color #2DA0A6 !important
+        opacity 0.6
 
       &:focus
         background-color transparent
@@ -45,6 +49,10 @@
         background-color transparent
         border none
         box-shadow none
+
+  &__answer
+    .card-body
+      padding 7px 20px 20px 20px
 
   &__buttons
     display flex

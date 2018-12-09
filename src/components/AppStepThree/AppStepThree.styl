@@ -16,11 +16,25 @@
     font-size 1.5rem
     box-sizing border-box
 
+    @media (max-width: 1000px)
+      display flex
+      flex-direction column
+
     .form-control
       width 100%
 
     .dropdown-toggle:after
       display none
+
+    .application
+      &__title
+        h4 
+          margin 0
+
+      &__note
+        font-size 0.875rem
+        font-style italic
+        margin -5px 0 0 0
 
   &__wrapper
     display flex

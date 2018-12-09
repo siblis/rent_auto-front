@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 import AppStepOne from 'components/AppStepOne';
 import AppStepTwo from 'components/AppStepTwo';
@@ -62,7 +62,9 @@ class AppCont extends PureComponent {
     licenseExpireDate: '',
     stepThreeModal: false,
     isLoading: false,
+    recaptchaToken: '',
     requestSuccess: false,
+    responseMessage: '',
   }
   
   componentDidMount() {
@@ -111,7 +113,7 @@ class AppCont extends PureComponent {
 
   handleStartDateInput = startDate => {
     this.setState({
-      startDate,
+      startDate: moment(startDate).tz("Europe/Moscow"),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -120,7 +122,7 @@ class AppCont extends PureComponent {
 
   handleEndDateInput = endDate => {
     this.setState({
-      endDate,
+      endDate: moment(endDate).tz("Europe/Moscow"),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -132,7 +134,7 @@ class AppCont extends PureComponent {
       startTime.minute('00');
     }
     this.setState({
-      startTime,
+      startTime: moment(startTime),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -144,7 +146,7 @@ class AppCont extends PureComponent {
       endTime.minute('00');
     }
     this.setState({
-      endTime,
+      endTime: moment(endTime),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -188,7 +190,7 @@ class AppCont extends PureComponent {
     if (this.state.stepOneLazyValidation) {
       this.setState({
         validStartDate: this.state.startDate !== '' && moment(this.state.startDate).hour(23).minute(59).isAfter(),
-        validEndDate: this.state.endDate !== '' && this.state.startDate !== '' && moment(this.state.startDate).hour(0).minute(0).isBefore(this.state.endDate),
+        validEndDate: this.state.endDate !== '' && this.state.startDate !== '' && moment(this.state.startDate).hour(0).minute(0).isSameOrBefore(this.state.endDate),
         validStartTime: this.state.startTime !== '' && this.state.endTime !== '' && moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).isAfter(),
         validEndTime: this.state.endTime !== '' && this.state.startTime !== '' && 
           moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm'))
@@ -230,12 +232,12 @@ class AppCont extends PureComponent {
       app.get(request).then(res => {
         this.setState({
           price: res.data
-        })
-      })
+        });
+      });
     } else {
       this.setState({
         price: null,
-      })
+      });
     }
   }
 
@@ -255,7 +257,7 @@ class AppCont extends PureComponent {
   handleAdditionsSelect = event => {
     this.setState({
       selectedAdditions: event,
-    })
+    });
   }
 
   handleToStepThreeButton = () => {
@@ -272,42 +274,38 @@ class AppCont extends PureComponent {
 
   handlePassportGetDateInput = passportGetDate => {
     this.setState({
-      passportGetDate,
+      passportGetDate: moment(passportGetDate).tz("Europe/Moscow"),
     });
   }
 
   handleBirthdayDateInput = birthdayDate => {
     this.setState({
-      birthdayDate,
+      birthdayDate: moment(birthdayDate).tz("Europe/Moscow"),
     });
   }
 
   handleLicenseExpireDateInput = licenseExpireDate => {
     this.setState({
-      licenseExpireDate,
-    })
+      licenseExpireDate: moment(licenseExpireDate).tz("Europe/Moscow"),
+    });
   }
 
   handleLicenseGetDateInput = licenseGetDate => {
     this.setState({
-      licenseGetDate,
-    })
+      licenseGetDate: moment(licenseGetDate).tz("Europe/Moscow"),
+    });
   }
 
   handleBackButton = () => {
     this.setState({
       step: this.state.step - 1,
-    })
+    });
   }
 
   stepThreeModalToggle = () => {
     this.setState({
       stepThreeModal: !this.state.stepThreeModal
     });
-  }
-
-  recaptchaVerifyCallback = () => {
-    // console.log(response);
   }
 
   handleModalCloseButton = () => {
@@ -354,6 +352,7 @@ class AppCont extends PureComponent {
       isLoading: false,
       requestSuccess: false,
       recaptchaToken: '',
+      responseMessage: '',
     });
   }
 
@@ -434,17 +433,18 @@ class AppCont extends PureComponent {
       additions: serversideAdditions,
       recaptcha_token: recaptchaToken,
     }
-    app.post('requests', application).then(async (res) => {
-      if (res.status === 200) {
-        await this.setState({
-          requestSuccess: true,
+    app.post('requests', application).then(async res => {
+        if (res.status === 200) {
+          await this.setState({
+            requestSuccess: true,
+            responseMessage: res.data.message,
+          });
+        }
+        this.setState({
+          isLoading: false,
         });
-      }
-      await this.setState({
-        isLoading: false,
-      });
-      this.stepThreeModalToggle();
-    }).catch(() => {
+        this.stepThreeModalToggle();
+      }).catch(() => {
       this.stepThreeModalToggle();
       this.setState({
         isLoading: false,
@@ -536,6 +536,8 @@ class AppCont extends PureComponent {
             handleModalCloseButton={this.handleModalCloseButton}
             recaptchaVerifyCallback={this.recaptchaVerifyCallback}
             isLoading={this.state.isLoading}
+            requestSuccess={this.state.requestSuccess}
+            responseMessage={this.state.responseMessage}
           />
           <FAQ />
         </Fragment>

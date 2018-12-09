@@ -90,6 +90,7 @@ export default class AppStepTwo extends PureComponent {
                   classNamePrefix="application__multi-select"
                   options={additionalServices}
                   onChange={this.props.handleAdditionsSelect}
+                  isSearchable={false}
                 />
               </div>
               <FormGroup>

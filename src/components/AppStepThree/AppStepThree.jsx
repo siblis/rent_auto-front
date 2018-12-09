@@ -26,6 +26,7 @@ export default class AppStepTwo extends PureComponent {
     licenseCategory: propTypes.string,
     licenseGetDate: propTypes.string,
     licenseExpireDate: propTypes.string,
+    responseMessage: propTypes.string,
     isLoading: propTypes.bool,
     requestSuccess: propTypes.bool,
     handleBackButton: propTypes.func,
@@ -47,7 +48,10 @@ export default class AppStepTwo extends PureComponent {
         <Container>
           <Form className="application">
             <div className="application__step-three">
-              <h4 className="application__field-name">Паспортные данные</h4>
+              <div className="application__title">
+                <h4 className="application__field-name">Паспортные данные</h4>
+                <p className="application__note">Эту информацию можно не заполнять здесь, а заполнить лично в нашем офисе</p>
+              </div>
               <Input
                 type="text"
                 name="passportOwnerName"
@@ -125,6 +129,12 @@ export default class AppStepTwo extends PureComponent {
                         locale={calendarLocale}
                         theme={calendarTheme}
                         height={350}
+                        min={new Date(1900, 0, 1)}
+                        max={new Date()}
+                        displayOptions={{
+                          hideYearsOnSelect: false,
+                        }}
+                        selected={new Date(2000, 0, 1)}
                       />
                     </DropdownItem>
                   </DropdownMenu>
@@ -143,6 +153,12 @@ export default class AppStepTwo extends PureComponent {
                         locale={calendarLocale}
                         theme={calendarTheme}
                         height={350}
+                        min={new Date(1950, 0, 1)}
+                        max={new Date()}
+                        displayOptions={{
+                          hideYearsOnSelect: false,
+                        }}
+                        selected={new Date(2010, 0, 1)}
                       />
                     </DropdownItem>
                   </DropdownMenu>
@@ -164,6 +180,12 @@ export default class AppStepTwo extends PureComponent {
                         locale={calendarLocale}
                         theme={calendarTheme}
                         height={350}
+                        min={new Date(1950, 0, 1)}
+                        max={new Date()}
+                        displayOptions={{
+                          hideYearsOnSelect: false,
+                        }}
+                        selected={new Date(2010, 0, 1)}
                       />
                     </DropdownItem>
                   </DropdownMenu>
@@ -182,6 +204,12 @@ export default class AppStepTwo extends PureComponent {
                         locale={calendarLocale}
                         theme={calendarTheme}
                         height={350}
+                        min={new Date(2015, 0, 1)}
+                        max={new Date(2060, 0, 1)}
+                        displayOptions={{
+                          hideYearsOnSelect: false,
+                        }}
+                        selected={new Date(2020, 0, 1)}
                       />
                     </DropdownItem>
                   </DropdownMenu>
@@ -199,7 +227,7 @@ export default class AppStepTwo extends PureComponent {
                 {this.props.requestSuccess ? 'Заявка принята' : 'Упс...'}
                 </ModalHeader>
                 <ModalBody>
-                  {this.props.requestSuccess ? 'Заявка отправлена на рассмотрение. Информация о заявке отправлена на указанную почту' : 'Что-то пошло не так. Не удалось отправить вашу заявку на сервер.'}
+                  {this.props.requestSuccess ? this.props.responseMessage : 'Что-то пошло не так. Не удалось отправить вашу заявку на сервер.'}
                 </ModalBody>
                 <ModalFooter>
                   <Button color="secondary" onClick={this.props.handleModalCloseButton}>Закрыть</Button>

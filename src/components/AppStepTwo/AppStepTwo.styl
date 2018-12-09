@@ -54,11 +54,28 @@
     align-items center
     font-size 1.5rem
 
+    @media (max-width 1000px)
+      display flex
+      flex-wrap wrap
+
+    @media (max-width 500px)
+      padding 30px 5px
+
     .form-group
       margin 0
 
+      @media (max-width 1000px)
+        width 100%
+        margin-top 20px
+
       label 
         margin 0
+    
+    .form-control 
+      @media (max-width 1000px)
+        width 80%
+      @media (max-width 450px)
+        width 75%
 
     .dropdown-toggle
       width 300px
@@ -85,17 +102,43 @@
     .dropdown-menu
       width 300px !important
 
-    .application__block
-      margin 0
+    .application
+
+      &__block
+        margin 0
+      
+        @media (max-width 1000px)
+          width 80%
+          margin-top 20px
+          order 1
+        
+        @media (max-width 450px)
+          width 75%
+
+      &__add-services
+        @media (max-width 1000px)
+          width 100% !important
 
   &__btn-next--step-two
     grid-row-start 4
     align-self end
     margin 0 0 0 -140px
+    @media (max-width 1000px)
+      order 3
+
+    @media (max-width 1000px)
+      margin 20px 0 0 0
+      align-self flex-end
 
   &__checkbox-group
     margin 40px 0 0 0
     display flex
+
+    @media (max-width 1000px)
+      order 2
+    
+    @media (max-width 1000px)
+      width 100%
 
     input 
       width 25px
@@ -110,6 +153,12 @@
       font-size 1rem
       padding 0 0 0 50px
       width 300px
+      
+      @media (max-width 1000px)
+        width 80%
+
+      @media (max-width 450px)
+        width 75%
 
   &__input-group
     display flex
@@ -124,6 +173,14 @@
       height 50px
       background-color #E5E5E5 !important
       border none !important
+      align-items flex-start !important
+
+      @media (max-width 1000px)
+        display flex
+        flex-direction column
+        width 100%
+        min-height 50px !important
+        height auto
 
       &:hover 
         border-color #2DA0A6 !important
@@ -142,6 +199,28 @@
       left 300px
       min-width 350px !important
       flex-direction row
+      @media (max-width 1000px)
+        left 0
+        width 90%
+        min-width 200px !important
+      
+      @media (max-width 500px)
+        width 80%
+
+      @media (max-width 400px)
+        width 70%
+
+    &__multi-value
+      @media (max-width 1000px)
+        margin 0 !important
+        font-size 1rem
+
+      &__label
+        padding 0px 3px
+
+        @media (max-width 1000px)
+          padding 0px 3px !important
+      
 
     &__placeholder
       display none
@@ -150,10 +229,23 @@
       display none
 
     &__indicators
-      background-color #E5E5E5
+      background-color transparent
       position absolute
       right 10px
-      top 5px
+      top 0
+      bottom 0
+
+      @media (max-width 500px)
+        right 5px
+
+    &__clear-indicator 
+      @media (max-width 500px)
+        padding 1px !important
+
+    &__dropdown-indicator 
+      @media (max-width 500px)
+        padding 1px !important
+
 
     &__indicator-separator
       display none

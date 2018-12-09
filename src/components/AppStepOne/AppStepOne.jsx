@@ -37,7 +37,7 @@ export default class AppStepOne extends PureComponent {
         <Container>
           <Form className="application">
             <div className="application__step-one">
-              <div className="application__block">
+              <div className="application__block application__block--start-date">
                 <h4 className="application__field-name">Дата взятия</h4>
                 <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
@@ -60,7 +60,7 @@ export default class AppStepOne extends PureComponent {
                   {this.props.validStartDate || <div className="application__error animated bounce">!</div>}
                 </div>
               </div>
-              <div className="application__block">
+              <div className="application__block application__block--end-date">
                 <h4 className="application__field-name">Дата возврата</h4>
                 <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
@@ -83,7 +83,7 @@ export default class AppStepOne extends PureComponent {
                   {this.props.validEndDate || <div className="application__error animated bounce">!</div>}
                 </div>
               </div>
-              <div className="application__block">
+              <div className="application__block application__block--model">
                 <h4 className="application__field-name">Модель автомобиля</h4>
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/car.svg')}></object>
@@ -100,10 +100,10 @@ export default class AppStepOne extends PureComponent {
                   {this.props.validBrand || <div className="application__error animated bounce">!</div>}
                 </div>
               </div>
-              <div className="application__block">
+              <div className="application__block application__block--start-time">
                 <h4 className="application__field-name">Время взятия</h4>
                 <div className="application__input">
-                  <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
+                  <object className="application__icon application__icon--clock" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
                   <TimePicker
                     className={this.props.validStartTime ? 'application__field' : 'application__field application__invalid animated bounce'}
                     onChange={this.props.handleStartTimeInput}
@@ -117,7 +117,7 @@ export default class AppStepOne extends PureComponent {
               <div className="application__block">
                 <h4 className="application__field-name">Время возврата</h4>
                 <div className="application__input">
-                  <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
+                  <object className="application__icon application__icon--clock" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
                   <TimePicker
                     className={this.props.validEndTime ? 'application__field' : 'application__field application__invalid animated bounce'}
                     onChange={this.props.handleEndTimeInput}
@@ -128,7 +128,7 @@ export default class AppStepOne extends PureComponent {
                   {this.props.validEndTime || <div className="application__error animated bounce">!</div>}      
                 </div>
               </div>
-              <div className="application__block">
+              <div className="application__block application__block--price">
                 <h4 className="application__field-name">Примерная стоимость</h4>
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/ruble-currency-sign.svg')}></object>
