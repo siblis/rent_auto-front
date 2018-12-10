@@ -374,13 +374,13 @@ class AppCont extends PureComponent {
       });
     });
     const startDate = moment(this.state.startDate).add({
-      hours: this.state.startTime.format('h'),
+      hours: this.state.startTime.format('H'),
       minutes: this.state.startTime.format('m')
-    }).toISOString();
+    }).toISOString(true);
     const endDate = moment(this.state.endDate).add({
-      hours: this.state.endTime.format('h'),
+      hours: this.state.endTime.format('H'),
       minutes: this.state.endTime.format('m')
-    }).toISOString();
+    }).toISOString(true);
     const {
       brand,
       price,
@@ -415,17 +415,17 @@ class AppCont extends PureComponent {
       last_name: lastName,
       first_name: firstName,
       patronymic: middleName,
-      birthdate: birthdayDate !== '' ? birthdayDate.toISOString() : '',
+      birthdate: birthdayDate !== '' ? birthdayDate.toISOString(true) : '',
       email,
       phone: phoneNumber,
       doc_number: passportSeries,
       doc_issued_by: passportIssuedBy,
-      doc_issued_date: passportGetDate !== '' ? passportGetDate.toISOString() : '',
+      doc_issued_date: passportGetDate !== '' ? passportGetDate.toISOString(true) : '',
       doc_registration: passportRegAddress,
       lic_number: licenseSeries,
-      lic_date: licenseGetDate !== '' ? licenseGetDate.toISOString() : '',
+      lic_date: licenseGetDate !== '' ? licenseGetDate.toISOString(true) : '',
       lic_issued_by: licenseIssuedBy,
-      lic_valid_to: licenseExpireDate !== '' ? licenseExpireDate.toISOString() : '',
+      lic_valid_to: licenseExpireDate !== '' ? licenseExpireDate.toISOString(true) : '',
       license_category: licenseCategory,
       personal_data_agreement: personalDataCheckbox,
       note: '',  // Threre is no such field in the application
