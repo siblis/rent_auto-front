@@ -18,7 +18,7 @@ export default class Footer extends PureComponent {
             {/*}
             <li><Link to={`/description`}>Описание проекта</Link></li>
             */}
-            <li><Link to={`/rules`}>Условия аренды</Link></li>
+            <li><Link to={`/rules`}>Условия проката</Link></li>
           </ul>
           <div className="footer__schedule">
             <p>ГРАФИК РАБОТЫ:</p>
