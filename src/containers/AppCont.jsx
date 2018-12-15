@@ -65,6 +65,7 @@ class AppCont extends PureComponent {
     recaptchaToken: '',
     requestSuccess: false,
     responseMessage: '',
+    brandCalculated: false,
   }
   
   componentDidMount () {
@@ -75,12 +76,13 @@ class AppCont extends PureComponent {
   }
 
   calculateBrand = () => {
-    if (this.props.location.carId) {
+    if (this.props.location.carId && !this.state.brandCalculated) {
       const { carId } = this.props.location;
       const brand = this.props.brands.filter(brand => brand.id === carId)[0];
       if (brand) {
         this.setState({
           brand,
+          brandCalculated: true,
         });
       }
     }
