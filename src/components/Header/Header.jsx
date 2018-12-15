@@ -44,7 +44,11 @@ export default class Header extends PureComponent {
   }
 
   setDropdownMenuTitle = (event) => {
-    const targetId = event.target.id;
+    let targetId = '';
+
+    if (event) {
+      targetId = event.target.id;
+    }
 
     if (targetId === 'cars') {
       this.setState({

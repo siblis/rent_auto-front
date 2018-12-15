@@ -21,6 +21,7 @@ export default class AppStepTwo extends PureComponent {
     validEmail: propTypes.bool,
     validPhoneNumber: propTypes.bool,
     validPersonalDataCheckbox: propTypes.bool,
+    selectedAdditions: propTypes.array,
     handlePersonalDataCheckbox: propTypes.func,
     handleAdditionsSelect: propTypes.func,
     handleToStepThreeButton: propTypes.func,
@@ -91,6 +92,7 @@ export default class AppStepTwo extends PureComponent {
                   options={additionalServices}
                   onChange={this.props.handleAdditionsSelect}
                   isSearchable={false}
+                  value={this.props.selectedAdditions}
                 />
               </div>
               <FormGroup>

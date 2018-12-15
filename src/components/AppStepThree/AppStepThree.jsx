@@ -2,8 +2,19 @@ import '../../../node_modules/rc-time-picker/assets/index.css';
 import './AppStepThree.styl';
 
 import React, { PureComponent } from 'react';
-import { Container, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
-  Form, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Container,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  Form,
+  Input,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter 
+} from 'reactstrap';
 import Calendar from 'react-infinite-calendar';
 import propTypes from 'prop-types';
 
@@ -40,6 +51,64 @@ export default class AppStepTwo extends PureComponent {
     stepThreeModalToggle: propTypes.func,
     handleModalCloseButton: propTypes.func,
     recaptchaVerifyCallback: propTypes.func,
+  }
+
+  state = {
+    birthdayDateDropdownOpen: false,
+    passportGetDateDropdownOpen: false,
+    licenseGetDateDropdownOpen: false,
+    licenseExpireDateDropdownOpen: false,
+  }
+
+  getCalendarHeight = () => {
+    if (document.documentElement.clientWidth < 400) {
+      return 300;
+    }
+    return 350;
+  }
+
+  birthdayDateDropdownToggle = () => {
+    this.setState(prevState => ({
+      birthdayDateDropdownOpen: !prevState.birthdayDateDropdownOpen
+    }));
+  }
+
+  passportGetDateDropdownToggle = () => {
+    this.setState(prevState => ({
+      passportGetDateDropdownOpen: !prevState.passportGetDateDropdownOpen
+    }));
+  }
+
+  licenseGetDateDropdownToggle = () => {
+    this.setState(prevState => ({
+      licenseGetDateDropdownOpen: !prevState.licenseGetDateDropdownOpen
+    }));
+  }
+
+  licenseExpireDateDropdownToggle = () => {
+    this.setState(prevState => ({
+      licenseExpireDateDropdownOpen: !prevState.licenseExpireDateDropdownOpen
+    }));
+  }
+
+  handleBirthdayDateInput = async (event) => {
+    await this.props.handleBirthdayDateInput(event);
+    this.birthdayDateDropdownToggle();
+  }
+
+  handlePassportGetDateInput = async (event) => {
+    await this.props.handlePassportGetDateInput(event);
+    this.passportGetDateDropdownToggle();
+  }
+
+  handleLicenseGetDateInput = async (event) => {
+    await this.props.handleLicenseGetDateInput(event);
+    this.licenseGetDateDropdownToggle();
+  }
+
+  handleLicenseExpireDateInput = async (event) => {
+    await this.props.handleLicenseExpireDateInput(event);
+    this.licenseExpireDateDropdownToggle();
   }
 
   render() {
@@ -129,102 +198,96 @@ export default class AppStepTwo extends PureComponent {
               <div className="div"></div>
               <div className="application__input application__input--date application__order_-4">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                <UncontrolledDropdown>
+                <Dropdown isOpen={this.state.birthdayDateDropdownOpen} toggle={this.birthdayDateDropdownToggle}>
                   <DropdownToggle caret>
                     {this.props.birthdayDate}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>
-                      <Calendar
-                        onSelect={this.props.handleBirthdayDateInput}
-                        locale={calendarLocale}
-                        theme={calendarTheme}
-                        height={350}
-                        min={new Date(1900, 0, 1)}
-                        max={new Date()}
-                        displayOptions={{
-                          hideYearsOnSelect: false,
-                        }}
-                        selected={new Date(2000, 0, 1)}
-                      />
-                    </DropdownItem>
+                    <Calendar
+                      onSelect={this.handleBirthdayDateInput}
+                      locale={calendarLocale}
+                      theme={calendarTheme}
+                      width={this.getCalendarHeight()}
+                      height={400}
+                      min={new Date(1900, 0, 1)}
+                      max={new Date()}
+                      displayOptions={{
+                        hideYearsOnSelect: false,
+                      }}
+                      selected={new Date(2000, 0, 1)}
+                    />
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </Dropdown>
               </div>
               <div className="application__input application__input--date application__order_-4">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                <UncontrolledDropdown>
+                <Dropdown isOpen={this.state.passportGetDateDropdownOpen} toggle={this.passportGetDateDropdownToggle}>
                   <DropdownToggle caret>
                     {this.props.passportGetDate}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>
-                      <Calendar
-                        onSelect={this.props.handlePassportGetDateInput}
-                        locale={calendarLocale}
-                        theme={calendarTheme}
-                        height={350}
-                        min={new Date(1950, 0, 1)}
-                        max={new Date()}
-                        displayOptions={{
-                          hideYearsOnSelect: false,
-                        }}
-                        selected={new Date(2010, 0, 1)}
-                      />
-                    </DropdownItem>
+                    <Calendar
+                      onSelect={this.handlePassportGetDateInput}
+                      locale={calendarLocale}
+                      theme={calendarTheme}
+                      width={this.getCalendarHeight()}
+                      height={400}
+                      min={new Date(1950, 0, 1)}
+                      max={new Date()}
+                      displayOptions={{
+                        hideYearsOnSelect: false,
+                      }}
+                      selected={new Date(2010, 0, 1)}
+                    />
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </Dropdown>
               </div>
               <div className="div"></div>
               <div className="div"></div>
               <div className="div"></div>
               <div className="application__input application__input--date application__order_1">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                <UncontrolledDropdown>
+                <Dropdown isOpen={this.state.licenseGetDateDropdownOpen} toggle={this.licenseGetDateDropdownToggle}>
                   <DropdownToggle caret>
                     {this.props.licenseGetDate}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>
-                      <Calendar
-                        onSelect={this.props.handleLicenseGetDateInput}
-                        locale={calendarLocale}
-                        theme={calendarTheme}
-                        height={350}
-                        min={new Date(1950, 0, 1)}
-                        max={new Date()}
-                        displayOptions={{
-                          hideYearsOnSelect: false,
-                        }}
-                        selected={new Date(2010, 0, 1)}
-                      />
-                    </DropdownItem>
+                    <Calendar
+                      onSelect={this.handleLicenseGetDateInput}
+                      locale={calendarLocale}
+                      theme={calendarTheme}
+                      height={350}
+                      min={new Date(1950, 0, 1)}
+                      max={new Date()}
+                      displayOptions={{
+                        hideYearsOnSelect: false,
+                      }}
+                      selected={new Date(2010, 0, 1)}
+                    />
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </Dropdown>
               </div>
               <div className="application__input application__input--date application__order_1">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                <UncontrolledDropdown>
+                <Dropdown isOpen={this.state.licenseExpireDateDropdownOpen} toggle={this.licenseExpireDateDropdownToggle}>
                   <DropdownToggle caret>
                     {this.props.licenseExpireDate}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>
-                      <Calendar
-                        onSelect={this.props.handleLicenseExpireDateInput}
-                        locale={calendarLocale}
-                        theme={calendarTheme}
-                        height={350}
-                        min={new Date(2015, 0, 1)}
-                        max={new Date(2060, 0, 1)}
-                        displayOptions={{
-                          hideYearsOnSelect: false,
-                        }}
-                        selected={new Date(2020, 0, 1)}
-                      />
-                    </DropdownItem>
+                    <Calendar
+                      onSelect={this.handleLicenseExpireDateInput}
+                      locale={calendarLocale}
+                      theme={calendarTheme}
+                      height={350}
+                      min={new Date(2015, 0, 1)}
+                      max={new Date(2060, 0, 1)}
+                      displayOptions={{
+                        hideYearsOnSelect: false,
+                      }}
+                      selected={new Date(2020, 0, 1)}
+                    />
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </Dropdown>
               </div>
               <Button
                 className={this.props.isLoading ? 'application__btn-submit--step-three ld ld-ext-right running application__order_3' : 'application__btn-submit--step-three application__order_3'}

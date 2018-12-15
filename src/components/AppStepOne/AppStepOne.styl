@@ -149,25 +149,36 @@
       padding 0 40px 0 0
       text-align right
 
-    .application__block--start-date
-      @media (max-width 990px)
-        order -5
-
-    .application__block--start-time
-      @media (max-width 990px)
-        order -4
-
-    .application__block--end-date
-      @media (max-width 990px)
-        order -3
-
-    .application__block--model
-      @media (max-width 990px)
-        order 1
+    .application
     
-    .application__block--price
-      @media (max-width 990px)
-        order 2
+      &__block--start-date
+        @media (max-width 990px)
+          order -5
+
+      &__block--start-time
+        @media (max-width 990px)
+          order -4
+
+      &__block--end-date
+        @media (max-width 990px)
+          order -3
+
+      &__block--model
+        @media (max-width 990px)
+          order 1
+    
+      &__block--price
+        margin 10px 0 10px 0
+
+        .application__field-name
+          margin-bottom 0
+
+        @media (max-width 990px)
+          order 2
+
+      &__subtitle
+        font-size 1rem
+        font-style italic
 
   &__btn-next
     grid-row-start 3

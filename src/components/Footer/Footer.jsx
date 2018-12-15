@@ -24,7 +24,7 @@ export default class Footer extends PureComponent {
           <address className="footer__address">
             <p>Адрес: г. Екатеринбург, ул. Гагарина 6/3</p>
             <p>Телефон: <a href="tel:+73432012401">+7 (343) 201&#x2012;2&#x2012;401</a></p>
-            <p>Сотовый: <a href="tel:+79002012652">89002012652</a></p>
+            <p>Сотовый: <a href="tel:+79002012652">+7 (900) 201&#x2012;2&#x2012;652</a></p>
             <p>Почта: <a href="mailto:info@tachka96.ru">info@tachka96.ru</a></p>
           </address>
         </Container>

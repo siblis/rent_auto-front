@@ -22,7 +22,7 @@ class AppCont extends PureComponent {
   }
 
   state = {
-    step: 3,
+    step: 1,
     stepOneLazyValidation: false,
     stepTwoLazyValidation: false,
     stepThreeLazyValidation: false,
@@ -67,13 +67,11 @@ class AppCont extends PureComponent {
     responseMessage: '',
   }
   
-  componentDidMount() {
+  componentDidMount () {
     const { loadBrands, loadAdditions } = this.props;
-    const { calculateBrand, setStep } = this;
     loadBrands();
     loadAdditions();
-    calculateBrand();
-    setStep();
+    this.setStep();
   }
 
   calculateBrand = () => {
@@ -200,18 +198,28 @@ class AppCont extends PureComponent {
     }
   }
 
-  validateStepTwo = () => {
+  validateStepTwo = async () => {
     if (this.state.stepTwoLazyValidation) {
-      this.setState({
+      await this.setState({
         validFirstName: this.state.firstName !== '' && /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.firstName),
-        validLastName: this.state.lastName !== '' && /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.lastName),
+        validLastName: this.state.lastName === '' || /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.lastName),
         validEmail: this.state.email !== ''  && /^[a-zA-Z]+([_.-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})+$/.test(this.state.email),
         validPhoneNumber: this.state.phoneNumber !== '' && /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im.test(this.state.phoneNumber),
         validPersonalDataCheckbox: this.state.personalDataCheckbox,
-      })
+      });
+      if (this.state.validEmail) {
+        this.setState({
+          validPhoneNumber: true,
+        })
+      }
+      if (this.state.validPhoneNumber) {
+        this.setState({
+          validEmail: true,
+        })
+      }
     }
-    if (this.state.firstName !== '' && this.state.lastName !== '' &&
-    this.state.email !== '' && this.state.phoneNumber !== '' && this.state.personalDataCheckbox) {
+    if (this.state.firstName !== '' && this.state.personalDataCheckbox
+    && (this.state.email !== '' || this.state.phoneNumber !== '' )) {
       return true;
     } else {
       return false;
@@ -263,8 +271,9 @@ class AppCont extends PureComponent {
   handleToStepThreeButton = () => {
     this.setState({
       stepTwoLazyValidation: true,
-    }, () => {
-      if (this.validateStepTwo()) {
+    }, async () => {
+      await this.validateStepTwo();
+      if (this.state.validFirstName && this.state.validPersonalDataCheckbox && (this.state.validEmail || this.state.validPhoneNumber)) {
         this.setState({
           step: 3,
         });
@@ -451,6 +460,7 @@ class AppCont extends PureComponent {
 
   render() {
     if (this.state.step === 1) {
+      this.calculateBrand();
       return (
         <Fragment>
           <AppStepOne
@@ -493,6 +503,7 @@ class AppCont extends PureComponent {
             validEmail={this.state.validEmail}
             validPhoneNumber={this.state.validPhoneNumber}
             validPersonalDataCheckbox={this.state.validPersonalDataCheckbox}
+            selectedAdditions={this.state.selectedAdditions}
             handleInputStepTwo={this.handleInputStepTwo}
             handleNameInput={this.handleNameInput}
             handleAdditionsSelect={this.handleAdditionsSelect}
