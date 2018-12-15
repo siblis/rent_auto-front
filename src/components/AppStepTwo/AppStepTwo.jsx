@@ -1,13 +1,13 @@
 import '../../../node_modules/rc-calendar/assets/index.css';
 import '../../../node_modules/rc-time-picker/assets/index.css';
-import './MainPageStepTwo.styl';
+import './AppStepTwo.styl';
 
 import React, { PureComponent } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Select from 'react-select';
 import propTypes from 'prop-types';
 
-export default class Header extends PureComponent {
+export default class AppStepTwo extends PureComponent {
   static propTypes = {
     lastName: propTypes.string,
     firstName: propTypes.string,
@@ -21,10 +21,12 @@ export default class Header extends PureComponent {
     validEmail: propTypes.bool,
     validPhoneNumber: propTypes.bool,
     validPersonalDataCheckbox: propTypes.bool,
+    selectedAdditions: propTypes.array,
     handlePersonalDataCheckbox: propTypes.func,
     handleAdditionsSelect: propTypes.func,
     handleToStepThreeButton: propTypes.func,
     handleInputStepTwo: propTypes.func,
+    handleNameInput: propTypes.func,
   }
 
   render() {
@@ -34,17 +36,18 @@ export default class Header extends PureComponent {
         additionalServices[index] = {
           value: item.name,
           label: item.name,
+          id: item.id,
         }
       });
     }
     
     return (
-      <main className="main-page">
+      <main className="app">
         <Container>
           <Form className="application">
             <div className="application__step-two">
               <FormGroup>
-                <Label for="lastName" >Фамилия</Label>
+                <Label for="lastName">Фамилия</Label>
                 <div className="application__input-group">
                   <Input 
                     className={this.props.validLastName ? '' : 'application__invalid animated bounce'}
@@ -52,7 +55,7 @@ export default class Header extends PureComponent {
                     name="lastName"
                     id="lastName"
                     value={this.props.lastName}
-                    onChange={this.props.handleInputStepTwo}
+                    onChange={this.props.handleNameInput}
                   />
                   {this.props.validLastName || <div className="application__error animated bounce">!</div>}
                 </div>
@@ -66,13 +69,19 @@ export default class Header extends PureComponent {
                     name="firstName"
                     id="firstName"
                     value={this.props.firstName}
-                    onChange={this.props.handleInputStepTwo}/>
+                    onChange={this.props.handleNameInput}/>
                   {this.props.validFirstName || <div className="application__error animated bounce">!</div>}
                 </div>
               </FormGroup>
               <FormGroup>
                 <Label for="middleName">Отчество</Label>
-                <Input type="text" name="middleName" id="middleName" onChange={this.props.handleInputStepTwo}/>
+                <Input
+                  type="text"
+                  name="middleName"
+                  id="middleName"
+                  value={this.props.middleName}
+                  onChange={this.props.handleNameInput}
+                />
               </FormGroup >
               <div className="application__block">
                 <h4 className="application__field-name">Дополнительные услуги</h4>
@@ -82,6 +91,8 @@ export default class Header extends PureComponent {
                   classNamePrefix="application__multi-select"
                   options={additionalServices}
                   onChange={this.props.handleAdditionsSelect}
+                  isSearchable={false}
+                  value={this.props.selectedAdditions}
                 />
               </div>
               <FormGroup>
