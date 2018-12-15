@@ -1,9 +1,27 @@
 .faq
 
   &__wrapper
-    margin 30px 0
+    width 100%
+    margin 30px auto
     padding 30px
     background-color white
+    @media (max-width 990px)
+      padding 12px
+    @media (max-width 490px)
+      padding 12px 3px
+
+  &__question
+    width 100% !important
+    white-space inherit
+    text-align left
+    margin 0
+    padding 0 12px
+    height 70px !important
+    @media (max-width: 990px)
+      margin-bottom 0
+      height 80px !important
+    @media (max-width: 490px)
+      font-size 1.25rem !important
 
   &__text
     display flex
@@ -20,6 +38,8 @@
       &:active
         background-color transparent
         box-shadow none
+        color #2DA0A6 !important
+        opacity 0.6
 
       &:focus
         background-color transparent
@@ -29,6 +49,16 @@
         background-color transparent
         border none
         box-shadow none
+
+  &__answer
+    .card-body
+      padding 7px 20px 20px 20px
+      
+      a 
+        color #9A9B9B
+        &:hover 
+          opacity 0.8
+          text-decoration none
 
   &__buttons
     display flex

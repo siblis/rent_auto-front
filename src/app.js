@@ -4,5 +4,5 @@ import { API_URL } from '../config';
 
 export default axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 20000,
 });

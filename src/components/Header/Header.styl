@@ -4,12 +4,41 @@
   &__dropdown
     width 400px
     margin -4px 0 0 0
+    display flex
+    justify-content flex-end
+    
+    @media (max-width: 1000px)
+      width 350px
+
+    @media (max-width: 550px)
+      width 300px
+    
+    @media (max-width: 450px)
+      width 260px
+
+    @media (max-width: 410px)
+      width 180px
 
     .btn
       width 400px
       text-align right
+      
+      @media (max-width: 1000px)
+        width 350px
+      
+      @media (max-width: 550px)
+        width 300px
+        font-size 1.5rem
+      
+      @media (max-width: 450px)
+        width 260px
+
+      @media (max-width: 410px)
+        width 180px
+        font-size 1rem
     
     .dropdown-item
+      pointer-events: all;
       &:active
         background-color transparent !important
         box-shadow none
@@ -40,22 +69,69 @@
         box-shadow none
         border none
 
-    .dropdown-menu
-      margin 20px 0 0 20px
-      background-color #F8F8F8
+  &__dropdown-menu
+    margin 20px 0 0 20px
+    padding 5px 20px
+    background-color #F8F8F8
+
+    @media (max-width 1000px)
+      min-width 380px
+
+    @media (max-width 900px)
+      min-width 330px
+    
+    @media (max-width 600px)
+      min-width 300px
+      left 0 !important
+
+    @media (max-width 490px)
+      left -20px !important
+
+    @media (max-width 450px)
+      left -30px !important
+
+    @media (max-width 410px)
+      left -30px !important
+      min-width 220px
+
     a
       color #2DA0A6
       font-size 1.75rem
+      display block
+      text-decoration none
+
+      @media (max-width 410px)
+        font-size 1.25rem
+
+      &:hover 
+        text-decoration none
+        opacity .8
 
   .container
     display flex
     justify-content space-between
     padding 20px
 
-  .nav
+    @media (min-width: 1200px)
+      max-width 1400px
+    
+    @media (max-width: 490px)
+      padding 20px 3px
+
+  &__nav
     width 100%
     display flex
     justify-content space-between
+    margin 0 200px 0 0
+    @media (max-width: 1200px)
+      margin 0
+    
+  &__logo
+    @media (max-width: 800px)
+      width 150px
+    @media (max-width: 490px)
+      margin-top 10px
+      width 110px
 
   .nav-menu
     display flex
@@ -71,3 +147,19 @@
   .dropdown-toggle
     font-weight 700
     
+  &__contacts
+    
+    a
+      &:hover
+        text-decoration none
+        color white !important
+
+    @media (max-width: 880px)
+      margin 3px 0 0 10px !important
+
+    @media (max-width: 800px)
+      display none !important
+
+  #contacts
+    @media (min-width: 800px)
+      display none !important

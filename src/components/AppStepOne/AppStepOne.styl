@@ -39,8 +39,9 @@
   animation-fill-mode: both;
 }
 
-.main-page
+.app
   color #2DA0A6
+  height auto
 
   &__field-name
     font-size 1.75rem
@@ -90,7 +91,7 @@
 
 .rc-time-picker-input
   border 0
-  background-color #E5E5E5
+  background-color transparent
   width 200px
   height 44px
   font-size 1.5rem
@@ -99,6 +100,9 @@
   color #2DA0A6
   border none
   box-sizing border-box
+
+  @media (max-width 990px)
+    width 100%
 
 .rc-time-picker-panel-narrow
   max-width 200px
@@ -124,32 +128,86 @@
 .application
 
   &__step-one
+    width 100%
     background-color #fff
-    margin 30px 0
+    margin 30px auto
     padding 30px
     display grid 
-    grid-template-columns 1.5fr 1.5fr 1fr
+    grid-template-columns 1.5fr 1.5fr 0.6fr
     grid-template-rows 1fr 1fr 1fr
     grid-auto-flow column
     align-items center
     font-size 1.5rem
+    @media (max-width: 990px)
+      display flex
+      flex-wrap wrap
+      padding 15px
+    @media (max-width: 490px)
+      padding 5px
 
     .dropdown-toggle
       padding 0 40px 0 0
       text-align right
 
+    .application
+    
+      &__block--start-date
+        @media (max-width 990px)
+          order -5
+
+      &__block--start-time
+        @media (max-width 990px)
+          order -4
+
+      &__block--end-date
+        @media (max-width 990px)
+          order -3
+
+      &__block--model
+        @media (max-width 990px)
+          order 1
+    
+      &__block--price
+        margin 10px 0 10px 0
+
+        .application__field-name
+          margin-bottom 0
+
+        @media (max-width 990px)
+          order 2
+
+      &__subtitle
+        font-size 1rem
+        font-style italic
+
   &__btn-next
     grid-row-start 3
-    margin-top 70px
+    margin 70px 0 0 -60px
+
+    @media (max-width 990px)
+      order 3
+
+    @media (max-width 990px)
+      margin 30px 0 0 0
 
   &__block
     margin 32px 0 0 0
+    @media (max-width: 990px)
+      width 100%
 
   &__input
-    display flex 
+    display flex
+
+    .application__icon--clock
+      margin-right 15px
+
+    @media (max-width: 990px)
+      width 100%
 
     .dropdown-toggle
       overflow-x hidden
+      @media (max-width: 990px)
+        width 100%
 
     .dropdown-menu
       width 400px
@@ -158,12 +216,33 @@
       .dropdown-menu
         width 100px
         border none
+      .dropdown-item
+        padding 0
+  
+  .dropdown
+    @media (max-width: 990px)
+      width 70%
+
+    @media (max-width 460px)
+      width 60%
+    
+    @media (max-width 370px)
+      width 55%
 
   &__field
     height 50px
     border-radius 5px
     box-sizing border-box
     background-color #E5E5E5
+
+    @media (max-width 990px)
+      width 70%
+    
+    @media (max-width 460px)
+      width 60%
+    
+    @media (max-width 370px)
+      width 55%
 
     .rc-time-picker-panel-select
       width 100px !important
@@ -185,7 +264,7 @@
     width 50px
     height 50px
     text-align center
-    font-size 1.875rem
+    font-size 30px
     font-weight 700
     margin 0 0 0 20px
     animation-name: bounce;
@@ -194,8 +273,12 @@
   &__invalid
     border 3px solid #F60C0C !important
     animation-name: bounce;
-    transform-origin: center bottom;
+    transform-origin: center bottom
+
+  &__brand-name
+    font-size 1rem !important
 
   &__brand-items
     white-space nowrap
     overflow hidden
+    cursor pointer

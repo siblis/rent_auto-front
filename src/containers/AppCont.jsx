@@ -1,22 +1,24 @@
 import React, { PureComponent, Fragment } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
-import MainPageStepOne from 'components/MainPageStepOne';
-import MainPageStepTwo from 'components/MainPageStepTwo';
-import MainPageStepThree from 'components/MainPageStepThree';
+import AppStepOne from 'components/AppStepOne';
+import AppStepTwo from 'components/AppStepTwo';
+import AppStepThree from 'components/AppStepThree';
 import FAQ from 'components/FAQ';
 import { loadBrands } from 'actions/brands';
 import { loadAdditions } from 'actions/additions';
 import app from '../app';
+import { GOOGLE_RECAPTCHA_SITE_KEY } from '../../config';
 
-class MainPageCont extends PureComponent {
+class AppCont extends PureComponent {
   static propTypes = {
     loadBrands: propTypes.func,
     loadAdditions: propTypes.func,
     brands: propTypes.array,
     additions: propTypes.array,
+    location: propTypes.object,
   }
 
   state = {
@@ -58,12 +60,39 @@ class MainPageCont extends PureComponent {
     licenseCategory: '',
     licenseGetDate: '',
     licenseExpireDate: '',
+    stepThreeModal: false,
+    isLoading: false,
+    recaptchaToken: '',
+    requestSuccess: false,
+    responseMessage: '',
   }
   
-  componentDidMount() {
+  componentDidMount () {
     const { loadBrands, loadAdditions } = this.props;
     loadBrands();
     loadAdditions();
+    this.setStep();
+  }
+
+  calculateBrand = () => {
+    if (this.props.location.carId) {
+      const { carId } = this.props.location;
+      const brand = this.props.brands.filter(brand => brand.id === carId)[0];
+      if (brand) {
+        this.setState({
+          brand,
+        });
+      }
+    }
+  }
+
+  setStep = () => {
+    if (this.props.location.step) {
+      const { step } = this.props.location;
+      this.setState({
+        step,
+      });
+    }
   }
 
   handleInputStepTwo = event => {
@@ -82,7 +111,7 @@ class MainPageCont extends PureComponent {
 
   handleStartDateInput = startDate => {
     this.setState({
-      startDate,
+      startDate: moment(startDate).tz("Europe/Moscow"),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -91,7 +120,7 @@ class MainPageCont extends PureComponent {
 
   handleEndDateInput = endDate => {
     this.setState({
-      endDate,
+      endDate: moment(endDate).tz("Europe/Moscow"),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -99,8 +128,11 @@ class MainPageCont extends PureComponent {
   }
 
   handleStartTimeInput = startTime => {
+    if (startTime.minute() % 10 !== 0) {
+      startTime.minute('00');
+    }
     this.setState({
-      startTime,
+      startTime: moment(startTime),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -108,8 +140,11 @@ class MainPageCont extends PureComponent {
   }
 
   handleEndTimeInput = endTime => {
+    if (endTime.minute() % 10 !== 0) {
+      endTime.minute('00');
+    }
     this.setState({
-      endTime,
+      endTime: moment(endTime),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -124,6 +159,7 @@ class MainPageCont extends PureComponent {
         break;
       }
     }
+
     this.setState({
       brand: selectedBrand,
     }, () => {
@@ -140,30 +176,50 @@ class MainPageCont extends PureComponent {
     });
   }
 
+  handleNameInput = event => {
+    this.setState({
+      [event.target.name]: event.target.value.replace(/^[а-яёa-z]/g, l => l.toUpperCase()),
+    }, () => {
+      this.validateStepTwo();
+    });
+  }
+
   validateStepOne = () => {
     if (this.state.stepOneLazyValidation) {
       this.setState({
         validStartDate: this.state.startDate !== '' && moment(this.state.startDate).hour(23).minute(59).isAfter(),
-        validEndDate: this.state.endDate !== '' && this.state.startDate !== '' && moment(this.state.startDate).hour(0).minute(0).isBefore(this.state.endDate),
+        validEndDate: this.state.endDate !== '' && this.state.startDate !== '' && moment(this.state.startDate).hour(0).minute(0).isSameOrBefore(this.state.endDate),
         validStartTime: this.state.startTime !== '' && this.state.endTime !== '' && moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).isAfter(),
-        validEndTime: this.state.endTime !== '' && this.state.startTime !== '' && moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm')).isAfter(moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm'))),
+        validEndTime: this.state.endTime !== '' && this.state.startTime !== '' && 
+          moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm'))
+            .isAfter(moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm'))),
         validBrand: this.state.brand !== undefined,
       })
     }
   }
 
-  validateStepTwo = () => {
+  validateStepTwo = async () => {
     if (this.state.stepTwoLazyValidation) {
-      this.setState({
+      await this.setState({
         validFirstName: this.state.firstName !== '' && /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.firstName),
-        validLastName: this.state.lastName !== '' && /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.lastName),
-        validEmail: this.state.email !== ''  && /^[a-zA-Z]+([_.-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,4})+$/.test(this.state.email),
+        validLastName: this.state.lastName === '' || /^[А-ЯЁA-Z][а-яёa-z]+$/.test(this.state.lastName),
+        validEmail: this.state.email !== ''  && /^[a-zA-Z]+([_.-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})+$/.test(this.state.email),
         validPhoneNumber: this.state.phoneNumber !== '' && /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im.test(this.state.phoneNumber),
         validPersonalDataCheckbox: this.state.personalDataCheckbox,
-      })
+      });
+      if (this.state.validEmail) {
+        this.setState({
+          validPhoneNumber: true,
+        })
+      }
+      if (this.state.validPhoneNumber) {
+        this.setState({
+          validEmail: true,
+        })
+      }
     }
-    if (this.state.firstName !== '' && this.state.lastName !== '' &&
-    this.state.email !== '' && this.state.phoneNumber !== '' && this.state.personalDataCheckbox) {
+    if (this.state.firstName !== '' && this.state.personalDataCheckbox
+    && (this.state.email !== '' || this.state.phoneNumber !== '' )) {
       return true;
     } else {
       return false;
@@ -184,12 +240,12 @@ class MainPageCont extends PureComponent {
       app.get(request).then(res => {
         this.setState({
           price: res.data
-        })
-      })
+        });
+      });
     } else {
       this.setState({
         price: null,
-      })
+      });
     }
   }
 
@@ -209,14 +265,15 @@ class MainPageCont extends PureComponent {
   handleAdditionsSelect = event => {
     this.setState({
       selectedAdditions: event,
-    })
+    });
   }
 
   handleToStepThreeButton = () => {
     this.setState({
       stepTwoLazyValidation: true,
-    }, () => {
-      if (this.validateStepTwo()) {
+    }, async () => {
+      await this.validateStepTwo();
+      if (this.state.validFirstName && this.state.validPersonalDataCheckbox && (this.state.validEmail || this.state.validPhoneNumber)) {
         this.setState({
           step: 3,
         });
@@ -226,84 +283,187 @@ class MainPageCont extends PureComponent {
 
   handlePassportGetDateInput = passportGetDate => {
     this.setState({
-      passportGetDate,
+      passportGetDate: moment(passportGetDate).tz("Europe/Moscow"),
     });
   }
 
   handleBirthdayDateInput = birthdayDate => {
     this.setState({
-      birthdayDate,
+      birthdayDate: moment(birthdayDate).tz("Europe/Moscow"),
     });
   }
 
   handleLicenseExpireDateInput = licenseExpireDate => {
     this.setState({
-      licenseExpireDate,
-    })
+      licenseExpireDate: moment(licenseExpireDate).tz("Europe/Moscow"),
+    });
   }
 
   handleLicenseGetDateInput = licenseGetDate => {
     this.setState({
-      licenseGetDate,
-    })
+      licenseGetDate: moment(licenseGetDate).tz("Europe/Moscow"),
+    });
   }
 
   handleBackButton = () => {
     this.setState({
       step: this.state.step - 1,
-    })
+    });
   }
 
-  handleSubmitButton = () => {
+  stepThreeModalToggle = () => {
+    this.setState({
+      stepThreeModal: !this.state.stepThreeModal
+    });
+  }
+
+  handleModalCloseButton = () => {
+    this.setState({
+      step: 1,
+      stepOneLazyValidation: false,
+      stepTwoLazyValidation: false,
+      stepThreeLazyValidation: false,
+      startDate: '',
+      validStartDate: true,
+      endDate: '',
+      validEndDate: true,
+      startTime: '',
+      validStartTime: true,
+      endTime: '',
+      validEndTime: true,
+      brand: undefined,
+      validBrand: true,
+      price: null,
+      firstName: '',
+      validFirstName: true,
+      lastName: '',
+      validLastName: true,
+      middleName: '',
+      email: '',
+      validEmail: true,
+      phoneNumber: '',
+      validPhoneNumber: true,
+      personalDataCheckbox: false,
+      validPersonalDataCheckbox: true,
+      selectedAdditions: [],
+      passportOwnerName: '',
+      passportSeries: '',
+      passportIssuedBy: '',
+      passportRegAddress: '',
+      passportGetDate: '',
+      birthdayDate: '',
+      licenseSeries: '',
+      licenseIssuedBy: '',
+      licenseCategory: '',
+      licenseGetDate: '',
+      licenseExpireDate: '',
+      stepThreeModal: false,
+      isLoading: false,
+      requestSuccess: false,
+      recaptchaToken: '',
+      responseMessage: '',
+    });
+  }
+
+  getAdditionsArray = () => {
+    const additionsArray = [];
+    this.state.selectedAdditions.forEach(addition => {
+      additionsArray.push(addition.id);
+    });
+    return additionsArray;
+  }
+
+  handleSubmitButton = async () => {
+    this.setState({
+      isLoading: true,
+    });
+    await window.grecaptcha.execute(GOOGLE_RECAPTCHA_SITE_KEY, {action: 'formSending'}).then(async token => {
+      await this.setState({
+        recaptchaToken: token,
+      });
+    });
     const startDate = moment(this.state.startDate).add({
-      hours: this.state.startTime.format('h'),
+      hours: this.state.startTime.format('H'),
       minutes: this.state.startTime.format('m')
-    }).toISOString();
+    }).toISOString(true);
     const endDate = moment(this.state.endDate).add({
-      hours: this.state.endTime.format('h'),
+      hours: this.state.endTime.format('H'),
       minutes: this.state.endTime.format('m')
-    }).toISOString();
-    const { brand, price, firstName, lastName, middleName, email, phoneNumber, 
-      selectedAdditions, birthdayDate, passportSeries, passportIssuedBy, passportGetDate, 
-      passportRegAddress, licenseSeries, licenseIssuedBy, licenseGetDate, licenseExpireDate, 
-      licenseCategory, personalDataCheckbox } = this.state;
+    }).toISOString(true);
+    const {
+      brand,
+      price,
+      firstName,
+      lastName,
+      middleName,
+      email,
+      phoneNumber,
+      birthdayDate,
+      passportSeries,
+      passportIssuedBy,
+      passportGetDate, 
+      passportRegAddress,
+      licenseSeries,
+      licenseIssuedBy,
+      licenseGetDate,
+      licenseExpireDate, 
+      licenseCategory,
+      selectedAdditions,
+      recaptchaToken
+    } = this.state;
     const additions = [];
     selectedAdditions.forEach(item => {
       additions.push(item.value);
-    })
+    });
+    const serversideAdditions = this.getAdditionsArray();
     const application = {
       begin_time: startDate,
       end_time: endDate,
-      model_name: brand,
+      model: brand.id,
       last_name: lastName,
       first_name: firstName,
       patronymic: middleName,
-      birthdate: birthdayDate !== '' ? birthdayDate.toISOString() : '',
+      birthdate: birthdayDate !== '' ? birthdayDate.toISOString(true) : '',
       email,
       phone: phoneNumber,
       doc_number: passportSeries,
       doc_issued_by: passportIssuedBy,
-      doc_issued_date: passportGetDate !== '' ? passportGetDate.toISOString() : '',
+      doc_issued_date: passportGetDate !== '' ? passportGetDate.toISOString(true) : '',
       doc_registration: passportRegAddress,
       lic_number: licenseSeries,
-      lic_date: licenseGetDate !== '' ? licenseGetDate.toISOString() : '',
+      lic_date: licenseGetDate !== '' ? licenseGetDate.toISOString(true) : '',
       lic_issued_by: licenseIssuedBy,
-      lic_valid_to: licenseExpireDate !== '' ? licenseExpireDate.toISOString() : '',
+      lic_valid_to: licenseExpireDate !== '' ? licenseExpireDate.toISOString(true) : '',
       license_category: licenseCategory,
-      personal_data_agreement: personalDataCheckbox,
-      note: '',  // Threre is no such field in application
       price,
-      additions,
+      additions: serversideAdditions,
+      recaptcha_token: recaptchaToken,
     }
-    app.post('requests', application);
-    alert('Ваша заявка принята на рассмотрение!');
+    app.post('requests', application).then(async res => {
+        if (res.status === 200) {
+          await this.setState({
+            requestSuccess: true,
+            responseMessage: res.data.message,
+          });
+        }
+        this.setState({
+          isLoading: false,
+        });
+        this.stepThreeModalToggle();
+      }).catch(() => {
+      this.stepThreeModalToggle();
+      this.setState({
+        isLoading: false,
+      });
+    })
   }
 
   render() {
     if (this.state.step === 1) {
+      this.calculateBrand();
       return (
         <Fragment>
-          <MainPageStepOne
+          <AppStepOne
             startDate={this.state.startDate !== '' ? moment(this.state.startDate).format('DD MM YYYY') : ''}
             endDate={this.state.endDate !== '' ? moment(this.state.endDate).format('DD MM YYYY') : ''}
             startTime={this.state.startTime}
@@ -330,7 +490,7 @@ class MainPageCont extends PureComponent {
     if (this.state.step === 2) {
       return (
         <Fragment>
-          <MainPageStepTwo
+          <AppStepTwo
             firstName={this.state.firstName}
             lastName={this.state.lastName}
             email={this.state.email}
@@ -343,7 +503,9 @@ class MainPageCont extends PureComponent {
             validEmail={this.state.validEmail}
             validPhoneNumber={this.state.validPhoneNumber}
             validPersonalDataCheckbox={this.state.validPersonalDataCheckbox}
+            selectedAdditions={this.state.selectedAdditions}
             handleInputStepTwo={this.handleInputStepTwo}
+            handleNameInput={this.handleNameInput}
             handleAdditionsSelect={this.handleAdditionsSelect}
             handlePersonalDataCheckbox={this.handlePersonalDataCheckbox}
             handleToStepThreeButton={this.handleToStepThreeButton}
@@ -355,7 +517,7 @@ class MainPageCont extends PureComponent {
     if (this.state.step === 3) {
       return (
         <Fragment>
-          <MainPageStepThree
+          <AppStepThree
             firstName={this.state.firstName}
             lastName={this.state.lastName}
             middleName={this.state.middleName}
@@ -377,6 +539,13 @@ class MainPageCont extends PureComponent {
             handleLicenseExpireDateInput={this.handleLicenseExpireDateInput}
             handleBackButton={this.handleBackButton}
             handleSubmitButton={this.handleSubmitButton}
+            stepThreeModal={this.state.stepThreeModal}
+            stepThreeModalToggle={this.stepThreeModalToggle}
+            handleModalCloseButton={this.handleModalCloseButton}
+            recaptchaVerifyCallback={this.recaptchaVerifyCallback}
+            isLoading={this.state.isLoading}
+            requestSuccess={this.state.requestSuccess}
+            responseMessage={this.state.responseMessage}
           />
           <FAQ />
         </Fragment>
@@ -401,4 +570,4 @@ function mapDispatchToProps(dispatch, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPageCont);
+export default connect(mapStateToProps, mapDispatchToProps)(AppCont);

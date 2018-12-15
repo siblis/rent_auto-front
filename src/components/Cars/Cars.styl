@@ -3,10 +3,17 @@
 
   .container
     min-height calc(100vh - 380px)
+    @media (max-width: 1200px)
+      padding 0
 
   &__wrapper
-    background-color white
-    padding 12px 34px
-    margin 26px 0
     min-height calc(100vh - 380px)
+    margin 16px 0
+    display flex
+    flex-wrap wrap
+    justify-content space-around
+    
+    @media (max-width: 490px)
+      margin 16px 3px
+
     
