@@ -11,9 +11,13 @@ export default class Footer extends PureComponent {
       <footer className="footer">
         <Container>
           <ul className="footer__nav">
+            {/*}
             <li><Link to={`/policy`}>Персональные данные</Link></li>
+            */}
             <li><Link to={`/about`}>О нас</Link></li>
+            {/*}
             <li><Link to={`/description`}>Описание проекта</Link></li>
+            */}
             <li><Link to={`/rules`}>Условия аренды</Link></li>
           </ul>
           <div className="footer__schedule">

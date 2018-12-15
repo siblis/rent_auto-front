@@ -93,7 +93,9 @@ export default class Header extends PureComponent {
                   <Link to={`/app`} id='app' onClick={this.handleLinkClick}>Главная</Link>
                   <Link to={`/cars`} id='cars' onClick={this.handleLinkClick}>Список авто</Link>
                   <Link to={`/rules`} id='rules' onClick={this.handleLinkClick}>Условия проката</Link>
+                  {/*}
                   <Link to={`/services`} id='services' onClick={this.handleLinkClick}>Дополнительные услуги</Link>
+                  */}
                   <Link to={`/contacts`} id='contacts' onClick={this.handleLinkClick}>Контакты</Link>
                 </DropdownMenu>
               </Dropdown>
