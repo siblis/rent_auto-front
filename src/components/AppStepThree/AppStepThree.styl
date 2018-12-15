@@ -18,7 +18,10 @@
 
     @media (max-width: 1000px)
       display flex
-      flex-direction column
+      flex-wrap wrap
+
+    @media (max-width 500px)
+      padding 20px 3px
 
     .form-control
       width 100%
@@ -36,12 +39,50 @@
         font-style italic
         margin -5px 0 0 0
 
+      &__order_-5
+        @media (max-width 1000px)
+          order -5
+          margin-bottom 10px
+
+      &__order_-4
+        @media (max-width 1000px)
+          margin-bottom 10px
+          order -4
+          width 50%
+        @media (max-width 425px)
+          width 100%
+
+      &__order_0
+        @media (max-width 1000px)
+          order 0
+          margin-bottom 10px
+
+      &__order_1
+        @media (max-width 1000px)
+          margin-bottom 10px
+          order 1
+          width 50%
+        @media (max-width 425px)
+          width 100%
+
+      &__order_2
+        @media (max-width 1000px)
+          order 2
+          margin-bottom 10px
+
+      &__order_3
+        @media (max-width 1000px)
+          order 3
+          max-width 50%
+
   &__wrapper
     display flex
     justify-content flex-end
 
   &__btn-back
     margin 50px 0 0 0
+    @media (max-width 1000px)
+      margin 0 10px 0 0
 
   &__subttl
     margin 10px 0 0 0
@@ -53,6 +94,3 @@
   &__input--date
     .dropdown-item
       padding 0
-
-  .g-recaptcha
-    width 200px

@@ -22,7 +22,7 @@ class AppCont extends PureComponent {
   }
 
   state = {
-    step: 1,
+    step: 3,
     stepOneLazyValidation: false,
     stepTwoLazyValidation: false,
     stepThreeLazyValidation: false,
@@ -399,7 +399,6 @@ class AppCont extends PureComponent {
       licenseGetDate,
       licenseExpireDate, 
       licenseCategory,
-      personalDataCheckbox,
       selectedAdditions,
       recaptchaToken
     } = this.state;
@@ -427,8 +426,6 @@ class AppCont extends PureComponent {
       lic_issued_by: licenseIssuedBy,
       lic_valid_to: licenseExpireDate !== '' ? licenseExpireDate.toISOString(true) : '',
       license_category: licenseCategory,
-      personal_data_agreement: personalDataCheckbox,
-      note: '',  // Threre is no such field in the application
       price,
       additions: serversideAdditions,
       recaptcha_token: recaptchaToken,

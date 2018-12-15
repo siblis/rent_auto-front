@@ -48,11 +48,12 @@ export default class AppStepTwo extends PureComponent {
         <Container>
           <Form className="application">
             <div className="application__step-three">
-              <div className="application__title">
+              <div className="application__title application__order_-5">
                 <h4 className="application__field-name">Паспортные данные</h4>
                 <p className="application__note">Эту информацию можно не заполнять здесь, а заполнить лично в нашем офисе</p>
               </div>
               <Input
+                className="application__order_-5"
                 type="text"
                 name="passportOwnerName"
                 placeholder="Фамилия, имя и отчество"
@@ -60,6 +61,7 @@ export default class AppStepTwo extends PureComponent {
                 value={this.props.passportOwnerName ==='' ? `${this.props.lastName} ${this.props.firstName} ${this.props.middleName}` : this.props.passportOwnerName}
               />
               <Input
+                className="application__order_-5"
                 type="text"
                 name="passportSeries"
                 placeholder="Серия и номер"
@@ -67,7 +69,7 @@ export default class AppStepTwo extends PureComponent {
                 value={this.props.passportSeries}
               />
               <Input
-                className="application__address-textarea"
+                className="application__address-textarea application__order_0"
                 name="passportIssuedBy"
                 type="textarea"
                 placeholder="Кем выдан"
@@ -75,15 +77,16 @@ export default class AppStepTwo extends PureComponent {
                 value={this.props.passportIssuedBy}
               />
               <Input
-                className="application__address-textarea"
+                className="application__address-textarea application__order_0"
                 name="passportRegAddress"
                 type="textarea"
                 placeholder="Адрес регистрации"
                 onChange={this.props.handleInputStepThree}
                 value={this.props.passportRegAddress}
               />
-              <h4 className="application__subttl">Водительское удостоверение</h4>
+              <h4 className="application__subttl application__order_0">Водительское удостоверение</h4>
               <Input
+                className="application__order_0"
                 type="text"
                 name="licenseSeries"
                 placeholder="Серия и номер"
@@ -91,6 +94,7 @@ export default class AppStepTwo extends PureComponent {
                 value={this.props.licenseSeries}
               />
               <Input
+                className="application__order_0"
                 type="text"
                 name="licenseIssuedBy"
                 placeholder="Кем выдано"
@@ -98,13 +102,14 @@ export default class AppStepTwo extends PureComponent {
                 value={this.props.licenseIssuedBy}
               />
               <Input
+                className="application__order_2"
                 type="text"
                 name="licenseCategory"
                 placeholder="Категория ТС"
                 onChange={this.props.handleInputStepThree}
                 value={this.props.licenseCategory}
               />
-              <div className="application__wrapper">
+              <div className="application__wrapper application__order_3">
                 {/*
                 <FormGroup className="application__checkbox-group">
                   <Input type="checkbox" name="policy" id="policy" />
@@ -112,11 +117,17 @@ export default class AppStepTwo extends PureComponent {
                 
                 </FormGroup>
                 */}
-                <Button className="application__btn-back" color="primary" onClick={this.props.handleBackButton}>Назад</Button>
+                <Button
+                  className="application__btn-back"
+                  color="primary"
+                  onClick={this.props.handleBackButton}
+                >
+                  Назад
+                </Button>
               </div>
               <div className="div"></div>
               <div className="div"></div>
-              <div className="application__input application__input--date">
+              <div className="application__input application__input--date application__order_-4">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 <UncontrolledDropdown>
                   <DropdownToggle caret>
@@ -140,7 +151,7 @@ export default class AppStepTwo extends PureComponent {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
-              <div className="application__input application__input--date">
+              <div className="application__input application__input--date application__order_-4">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 <UncontrolledDropdown>
                   <DropdownToggle caret>
@@ -167,7 +178,7 @@ export default class AppStepTwo extends PureComponent {
               <div className="div"></div>
               <div className="div"></div>
               <div className="div"></div>
-              <div className="application__input application__input--date">
+              <div className="application__input application__input--date application__order_1">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 <UncontrolledDropdown>
                   <DropdownToggle caret>
@@ -191,7 +202,7 @@ export default class AppStepTwo extends PureComponent {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </div>
-              <div className="application__input application__input--date">
+              <div className="application__input application__input--date application__order_1">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 <UncontrolledDropdown>
                   <DropdownToggle caret>
@@ -216,7 +227,7 @@ export default class AppStepTwo extends PureComponent {
                 </UncontrolledDropdown>
               </div>
               <Button
-                className={this.props.isLoading ? 'application__btn-submit--step-three ld ld-ext-right running' : 'application__btn-submit--step-three'}
+                className={this.props.isLoading ? 'application__btn-submit--step-three ld ld-ext-right running application__order_3' : 'application__btn-submit--step-three application__order_3'}
                 onClick={this.props.handleSubmitButton}
               >{this.props.isLoading ? '' : 'Отправить'}
               <i className={this.props.isLoading ? 'ld ld-ring ld-spin' : ''}></i>
