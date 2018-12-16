@@ -4,6 +4,31 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
+const routes = [
+  {
+    path: 'app',
+    title: 'Главная',
+  },
+  {
+    path: 'cars',
+    title: 'Список авто',
+  },
+  {
+    path: 'rules',
+    title: 'Условия проката',
+  },
+  /* Hidden in current version
+  {
+    path: 'services',
+    title: 'Дополнительные услуги',
+  },
+  */
+  {
+    path: 'contacts',
+    title: 'Контакты',
+  }
+]
+
 export default class Header extends PureComponent {
   state = {
     dropdownMenuTitle: 'Парк авто',
@@ -12,29 +37,13 @@ export default class Header extends PureComponent {
   }
 
   componentDidMount = () => {
-    const path = window.location.pathname;
+    const path = window.location.pathname.slice(1);
 
-    if (path === '/cars') {
-      this.setState({
-        dropdownMenuTitle: 'Список авто',
-      });
-    } else if (path === '/rules') {
-      this.setState({
-        dropdownMenuTitle: 'Условия проката',
-      });
-    } else if (path === '/services') {
-      this.setState({
-        dropdownMenuTitle: 'Дополнительные услуги',
-      });
-    } else if (path === '/contacts') {
-      this.setState({
-        dropdownMenuTitle: 'Контакты',
-      });
-    } else {
-      this.setState({
-        dropdownMenuTitle: 'Главная',
-      });
-    }
+    const route = routes.find(route => route.path === path);
+    const title = route ? route.title : routes[0].title;
+    this.setState({
+      dropdownMenuTitle: title,
+    });
   }
   
   dropdownToggle = () => {
@@ -43,38 +52,17 @@ export default class Header extends PureComponent {
     }));
   }
 
-  setDropdownMenuTitle = (event) => {
-    let targetId = '';
+  setDropdownMenuTitle = event => {
+    const targetId = event.target.id;
 
-    if (event) {
-      targetId = event.target.id;
-    }
-
-    if (targetId === 'cars') {
-      this.setState({
-        dropdownMenuTitle: 'Список авто',
-      });
-    } else if (targetId === 'rules') {
-      this.setState({
-        dropdownMenuTitle: 'Условия проката',
-      });
-    } else if (targetId === 'services') {
-      this.setState({
-        dropdownMenuTitle: 'Дополнительные услуги',
-      });
-    } else if (targetId === 'contacts') {
-      this.setState({
-        dropdownMenuTitle: 'Контакты',
-      });
-    } else {
-      this.setState({
-        dropdownMenuTitle: 'Главная',
-      });
-    }
+    const title = routes.find(route => route.path === targetId).title;
+    this.setState({
+      dropdownMenuTitle: title,
+    });
   }
 
-  handleLinkClick = () => {
-    this.setDropdownMenuTitle();
+  handleLinkClick = event => {
+    this.setDropdownMenuTitle(event);
     this.dropdownToggle();
   }
 
@@ -90,13 +78,7 @@ export default class Header extends PureComponent {
                   {this.state.dropdownMenuTitle}
                 </DropdownToggle>
                 <DropdownMenu className="header__dropdown-menu">
-                  <Link to={`/app`} id='app' onClick={this.handleLinkClick}>Главная</Link>
-                  <Link to={`/cars`} id='cars' onClick={this.handleLinkClick}>Список авто</Link>
-                  <Link to={`/rules`} id='rules' onClick={this.handleLinkClick}>Условия проката</Link>
-                  {/*}
-                  <Link to={`/services`} id='services' onClick={this.handleLinkClick}>Дополнительные услуги</Link>
-                  */}
-                  <Link to={`/contacts`} id='contacts' onClick={this.handleLinkClick}>Контакты</Link>
+                  {routes.map((route, index) => <Link key={index} to={`/${route.path}`} onClick={this.handleLinkClick} id={route.path}>{route.title}</Link>)}
                 </DropdownMenu>
               </Dropdown>
               <li className="header__contacts">

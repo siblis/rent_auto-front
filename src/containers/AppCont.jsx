@@ -111,7 +111,8 @@ class AppCont extends PureComponent {
     });
   }
 
-  handleStartDateInput = startDate => {
+  handleStartDateInput = event => {
+    const startDate = event.target ? event.target.value : event;
     this.setState({
       startDate: moment(startDate).tz("Europe/Moscow"),
     }, () => {
@@ -120,7 +121,8 @@ class AppCont extends PureComponent {
     });
   }
 
-  handleEndDateInput = endDate => {
+  handleEndDateInput = event => {
+    const endDate = event.target ? event.target.value : event;
     this.setState({
       endDate: moment(endDate).tz("Europe/Moscow"),
     }, () => {
@@ -283,25 +285,29 @@ class AppCont extends PureComponent {
     });
   }
 
-  handlePassportGetDateInput = passportGetDate => {
+  handlePassportGetDateInput = event => {
+    const passportGetDate = event.target ? event.target.value : event;
     this.setState({
       passportGetDate: moment(passportGetDate).tz("Europe/Moscow"),
     });
   }
 
-  handleBirthdayDateInput = birthdayDate => {
+  handleBirthdayDateInput = event => {
+    const birthdayDate = event.target ? event.target.value : event;
     this.setState({
       birthdayDate: moment(birthdayDate).tz("Europe/Moscow"),
     });
   }
 
-  handleLicenseExpireDateInput = licenseExpireDate => {
+  handleLicenseExpireDateInput = event => {
+    const licenseExpireDate = event.target ? event.target.value : event;
     this.setState({
       licenseExpireDate: moment(licenseExpireDate).tz("Europe/Moscow"),
     });
   }
 
-  handleLicenseGetDateInput = licenseGetDate => {
+  handleLicenseGetDateInput = event => {
+    const licenseGetDate = event.target ? event.target.value : event;
     this.setState({
       licenseGetDate: moment(licenseGetDate).tz("Europe/Moscow"),
     });
