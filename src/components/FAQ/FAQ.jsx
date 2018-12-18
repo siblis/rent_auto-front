@@ -61,7 +61,7 @@ export default class About extends PureComponent {
             <div className="faq__text">
               {faq.map((item, index) => (
                 <Fragment key={index}>
-                  <Button disabled={this.isCollapseOpen()} className="faq__question" id={`question-${index}`}>
+                  <Button style={this.isCollapseOpen() ? { pointerEvents: 'none' } : {}} className="faq__question" id={`question-${index}`}>
                     <div dangerouslySetInnerHTML={{__html: item.question}}></div>
                   </Button>
                   {this.isCollapseOpen() ? <UncontrolledCollapse isOpen className="faq__answer" toggler={`#question-${index}`}>

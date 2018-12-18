@@ -37,8 +37,20 @@ export default class Cars extends PureComponent {
             )}
           </div>
           <div className="car-card__buttons">
-            <Link className="btn btn-primary car-card__button" to={`/car/${this.props.car.id}`}>Подробнее</Link>
-            <Link className="btn btn-secondary car-card__button" to={{pathname: '/app', carId: this.props.car.id}}>Забронировать</Link>
+            <Link
+              className="btn btn-primary car-card__button"
+              to={`/car/${this.props.car.id}`}
+              onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0}
+            >
+              Подробнее
+            </Link>
+            <Link
+              className="btn btn-secondary car-card__button"
+              to={{pathname: '/app', carId: this.props.car.id}}
+              onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0}
+            >
+              Забронировать
+            </Link>
           </div>
         </div>
       </div>
