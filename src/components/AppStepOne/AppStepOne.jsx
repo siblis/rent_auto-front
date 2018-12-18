@@ -7,7 +7,6 @@ import { Container, UncontrolledDropdown, Dropdown, DropdownItem, DropdownMenu, 
 import propTypes from 'prop-types';
 import Calendar from 'react-infinite-calendar';
 import TimePicker from 'rc-time-picker';
-import moment from 'moment';
 
 import calendarLocale from '../../utils/calendarLocale';
 import calendarTheme from '../../utils/calendarTheme';
@@ -38,9 +37,9 @@ export default class AppStepOne extends PureComponent {
     endDateDropdownOpen: false,
   }
 
-  isMobile = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
-  }
+  isSmallScreen = () => document.documentElement.clientWidth < 420;
+
+  isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
   startDateDropdownToggle = () => {
     this.setState(prevState => ({
@@ -64,14 +63,6 @@ export default class AppStepOne extends PureComponent {
                 <h4 className="application__field-name">Дата получения *</h4>
                 <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                  {this.isMobile() ? 
-                  <input
-                    type="date"
-                    onChange={this.props.handleStartDateInput}
-                    min={moment().format('YYYY-MM-DD')}
-                    className={this.props.validStartDate ? 'application__mobile-date-input' : 'application__mobile-date-input application__invalid animated bounce'}
-                  >
-                  </input> : 
                   <Dropdown isOpen={this.state.startDateDropdownOpen} toggle={this.startDateDropdownToggle}>
                     <DropdownToggle caret className={this.props.validStartDate ? '' : 'application__invalid animated bounce'}>
                       {this.props.startDate}
@@ -81,12 +72,12 @@ export default class AppStepOne extends PureComponent {
                         onSelect={this.props.handleStartDateInput}
                         locale={calendarLocale}
                         minDate={new Date()}
-                        width={400}
+                        width={this.isSmallScreen() ? 300 : 400}
                         height={400}
                         theme={calendarTheme}
                       />
                     </DropdownMenu>
-                  </Dropdown>}
+                  </Dropdown>
                   {this.props.validStartDate || <div className="application__error animated bounce">!</div>}
                 </div>
               </div>
@@ -94,14 +85,6 @@ export default class AppStepOne extends PureComponent {
                 <h4 className="application__field-name">Дата возврата *</h4>
                 <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                  {this.isMobile() ?
-                  <input
-                    type="date"
-                    onChange={this.props.handleEndDateInput}
-                    min={moment().format('YYYY-MM-DD')}
-                    className={this.props.validEndDate ? 'application__mobile-date-input' : 'application__mobile-date-input application__invalid animated bounce'}
-                  >
-                  </input> :
                   <Dropdown isOpen={this.state.endDateDropdownOpen} toggle={this.endDateDropdownToggle}>
                     <DropdownToggle caret className={this.props.validEndDate ? '' : 'application__invalid animated bounce'}>
                       {this.props.endDate}
@@ -111,12 +94,12 @@ export default class AppStepOne extends PureComponent {
                         onSelect={this.props.handleEndDateInput}
                         locale={calendarLocale}
                         minDate={new Date()}
-                        width={400}
+                        width={this.isSmallScreen() ? 300 : 400}
                         height={400}
                         theme={calendarTheme}
                       />
                     </DropdownMenu>
-                  </Dropdown>}
+                  </Dropdown>
                   {this.props.validEndDate || <div className="application__error animated bounce">!</div>}
                 </div>
               </div>

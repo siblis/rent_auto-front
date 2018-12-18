@@ -64,9 +64,9 @@ export default class AppStepTwo extends PureComponent {
     birthdayDateType: 'text',
   }
 
-  isMobile = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
-  }
+  isSmallScreen = () => document.documentElement.clientWidth < 420;
+
+  isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
   birthdayDateDropdownToggle = () => {
     this.setState(prevState => ({
@@ -91,55 +91,7 @@ export default class AppStepTwo extends PureComponent {
       licenseExpireDateDropdownOpen: !prevState.licenseExpireDateDropdownOpen
     }));
   }
-
-  handleLicenseExpireDateOnFocus = () => {
-    this.setState({
-      licenseExpireDateType: 'date',
-    })
-  }
-
-  handleLicenseExpireDateOnBlur = () => {
-    this.setState({
-      licenseExpireDateType: 'text',
-    })
-  }
-
-  handleLicenseGetDateOnFocus = () => {
-    this.setState({
-      licenseGetDateType: 'date',
-    })
-  }
-
-  handleLicenseGetDateOnBlur = () => {
-    this.setState({
-      licenseGetDateType: 'text',
-    })
-  }
-
-  handlePassportGetDateOnFocus = () => {
-    this.setState({
-      passportGetDateType: 'date',
-    })
-  }
-
-  handlePassportGetDateOnBlur = () => {
-    this.setState({
-      passportGetDateType: 'text',
-    })
-  }
-
-  handleBirthdayDateOnFocus = () => {
-    this.setState({
-      birthdayDateType: 'date',
-    })
-  }
-
-  handleBirthdayDateOnBlur = () => {
-    this.setState({
-      birthdayDateType: 'text',
-    })
-  }
-
+  
   render() {
     return (
       <main className="app">
@@ -227,16 +179,6 @@ export default class AppStepTwo extends PureComponent {
               <div className="div"></div>
               <div className="application__input application__input--date application__order_-4">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                {this.isMobile() ? 
-                  <input
-                    onFocus={this.handleBirthdayDateOnFocus}
-                    onBlur={this.handleBirthdayDateOnBlur}
-                    type={this.state.birthdayDateType}
-                    onChange={this.props.handleBirthdayDateInput}
-                    className="application__mobile-date-input"
-                    placeholder="Дата рождения"
-                  >
-                  </input> :
                   <Dropdown isOpen={this.state.birthdayDateDropdownOpen} toggle={this.birthdayDateDropdownToggle}>
                     <DropdownToggle caret>
                       {this.props.birthdayDate}
@@ -246,27 +188,17 @@ export default class AppStepTwo extends PureComponent {
                         onSelect={this.props.handleBirthdayDateInput}
                         locale={calendarLocale}
                         theme={calendarTheme}
-                        width={400}
+                        width={this.isSmallScreen() ? 300 : 400}
                         height={400}
                         min={new Date(1900, 0, 1)}
                         max={new Date()}
                         selected={new Date(2000, 0, 1)}
                       />
                     </DropdownMenu>
-                  </Dropdown>}
+                  </Dropdown>
               </div>
               <div className="application__input application__input--date application__order_-4">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                {this.isMobile() ? 
-                  <input
-                    onFocus={this.handlePassportGetDateOnFocus}
-                    onBlur={this.handlePassportGetDateOnBlur}
-                    type={this.state.passportGetDateType}
-                    onChange={this.props.handlePassportGetDateInput}
-                    className="application__mobile-date-input"
-                    placeholder="Когда выдан"
-                  >
-                  </input> :
                   <Dropdown isOpen={this.state.passportGetDateDropdownOpen} toggle={this.passportGetDateDropdownToggle}>
                     <DropdownToggle caret>
                       {this.props.passportGetDate}
@@ -276,30 +208,20 @@ export default class AppStepTwo extends PureComponent {
                         onSelect={this.props.handlePassportGetDateInput}
                         locale={calendarLocale}
                         theme={calendarTheme}
-                        width={400}
+                        width={this.isSmallScreen() ? 300 : 400}
                         height={400}
                         min={new Date(1950, 0, 1)}
                         max={new Date()}
                         selected={new Date(2010, 0, 1)}
                       />
                     </DropdownMenu>
-                  </Dropdown>}
+                  </Dropdown>
               </div>
               <div className="div"></div>
               <div className="div"></div>
               <div className="div"></div>
               <div className="application__input application__input--date application__order_1">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                {this.isMobile() ? 
-                  <input
-                    onFocus={this.handleLicenseGetDateOnFocus}
-                    onBlur={this.handleLicenseGetDateOnBlur}
-                    type={this.state.licenseGetDateType}
-                    onChange={this.props.handleLicenseGetDateInput}
-                    className="application__mobile-date-input"
-                    placeholder="Когда выдано"
-                  >
-                  </input> : 
                   <Dropdown isOpen={this.state.licenseGetDateDropdownOpen} toggle={this.licenseGetDateDropdownToggle}>
                     <DropdownToggle caret>
                       {this.props.licenseGetDate}
@@ -309,27 +231,17 @@ export default class AppStepTwo extends PureComponent {
                         onSelect={this.props.handleLicenseGetDateInput}
                         locale={calendarLocale}
                         theme={calendarTheme}
-                        width={400}
+                        width={this.isSmallScreen() ? 300 : 400}
                         height={400}
                         min={new Date(1950, 0, 1)}
                         max={new Date()}
                         selected={new Date(2010, 0, 1)}
                       />
                     </DropdownMenu>
-                  </Dropdown>}
+                  </Dropdown>
               </div>
               <div className="application__input application__input--date application__order_1">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                {this.isMobile() ? 
-                  <input
-                    onFocus={this.handleLicenseExpireDateOnFocus}
-                    onBlur={this.handleLicenseExpireDateOnBlur}
-                    type={this.state.licenseExpireDateType}
-                    onChange={this.props.handleLicenseExpireDateInput}
-                    className="application__mobile-date-input"
-                    placeholder="Срок действия"
-                  >
-                  </input> : 
                   <Dropdown isOpen={this.state.licenseExpireDateDropdownOpen} toggle={this.licenseExpireDateDropdownToggle}>
                     <DropdownToggle caret>
                       {this.props.licenseExpireDate}
@@ -339,14 +251,14 @@ export default class AppStepTwo extends PureComponent {
                         onSelect={this.props.handleLicenseExpireDateInput}
                         locale={calendarLocale}
                         theme={calendarTheme}
-                        width={400}
+                        width={this.isSmallScreen() ? 300 : 400}
                         height={400}
                         min={new Date(2015, 0, 1)}
                         max={new Date(2060, 0, 1)}
                         selected={new Date(2020, 0, 1)}
                       />
                     </DropdownMenu>
-                  </Dropdown>}
+                  </Dropdown>
               </div>
               <Button
                 className={this.props.isLoading ? 'application__btn-submit--step-three ld ld-ext-right running application__order_3' : 'application__btn-submit--step-three application__order_3'}
