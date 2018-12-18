@@ -17,6 +17,7 @@ export default class AppStepOne extends PureComponent {
     brands: propTypes.array,
     startDate: propTypes.string,
     endDate: propTypes.string,
+    endTime: propTypes.object,
     brand: propTypes.object,
     price: propTypes.number,
     handleStartDateInput: propTypes.func,
@@ -60,7 +61,7 @@ export default class AppStepOne extends PureComponent {
           <Form className="application">
             <div className="application__step-one">
               <div className="application__block application__block--start-date">
-                <h4 className="application__field-name">Дата получения</h4>
+                <h4 className="application__field-name">Дата получения *</h4>
                 <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                   {this.isMobile() ? 
@@ -90,7 +91,7 @@ export default class AppStepOne extends PureComponent {
                 </div>
               </div>
               <div className="application__block application__block--end-date">
-                <h4 className="application__field-name">Дата возврата</h4>
+                <h4 className="application__field-name">Дата возврата *</h4>
                 <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                   {this.isMobile() ?
@@ -120,7 +121,7 @@ export default class AppStepOne extends PureComponent {
                 </div>
               </div>
               <div className="application__block application__block--model">
-                <h4 className="application__field-name">Модель</h4>
+                <h4 className="application__field-name">Модель *</h4>
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/car.svg')}></object>
                   <UncontrolledDropdown>
@@ -137,7 +138,7 @@ export default class AppStepOne extends PureComponent {
                 </div>
               </div>
               <div className="application__block application__block--start-time">
-                <h4 className="application__field-name">Время получения</h4>
+                <h4 className="application__field-name">Время получения *</h4>
                 <div className="application__input">
                   <object className="application__icon application__icon--clock" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
                   <TimePicker
@@ -151,7 +152,7 @@ export default class AppStepOne extends PureComponent {
                 </div>
               </div>
               <div className="application__block">
-                <h4 className="application__field-name">Время возврата</h4>
+                <h4 className="application__field-name">Время возврата *</h4>
                 <div className="application__input">
                   <object className="application__icon application__icon--clock" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
                   <TimePicker
@@ -160,6 +161,7 @@ export default class AppStepOne extends PureComponent {
                     showSecond={false}
                     minuteStep={10}
                     allowEmpty={false}
+                    value={this.props.endTime}
                   />
                   {this.props.validEndTime || <div className="application__error animated bounce">!</div>}      
                 </div>

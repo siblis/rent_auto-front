@@ -61,7 +61,7 @@ export default class AppStepTwo extends PureComponent {
                 </div>
               </FormGroup>
               <FormGroup>
-                <Label for="firstName">Имя</Label>
+                <Label for="firstName">Имя *</Label>
                 <div className="application__input-group">
                   <Input
                     className={this.props.validFirstName ? '' : 'application__invalid animated bounce'}
@@ -96,7 +96,7 @@ export default class AppStepTwo extends PureComponent {
                 />
               </div>
               <FormGroup>
-                <Label for="email">E-mail</Label>
+                <Label for="email">E-mail *</Label>
                 <div className="application__input-group">
                   <Input
                     className={this.props.validEmail ? '' : 'application__invalid animated bounce'}
@@ -130,7 +130,7 @@ export default class AppStepTwo extends PureComponent {
                   id="policy"
                   checked={this.props.personalDataCheckbox}
                   onChange={this.props.handlePersonalDataCheckbox}/>
-                <Label for="policy">Согласие на обработку персональных данных</Label>
+                <Label for="policy">Согласие на обработку персональных данных *</Label>
                 {this.props.validPersonalDataCheckbox || <div className="application__error animated bounce">!</div>}
               </div>
               <div></div>

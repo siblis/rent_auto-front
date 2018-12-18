@@ -32,7 +32,7 @@ export default class Cars extends PureComponent {
               index < 5 ?
               <div className="car-card__row" key={index}>
                 <div>{rate.name}</div>
-                <div>{this.props.car.rental.day_cost * rate.rate}</div>
+                <div>{(this.props.car.rental.day_cost * rate.rate).toFixed(0)}</div>
               </div> : ''
             )}
           </div>

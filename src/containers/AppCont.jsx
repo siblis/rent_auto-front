@@ -135,6 +135,11 @@ class AppCont extends PureComponent {
     if (startTime.minute() % 10 !== 0) {
       startTime.minute('00');
     }
+    if (this.state.endTime === '') {
+      this.setState({
+        endTime: moment(startTime),
+      })
+    }
     this.setState({
       startTime: moment(startTime),
     }, () => {
@@ -475,7 +480,7 @@ class AppCont extends PureComponent {
             startDate={this.state.startDate !== '' ? moment(this.state.startDate).format('DD MM YYYY') : ''}
             endDate={this.state.endDate !== '' ? moment(this.state.endDate).format('DD MM YYYY') : ''}
             startTime={this.state.startTime}
-            endTime={this.state.endTime}
+            endTime={this.state.endTime !== '' ? moment(this.state.endTime) : undefined}
             brands={this.props.brands}
             brand={this.state.brand}
             price={this.state.price}

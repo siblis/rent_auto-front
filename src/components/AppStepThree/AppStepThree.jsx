@@ -58,6 +58,10 @@ export default class AppStepTwo extends PureComponent {
     passportGetDateDropdownOpen: false,
     licenseGetDateDropdownOpen: false,
     licenseExpireDateDropdownOpen: false,
+    licenseExpireDateType: 'text',
+    licenseGetDateType: 'text',
+    passportGetDateType: 'text',
+    birthdayDateType: 'text',
   }
 
   isMobile = () => {
@@ -86,6 +90,54 @@ export default class AppStepTwo extends PureComponent {
     this.setState(prevState => ({
       licenseExpireDateDropdownOpen: !prevState.licenseExpireDateDropdownOpen
     }));
+  }
+
+  handleLicenseExpireDateOnFocus = () => {
+    this.setState({
+      licenseExpireDateType: 'date',
+    })
+  }
+
+  handleLicenseExpireDateOnBlur = () => {
+    this.setState({
+      licenseExpireDateType: 'text',
+    })
+  }
+
+  handleLicenseGetDateOnFocus = () => {
+    this.setState({
+      licenseGetDateType: 'date',
+    })
+  }
+
+  handleLicenseGetDateOnBlur = () => {
+    this.setState({
+      licenseGetDateType: 'text',
+    })
+  }
+
+  handlePassportGetDateOnFocus = () => {
+    this.setState({
+      passportGetDateType: 'date',
+    })
+  }
+
+  handlePassportGetDateOnBlur = () => {
+    this.setState({
+      passportGetDateType: 'text',
+    })
+  }
+
+  handleBirthdayDateOnFocus = () => {
+    this.setState({
+      birthdayDateType: 'date',
+    })
+  }
+
+  handleBirthdayDateOnBlur = () => {
+    this.setState({
+      birthdayDateType: 'text',
+    })
   }
 
   render() {
@@ -177,8 +229,11 @@ export default class AppStepTwo extends PureComponent {
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 {this.isMobile() ? 
                   <input
-                    type="date"
+                    onFocus={this.handleBirthdayDateOnFocus}
+                    onBlur={this.handleBirthdayDateOnBlur}
+                    type={this.state.birthdayDateType}
                     onChange={this.props.handleBirthdayDateInput}
+                    className="application__mobile-date-input"
                     placeholder="Дата рождения"
                   >
                   </input> :
@@ -204,8 +259,11 @@ export default class AppStepTwo extends PureComponent {
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 {this.isMobile() ? 
                   <input
-                    type="date"
+                    onFocus={this.handlePassportGetDateOnFocus}
+                    onBlur={this.handlePassportGetDateOnBlur}
+                    type={this.state.passportGetDateType}
                     onChange={this.props.handlePassportGetDateInput}
+                    className="application__mobile-date-input"
                     placeholder="Когда выдан"
                   >
                   </input> :
@@ -234,8 +292,11 @@ export default class AppStepTwo extends PureComponent {
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 {this.isMobile() ? 
                   <input
-                    type="date"
+                    onFocus={this.handleLicenseGetDateOnFocus}
+                    onBlur={this.handleLicenseGetDateOnBlur}
+                    type={this.state.licenseGetDateType}
                     onChange={this.props.handleLicenseGetDateInput}
+                    className="application__mobile-date-input"
                     placeholder="Когда выдано"
                   >
                   </input> : 
@@ -261,8 +322,11 @@ export default class AppStepTwo extends PureComponent {
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                 {this.isMobile() ? 
                   <input
-                    type="date"
+                    onFocus={this.handleLicenseExpireDateOnFocus}
+                    onBlur={this.handleLicenseExpireDateOnBlur}
+                    type={this.state.licenseExpireDateType}
                     onChange={this.props.handleLicenseExpireDateInput}
+                    className="application__mobile-date-input"
                     placeholder="Срок действия"
                   >
                   </input> : 

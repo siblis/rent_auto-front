@@ -48,8 +48,7 @@ const faq = [
 
 export default class About extends PureComponent {
   isCollapseOpen = () => {
-    const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
-    return document.documentElement.clientWidth < 1000 || mobile;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
   }
 
   render() {
@@ -62,7 +61,7 @@ export default class About extends PureComponent {
             <div className="faq__text">
               {faq.map((item, index) => (
                 <Fragment key={index}>
-                  <Button className="faq__question" id={`question-${index}`}>
+                  <Button disabled={this.isCollapseOpen()} className="faq__question" id={`question-${index}`}>
                     <div dangerouslySetInnerHTML={{__html: item.question}}></div>
                   </Button>
                   {this.isCollapseOpen() ? <UncontrolledCollapse isOpen className="faq__answer" toggler={`#question-${index}`}>
