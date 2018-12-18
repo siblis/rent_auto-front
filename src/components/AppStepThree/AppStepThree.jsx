@@ -61,9 +61,7 @@ export default class AppStepTwo extends PureComponent {
   }
 
   isMobile = () => {
-    const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
-    // return document.documentElement.clientWidth < 500 || mobile;
-    return mobile;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
   }
 
   birthdayDateDropdownToggle = () => {
@@ -181,6 +179,7 @@ export default class AppStepTwo extends PureComponent {
                   <input
                     type="date"
                     onChange={this.props.handleBirthdayDateInput}
+                    placeholder="Дата рождения"
                   >
                   </input> :
                   <Dropdown isOpen={this.state.birthdayDateDropdownOpen} toggle={this.birthdayDateDropdownToggle}>
@@ -207,6 +206,7 @@ export default class AppStepTwo extends PureComponent {
                   <input
                     type="date"
                     onChange={this.props.handlePassportGetDateInput}
+                    placeholder="Когда выдан"
                   >
                   </input> :
                   <Dropdown isOpen={this.state.passportGetDateDropdownOpen} toggle={this.passportGetDateDropdownToggle}>
@@ -236,6 +236,7 @@ export default class AppStepTwo extends PureComponent {
                   <input
                     type="date"
                     onChange={this.props.handleLicenseGetDateInput}
+                    placeholder="Когда выдано"
                   >
                   </input> : 
                   <Dropdown isOpen={this.state.licenseGetDateDropdownOpen} toggle={this.licenseGetDateDropdownToggle}>
@@ -262,6 +263,7 @@ export default class AppStepTwo extends PureComponent {
                   <input
                     type="date"
                     onChange={this.props.handleLicenseExpireDateInput}
+                    placeholder="Срок действия"
                   >
                   </input> : 
                   <Dropdown isOpen={this.state.licenseExpireDateDropdownOpen} toggle={this.licenseExpireDateDropdownToggle}>

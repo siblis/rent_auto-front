@@ -38,9 +38,7 @@ export default class AppStepOne extends PureComponent {
   }
 
   isMobile = () => {
-    const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
-    // return document.documentElement.clientWidth < 500 || mobile;
-    return mobile;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
   }
 
   startDateDropdownToggle = () => {
