@@ -137,11 +137,11 @@ class AppCont extends PureComponent {
     }
     if (this.state.endTime === '') {
       this.setState({
-        endTime: moment(startTime),
+        endTime: moment(startTime).tz("Europe/Moscow"),
       })
     }
     this.setState({
-      startTime: moment(startTime),
+      startTime: moment(startTime).tz("Europe/Moscow"),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -153,7 +153,7 @@ class AppCont extends PureComponent {
       endTime.minute('00');
     }
     this.setState({
-      endTime: moment(endTime),
+      endTime: moment(endTime).tz("Europe/Moscow"),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -243,8 +243,8 @@ class AppCont extends PureComponent {
     }
     await this.validateStepOne();
     if (this.state.validStartDate && this.state.validEndDate && this.state.validStartTime && this.state.validEndTime && this.state.brand && this.state.stepOneLazyValidation) {
-      const startDate = moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).toISOString();
-      const endDate = moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm')).toISOString();
+      const startDate = moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).format();
+      const endDate = moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm')).format();
       const request = `rent_values?start_time=${startDate}&end_time=${endDate}&model=${this.state.brand.id}`
       app.get(request).then(res => {
         this.setState({

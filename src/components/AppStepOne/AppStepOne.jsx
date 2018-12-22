@@ -53,8 +53,7 @@ export default class AppStepOne extends PureComponent {
     }));
   }
 
-  render() {
-    return (
+  render() {return (
       <main className="app">
         <Container>
           <Form className="application">

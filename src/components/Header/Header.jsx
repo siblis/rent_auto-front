@@ -17,12 +17,10 @@ const routes = [
     path: 'rules',
     title: 'Условия проката',
   },
-  /* Hidden in current version
   {
     path: 'services',
     title: 'Дополнительные услуги',
   },
-  */
   {
     path: 'contacts',
     title: 'Контакты',
@@ -55,7 +53,8 @@ export default class Header extends PureComponent {
   setDropdownMenuTitle = event => {
     const targetId = event.target.id;
 
-    const title = routes.find(route => route.path === targetId).title;
+    const route = routes.find(route => route.path === targetId);
+    const title = route ? route.title : routes[0].title;
     this.setState({
       dropdownMenuTitle: title,
     });
