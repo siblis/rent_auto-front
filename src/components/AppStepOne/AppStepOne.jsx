@@ -1,4 +1,3 @@
-import '../../../node_modules/rc-time-picker/assets/index.css';
 import './AppStepOne.styl';
 
 import React, { PureComponent } from 'react';
@@ -53,7 +52,8 @@ export default class AppStepOne extends PureComponent {
     }));
   }
 
-  render() {return (
+  render() {
+    return (
       <main className="app">
         <Container>
           <Form className="application">
@@ -70,6 +70,7 @@ export default class AppStepOne extends PureComponent {
                       <Calendar
                         onSelect={this.props.handleStartDateInput}
                         locale={calendarLocale}
+                        min={new Date()}
                         minDate={new Date()}
                         width={this.isSmallScreen() ? 300 : 400}
                         height={400}
@@ -92,6 +93,7 @@ export default class AppStepOne extends PureComponent {
                       <Calendar
                         onSelect={this.props.handleEndDateInput}
                         locale={calendarLocale}
+                        min={new Date()}
                         minDate={new Date()}
                         width={this.isSmallScreen() ? 300 : 400}
                         height={400}

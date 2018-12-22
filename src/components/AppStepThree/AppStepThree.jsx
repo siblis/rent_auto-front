@@ -1,4 +1,3 @@
-import '../../../node_modules/rc-time-picker/assets/index.css';
 import './AppStepThree.styl';
 
 import React, { PureComponent } from 'react';
@@ -192,6 +191,8 @@ export default class AppStepTwo extends PureComponent {
                         height={400}
                         min={new Date(1900, 0, 1)}
                         max={new Date()}
+                        minDate={new Date(1900, 0, 1)}
+                        maxDate={new Date()}
                         selected={new Date(2000, 0, 1)}
                       />
                     </DropdownMenu>
@@ -212,6 +213,8 @@ export default class AppStepTwo extends PureComponent {
                         height={400}
                         min={new Date(1950, 0, 1)}
                         max={new Date()}
+                        minDate={new Date(1950, 0, 1)}
+                        maxDate={new Date()}
                         selected={new Date(2010, 0, 1)}
                       />
                     </DropdownMenu>
@@ -235,6 +238,8 @@ export default class AppStepTwo extends PureComponent {
                         height={400}
                         min={new Date(1950, 0, 1)}
                         max={new Date()}
+                        minDate={new Date(1950, 0, 1)}
+                        maxDate={new Date()}
                         selected={new Date(2010, 0, 1)}
                       />
                     </DropdownMenu>
@@ -255,6 +260,8 @@ export default class AppStepTwo extends PureComponent {
                         height={400}
                         min={new Date(2015, 0, 1)}
                         max={new Date(2060, 0, 1)}
+                        minDate={new Date(2015, 0, 1)}
+                        maxDate={new Date(2060, 0, 1)}
                         selected={new Date(2020, 0, 1)}
                       />
                     </DropdownMenu>

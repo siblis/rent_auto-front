@@ -1,7 +1,3 @@
-import 'normalize.css/normalize.css';
-import './assets/styles/bootstrap.min.css';
-import './assets/styles/loading.css';
-import 'react-infinite-calendar/styles.css';
 import './index.styl';
 
 import React, {Fragment} from 'react';

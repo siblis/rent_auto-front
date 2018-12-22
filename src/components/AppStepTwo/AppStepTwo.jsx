@@ -1,5 +1,3 @@
-import '../../../node_modules/rc-calendar/assets/index.css';
-import '../../../node_modules/rc-time-picker/assets/index.css';
 import './AppStepTwo.styl';
 
 import React, { PureComponent } from 'react';
