@@ -32,13 +32,25 @@ export default class Cars extends PureComponent {
               index < 5 ?
               <div className="car-card__row" key={index}>
                 <div>{rate.name}</div>
-                <div>{this.props.car.rental.day_cost * rate.rate}</div>
+                <div>{(this.props.car.rental.day_cost * rate.rate).toFixed(0)}</div>
               </div> : ''
             )}
           </div>
           <div className="car-card__buttons">
-            <Link className="btn btn-primary car-card__button" to={`/car/${this.props.car.id}`}>Подробнее</Link>
-            <Link className="btn btn-secondary car-card__button" to={{pathname: '/app', carId: this.props.car.id}}>Забронировать</Link>
+            <Link
+              className="btn btn-primary car-card__button"
+              to={`/car/${this.props.car.id}`}
+              onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0}
+            >
+              Подробнее
+            </Link>
+            <Link
+              className="btn btn-secondary car-card__button"
+              to={{pathname: '/app', carId: this.props.car.id}}
+              onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0}
+            >
+              Забронировать
+            </Link>
           </div>
         </div>
       </div>

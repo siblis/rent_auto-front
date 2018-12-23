@@ -22,21 +22,24 @@ class CarCont extends PureComponent {
     const { loadCars } = this.props;
     loadCars();
     const car = this.getCarById();
-    this.setState({
-      car,
-    })
+    if (car) {
+      this.setState({
+        car,
+      })
+    } else {
+      this.props.history.push("/cars");
+    }
   }
 
   getCarById = () => {
     const { id } = this.props.match.params;
-    return this.props.cars.filter(car => +car.id === +id)[0];
+    return this.props.cars.find(car => +car.id === +id);
   }
 
   render() {
-    if (this.props.cars.length > 0) {
-      const car = this.getCarById();
+    if (this.state.car) {
       return (
-        <Car car={car} />
+        <Car car={this.state.car} />
       );
     } else {
       return '';
