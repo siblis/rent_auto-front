@@ -1,4 +1,3 @@
-import '../../../node_modules/rc-time-picker/assets/index.css';
 import './AppStepThree.styl';
 
 import React, { PureComponent } from 'react';
@@ -58,14 +57,15 @@ export default class AppStepTwo extends PureComponent {
     passportGetDateDropdownOpen: false,
     licenseGetDateDropdownOpen: false,
     licenseExpireDateDropdownOpen: false,
+    licenseExpireDateType: 'text',
+    licenseGetDateType: 'text',
+    passportGetDateType: 'text',
+    birthdayDateType: 'text',
   }
 
-  getCalendarHeight = () => {
-    if (document.documentElement.clientWidth < 400) {
-      return 300;
-    }
-    return 350;
-  }
+  isSmallScreen = () => document.documentElement.clientWidth < 420;
+
+  isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
   birthdayDateDropdownToggle = () => {
     this.setState(prevState => ({
@@ -90,27 +90,7 @@ export default class AppStepTwo extends PureComponent {
       licenseExpireDateDropdownOpen: !prevState.licenseExpireDateDropdownOpen
     }));
   }
-
-  handleBirthdayDateInput = async (event) => {
-    await this.props.handleBirthdayDateInput(event);
-    this.birthdayDateDropdownToggle();
-  }
-
-  handlePassportGetDateInput = async (event) => {
-    await this.props.handlePassportGetDateInput(event);
-    this.passportGetDateDropdownToggle();
-  }
-
-  handleLicenseGetDateInput = async (event) => {
-    await this.props.handleLicenseGetDateInput(event);
-    this.licenseGetDateDropdownToggle();
-  }
-
-  handleLicenseExpireDateInput = async (event) => {
-    await this.props.handleLicenseExpireDateInput(event);
-    this.licenseExpireDateDropdownToggle();
-  }
-
+  
   render() {
     return (
       <main className="app">
@@ -198,103 +178,100 @@ export default class AppStepTwo extends PureComponent {
               <div className="div"></div>
               <div className="application__input application__input--date application__order_-4">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                <Dropdown isOpen={this.state.birthdayDateDropdownOpen} toggle={this.birthdayDateDropdownToggle}>
-                  <DropdownToggle caret>
-                    {this.props.birthdayDate}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <Calendar
-                      onSelect={this.handleBirthdayDateInput}
-                      locale={calendarLocale}
-                      theme={calendarTheme}
-                      width={this.getCalendarHeight()}
-                      height={400}
-                      min={new Date(1900, 0, 1)}
-                      max={new Date()}
-                      displayOptions={{
-                        hideYearsOnSelect: false,
-                      }}
-                      selected={new Date(2000, 0, 1)}
-                    />
-                  </DropdownMenu>
-                </Dropdown>
+                  <Dropdown isOpen={this.state.birthdayDateDropdownOpen} toggle={this.birthdayDateDropdownToggle}>
+                    <DropdownToggle caret>
+                      {this.props.birthdayDate}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <Calendar
+                        onSelect={this.props.handleBirthdayDateInput}
+                        locale={calendarLocale}
+                        theme={calendarTheme}
+                        width={this.isSmallScreen() ? 300 : 400}
+                        height={400}
+                        min={new Date(1900, 0, 1)}
+                        max={new Date()}
+                        minDate={new Date(1900, 0, 1)}
+                        maxDate={new Date()}
+                        selected={new Date(2000, 0, 1)}
+                      />
+                    </DropdownMenu>
+                  </Dropdown>
               </div>
               <div className="application__input application__input--date application__order_-4">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                <Dropdown isOpen={this.state.passportGetDateDropdownOpen} toggle={this.passportGetDateDropdownToggle}>
-                  <DropdownToggle caret>
-                    {this.props.passportGetDate}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <Calendar
-                      onSelect={this.handlePassportGetDateInput}
-                      locale={calendarLocale}
-                      theme={calendarTheme}
-                      width={this.getCalendarHeight()}
-                      height={400}
-                      min={new Date(1950, 0, 1)}
-                      max={new Date()}
-                      displayOptions={{
-                        hideYearsOnSelect: false,
-                      }}
-                      selected={new Date(2010, 0, 1)}
-                    />
-                  </DropdownMenu>
-                </Dropdown>
+                  <Dropdown isOpen={this.state.passportGetDateDropdownOpen} toggle={this.passportGetDateDropdownToggle}>
+                    <DropdownToggle caret>
+                      {this.props.passportGetDate}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <Calendar
+                        onSelect={this.props.handlePassportGetDateInput}
+                        locale={calendarLocale}
+                        theme={calendarTheme}
+                        width={this.isSmallScreen() ? 300 : 400}
+                        height={400}
+                        min={new Date(1950, 0, 1)}
+                        max={new Date()}
+                        minDate={new Date(1950, 0, 1)}
+                        maxDate={new Date()}
+                        selected={new Date(2010, 0, 1)}
+                      />
+                    </DropdownMenu>
+                  </Dropdown>
               </div>
               <div className="div"></div>
               <div className="div"></div>
               <div className="div"></div>
               <div className="application__input application__input--date application__order_1">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                <Dropdown isOpen={this.state.licenseGetDateDropdownOpen} toggle={this.licenseGetDateDropdownToggle}>
-                  <DropdownToggle caret>
-                    {this.props.licenseGetDate}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <Calendar
-                      onSelect={this.handleLicenseGetDateInput}
-                      locale={calendarLocale}
-                      theme={calendarTheme}
-                      height={350}
-                      min={new Date(1950, 0, 1)}
-                      max={new Date()}
-                      displayOptions={{
-                        hideYearsOnSelect: false,
-                      }}
-                      selected={new Date(2010, 0, 1)}
-                    />
-                  </DropdownMenu>
-                </Dropdown>
+                  <Dropdown isOpen={this.state.licenseGetDateDropdownOpen} toggle={this.licenseGetDateDropdownToggle}>
+                    <DropdownToggle caret>
+                      {this.props.licenseGetDate}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <Calendar
+                        onSelect={this.props.handleLicenseGetDateInput}
+                        locale={calendarLocale}
+                        theme={calendarTheme}
+                        width={this.isSmallScreen() ? 300 : 400}
+                        height={400}
+                        min={new Date(1950, 0, 1)}
+                        max={new Date()}
+                        minDate={new Date(1950, 0, 1)}
+                        maxDate={new Date()}
+                        selected={new Date(2010, 0, 1)}
+                      />
+                    </DropdownMenu>
+                  </Dropdown>
               </div>
               <div className="application__input application__input--date application__order_1">
                 <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
-                <Dropdown isOpen={this.state.licenseExpireDateDropdownOpen} toggle={this.licenseExpireDateDropdownToggle}>
-                  <DropdownToggle caret>
-                    {this.props.licenseExpireDate}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <Calendar
-                      onSelect={this.handleLicenseExpireDateInput}
-                      locale={calendarLocale}
-                      theme={calendarTheme}
-                      height={350}
-                      min={new Date(2015, 0, 1)}
-                      max={new Date(2060, 0, 1)}
-                      displayOptions={{
-                        hideYearsOnSelect: false,
-                      }}
-                      selected={new Date(2020, 0, 1)}
-                    />
-                  </DropdownMenu>
-                </Dropdown>
+                  <Dropdown isOpen={this.state.licenseExpireDateDropdownOpen} toggle={this.licenseExpireDateDropdownToggle}>
+                    <DropdownToggle caret>
+                      {this.props.licenseExpireDate}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <Calendar
+                        onSelect={this.props.handleLicenseExpireDateInput}
+                        locale={calendarLocale}
+                        theme={calendarTheme}
+                        width={this.isSmallScreen() ? 300 : 400}
+                        height={400}
+                        min={new Date(2015, 0, 1)}
+                        max={new Date(2060, 0, 1)}
+                        minDate={new Date(2015, 0, 1)}
+                        maxDate={new Date(2060, 0, 1)}
+                        selected={new Date(2020, 0, 1)}
+                      />
+                    </DropdownMenu>
+                  </Dropdown>
               </div>
               <Button
                 className={this.props.isLoading ? 'application__btn-submit--step-three ld ld-ext-right running application__order_3' : 'application__btn-submit--step-three application__order_3'}
                 onClick={this.props.handleSubmitButton}
               >{this.props.isLoading ? '' : 'Отправить'}
               <i className={this.props.isLoading ? 'ld ld-ring ld-spin' : ''}></i>
-
               </Button>
               <Modal isOpen={this.props.stepThreeModal} toggle={this.props.stepThreeModalToggle} >
                 <ModalHeader toggle={this.props.stepThreeModalToggle}>

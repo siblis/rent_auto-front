@@ -1,4 +1,3 @@
-import '../../../node_modules/rc-time-picker/assets/index.css';
 import './AppStepOne.styl';
 
 import React, { PureComponent } from 'react';
@@ -16,6 +15,7 @@ export default class AppStepOne extends PureComponent {
     brands: propTypes.array,
     startDate: propTypes.string,
     endDate: propTypes.string,
+    endTime: propTypes.object,
     brand: propTypes.object,
     price: propTypes.number,
     handleStartDateInput: propTypes.func,
@@ -36,12 +36,9 @@ export default class AppStepOne extends PureComponent {
     endDateDropdownOpen: false,
   }
 
-  getCalendarHeight = () => {
-    if (document.documentElement.clientWidth < 400) {
-      return 300;
-    }
-    return 350;
-  }
+  isSmallScreen = () => document.documentElement.clientWidth < 420;
+
+  isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
   startDateDropdownToggle = () => {
     this.setState(prevState => ({
@@ -55,16 +52,6 @@ export default class AppStepOne extends PureComponent {
     }));
   }
 
-  handleStartDateInput = async (event) => {
-    await this.props.handleStartDateInput(event);
-    this.startDateDropdownToggle();
-  }
-
-  handleEndDateInput = async (event) => {
-    await this.props.handleEndDateInput(event);
-    this.endDateDropdownToggle();
-  }
-
   render() {
     return (
       <main className="app">
@@ -72,7 +59,7 @@ export default class AppStepOne extends PureComponent {
           <Form className="application">
             <div className="application__step-one">
               <div className="application__block application__block--start-date">
-                <h4 className="application__field-name">Дата получения</h4>
+                <h4 className="application__field-name">Дата получения *</h4>
                 <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                   <Dropdown isOpen={this.state.startDateDropdownOpen} toggle={this.startDateDropdownToggle}>
@@ -81,10 +68,11 @@ export default class AppStepOne extends PureComponent {
                     </DropdownToggle>
                     <DropdownMenu>
                       <Calendar
-                        onSelect={this.handleStartDateInput}
+                        onSelect={this.props.handleStartDateInput}
                         locale={calendarLocale}
+                        min={new Date()}
                         minDate={new Date()}
-                        width={this.getCalendarHeight()}
+                        width={this.isSmallScreen() ? 300 : 400}
                         height={400}
                         theme={calendarTheme}
                       />
@@ -94,7 +82,7 @@ export default class AppStepOne extends PureComponent {
                 </div>
               </div>
               <div className="application__block application__block--end-date">
-                <h4 className="application__field-name">Дата возврата</h4>
+                <h4 className="application__field-name">Дата возврата *</h4>
                 <div className="application__input application__input--date">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/calendar.svg')}></object>
                   <Dropdown isOpen={this.state.endDateDropdownOpen} toggle={this.endDateDropdownToggle}>
@@ -103,10 +91,11 @@ export default class AppStepOne extends PureComponent {
                     </DropdownToggle>
                     <DropdownMenu>
                       <Calendar
-                        onSelect={this.handleEndDateInput}
+                        onSelect={this.props.handleEndDateInput}
                         locale={calendarLocale}
+                        min={new Date()}
                         minDate={new Date()}
-                        width={this.getCalendarHeight()}
+                        width={this.isSmallScreen() ? 300 : 400}
                         height={400}
                         theme={calendarTheme}
                       />
@@ -116,7 +105,7 @@ export default class AppStepOne extends PureComponent {
                 </div>
               </div>
               <div className="application__block application__block--model">
-                <h4 className="application__field-name">Модель</h4>
+                <h4 className="application__field-name">Модель *</h4>
                 <div className="application__input">
                   <object className="application__icon" type="image/svg+xml" data={require('../../assets/images/car.svg')}></object>
                   <UncontrolledDropdown>
@@ -133,7 +122,7 @@ export default class AppStepOne extends PureComponent {
                 </div>
               </div>
               <div className="application__block application__block--start-time">
-                <h4 className="application__field-name">Время получения</h4>
+                <h4 className="application__field-name">Время получения *</h4>
                 <div className="application__input">
                   <object className="application__icon application__icon--clock" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
                   <TimePicker
@@ -147,7 +136,7 @@ export default class AppStepOne extends PureComponent {
                 </div>
               </div>
               <div className="application__block">
-                <h4 className="application__field-name">Время возврата</h4>
+                <h4 className="application__field-name">Время возврата *</h4>
                 <div className="application__input">
                   <object className="application__icon application__icon--clock" type="image/svg+xml" data={require('../../assets/images/clock.svg')}></object>
                   <TimePicker
@@ -156,6 +145,7 @@ export default class AppStepOne extends PureComponent {
                     showSecond={false}
                     minuteStep={10}
                     allowEmpty={false}
+                    value={this.props.endTime}
                   />
                   {this.props.validEndTime || <div className="application__error animated bounce">!</div>}      
                 </div>

@@ -111,7 +111,8 @@ class AppCont extends PureComponent {
     });
   }
 
-  handleStartDateInput = startDate => {
+  handleStartDateInput = event => {
+    const startDate = event.target ? event.target.value : event;
     this.setState({
       startDate: moment(startDate).tz("Europe/Moscow"),
     }, () => {
@@ -120,7 +121,8 @@ class AppCont extends PureComponent {
     });
   }
 
-  handleEndDateInput = endDate => {
+  handleEndDateInput = event => {
+    const endDate = event.target ? event.target.value : event;
     this.setState({
       endDate: moment(endDate).tz("Europe/Moscow"),
     }, () => {
@@ -133,8 +135,13 @@ class AppCont extends PureComponent {
     if (startTime.minute() % 10 !== 0) {
       startTime.minute('00');
     }
+    if (this.state.endTime === '') {
+      this.setState({
+        endTime: moment(startTime).tz("Europe/Moscow"),
+      })
+    }
     this.setState({
-      startTime: moment(startTime),
+      startTime: moment(startTime).tz("Europe/Moscow"),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -146,7 +153,7 @@ class AppCont extends PureComponent {
       endTime.minute('00');
     }
     this.setState({
-      endTime: moment(endTime),
+      endTime: moment(endTime).tz("Europe/Moscow"),
     }, () => {
       this.validateStepOne();
       this.calculatePrice();
@@ -236,8 +243,8 @@ class AppCont extends PureComponent {
     }
     await this.validateStepOne();
     if (this.state.validStartDate && this.state.validEndDate && this.state.validStartTime && this.state.validEndTime && this.state.brand && this.state.stepOneLazyValidation) {
-      const startDate = moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).toISOString();
-      const endDate = moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm')).toISOString();
+      const startDate = moment(this.state.startDate).hour(this.state.startTime.format('HH')).minute(this.state.startTime.format('mm')).format();
+      const endDate = moment(this.state.endDate).hour(this.state.endTime.format('HH')).minute(this.state.endTime.format('mm')).format();
       const request = `rent_values?start_time=${startDate}&end_time=${endDate}&model=${this.state.brand.id}`
       app.get(request).then(res => {
         this.setState({
@@ -283,25 +290,29 @@ class AppCont extends PureComponent {
     });
   }
 
-  handlePassportGetDateInput = passportGetDate => {
+  handlePassportGetDateInput = event => {
+    const passportGetDate = event.target ? event.target.value : event;
     this.setState({
       passportGetDate: moment(passportGetDate).tz("Europe/Moscow"),
     });
   }
 
-  handleBirthdayDateInput = birthdayDate => {
+  handleBirthdayDateInput = event => {
+    const birthdayDate = event.target ? event.target.value : event;
     this.setState({
       birthdayDate: moment(birthdayDate).tz("Europe/Moscow"),
     });
   }
 
-  handleLicenseExpireDateInput = licenseExpireDate => {
+  handleLicenseExpireDateInput = event => {
+    const licenseExpireDate = event.target ? event.target.value : event;
     this.setState({
       licenseExpireDate: moment(licenseExpireDate).tz("Europe/Moscow"),
     });
   }
 
-  handleLicenseGetDateInput = licenseGetDate => {
+  handleLicenseGetDateInput = event => {
+    const licenseGetDate = event.target ? event.target.value : event;
     this.setState({
       licenseGetDate: moment(licenseGetDate).tz("Europe/Moscow"),
     });
@@ -469,7 +480,7 @@ class AppCont extends PureComponent {
             startDate={this.state.startDate !== '' ? moment(this.state.startDate).format('DD MM YYYY') : ''}
             endDate={this.state.endDate !== '' ? moment(this.state.endDate).format('DD MM YYYY') : ''}
             startTime={this.state.startTime}
-            endTime={this.state.endTime}
+            endTime={this.state.endTime !== '' ? moment(this.state.endTime) : undefined}
             brands={this.props.brands}
             brand={this.state.brand}
             price={this.state.price}

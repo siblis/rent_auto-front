@@ -12,13 +12,13 @@ export default class Footer extends PureComponent {
         <Container>
           <ul className="footer__nav">
             {/*}
-            <li><Link to={`/policy`}>Персональные данные</Link></li>
+            <li><Link to={`/policy`} onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0}>Персональные данные</Link></li>
             */}
-            <li><Link to={`/about`}>О нас</Link></li>
+            <li><Link to={`/about`} onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0}>О нас</Link></li>
             {/*}
-            <li><Link to={`/description`}>Описание проекта</Link></li>
+            <li><Link to={`/description`} onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0}>Описание проекта</Link></li>
             */}
-            <li><Link to={`/rules`}>Условия проката</Link></li>
+            <li><Link to={`/rules`} onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0}>Условия проката</Link></li>
           </ul>
           <div className="footer__schedule">
             <p>ГРАФИК РАБОТЫ:</p>
